@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Upload() {
+function Register() {
   return (
     <div>upload</div>
   )
 }
 
-export default Upload;
+export default Register;

@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Following() {
+function Login() {
   return (
     <div>following</div>
   )
 }
 
-export default Following;
+export default Login;

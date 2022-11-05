@@ -1,21 +1,22 @@
-import Home from '~/pages/Home';
-import Following from '~/pages/Following';
-import { HeaderOnlyLayout } from '~/components/Layout';
-import Upload from '~/pages/Upload';
+import { BlankLayout } from "../layouts"
+import Home from "../pages/Home"
+import Login from "../pages/Login"
+import Register from "../pages/Register"
+
 export const publicRoutes = [
     {
-        path:"/",
-        component:Home
+        path: "/",
+        component: Home
     },
     {
-        path:"/following",
-        component:Following,
-        layout:null
+        path: "/login",
+        component: Login,
+        layout: BlankLayout
     },
     {
-        path:"/upload",
-        component:Upload,
-        layout:HeaderOnlyLayout
+        path: "/register",
+        component: Register,
+        layout: BlankLayout
     }
 ]
 //Required login

@@ -1,15 +1,13 @@
+// .wrapper{
+//     margin: 0 auto;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     background-color: #ffff;
+// }
 .wrapper{
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.container{
-    width: var(--wrapper-width);
-    display: flex;
-}
-.content{
-    flex: 1;
+    .content{
+        min-height: 100vh;
+    }
 }

@@ -1,0 +1,13 @@
+.nav-links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 22px;
+  a:hover {
+    color: var(--primary);
+  }
+}

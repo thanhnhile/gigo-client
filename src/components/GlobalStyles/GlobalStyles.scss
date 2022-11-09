@@ -1,24 +1,36 @@
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-:root{
-    --primary:#E57905;
-    --second:#B3DDCA;
-    --text-color:#161823;
-    //Default layout
-    --default-layout-header-height:60px;
-    --wrapper-width: 1150px;
+:root {
+  --primary: #e57905;
+  --second: #b3ddca;
+  --text-color: #161823;
+  --white:#fff;
+  //Default layout
+  --default-layout-header-height: 60px;
+  --wrapper-width: 1200px;
 }
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-html{
-    font-size: 62.5%;
+html {
+  font-size: 62.5%;
 }
-body{
-    font-family: 'Lato','IBM Plex Sans', sans-serif;
-    font-size: 1.6rem;
-    line-height: 1.5;
+body {
+  font-family: 'Lato', 'IBM Plex Sans', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+.container {
+  width: var(--wrapper-width);
+  margin: 0 auto;
 }

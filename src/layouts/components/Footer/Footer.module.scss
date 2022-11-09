@@ -9,7 +9,6 @@
       display: flex;
       justify-content: space-between;
       padding-bottom: 24px;
-      gap: 15px;
       h2 {
         text-transform: capitalize;
         padding-bottom: 15px;
@@ -21,10 +20,16 @@
         }
       }
       .footer-top-about {
-        ul li a {
-          color: var(--white);
-          font-size: 1.2rem;
-          cursor: pointer;
+        li {
+          margin-bottom: 10px;
+          a {
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            &:hover {
+              color: var(--primary);
+            }
+          }
         }
       }
       .footer-top-sp {
@@ -33,9 +38,13 @@
           align-items: center;
           margin-bottom: 15px;
           .icon {
-            font-size: 2rem;
+            font-size: 3rem;
             color: var(--white);
             margin-right: 8px;
+            padding: 5px;
+            &:hover{
+              color: var(--primary);
+            }
           }
         }
         span {

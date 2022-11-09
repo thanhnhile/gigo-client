@@ -5,7 +5,7 @@
   --primary: #e57905;
   --second: #b3ddca;
   --text-color: #161823;
-  --white:#fff;
+  --white: #fff;
   //Default layout
   --default-layout-header-height: 60px;
   --wrapper-width: 1200px;
@@ -29,6 +29,10 @@ ul {
 a {
   text-decoration: none;
   color: var(--text-color);
+}
+p {
+  line-height: 1.8;
+  word-spacing: 3px;
 }
 .container {
   width: var(--wrapper-width);

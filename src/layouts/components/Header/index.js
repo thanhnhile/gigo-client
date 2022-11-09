@@ -20,10 +20,14 @@ const Header = () => {
                                 <Icon icon="bx:map" className={cx('icon')} />
                                 <span>154 cửa hàng trên cả nước</span>
                             </Link>
+                        </li>
+                        <li>
                             <Link to='stores'>
                                 <Icon icon="bx:phone-call" className={cx('icon')} />
                                 <span>Đặt hàng: 180018545</span>
                             </Link>
+                        </li>
+                        <li>
                             <Link to='stores'>
                                 <Icon icon="bx:smile" className={cx('icon')} />
                                 <span>Freeship từ đơn 50K</span>

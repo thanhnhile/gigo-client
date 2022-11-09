@@ -18,16 +18,16 @@ const Footer = () => {
                         <h2>Giới Thiệu</h2>
                         <ul>
                             <li>
-                                <a>Về Chúng Tôi</a>
+                                <Link to='/'>Về Chúng Tôi</Link>
                             </li>
                             <li>
-                                <a>Blog</a>
+                                <Link to='/'>Blog</Link>
                             </li>
                             <li>
-                                <a>Cơ Hội Nghề Nghiệp</a>
+                                <Link to='/'>Cơ Hội Nghề Nghiệp</Link>
                             </li>
                             <li>
-                                <a>Cửa Hàng</a>
+                                <Link to='/'>Cửa Hàng</Link>
                             </li>
                         </ul>
                     </div>

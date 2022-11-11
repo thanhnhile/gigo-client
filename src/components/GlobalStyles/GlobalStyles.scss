@@ -8,6 +8,7 @@
   --white: #fff;
   //Default layout
   --default-layout-header-height: 60px;
+  --top-nav-height: 35px;
   --wrapper-width: 1200px;
 }
 * {
@@ -35,6 +36,6 @@ p {
   word-spacing: 3px;
 }
 .container {
-  width: var(--wrapper-width);
+  max-width: var(--wrapper-width);
   margin: 0 auto;
 }

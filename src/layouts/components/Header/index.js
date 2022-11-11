@@ -5,13 +5,14 @@ import { Icon } from '@iconify/react';
 import styles from './Header.module.scss';
 import NavLink from '../NavLink';
 import Search from '../Search2';
+import logo from '~/assets/images/logo.png';
 
 
 const cx = className.bind(styles);
 const Header = () => {
-    const [search, setSearch] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
     return (
-        <React.Fragment>
+        <div>
             <header className={cx('wrapper')}>
                 <div >
                     <ul className={cx('top-nav')}>
@@ -37,13 +38,13 @@ const Header = () => {
                 </div>
                 <nav className={cx('nav-bar', 'container')}>
                     <div className={cx('logo')}>
-                        <img src='https://www.foody.vn/style/images/logo/foody-vn.png' alt='Gigo' />
+                        <img src={logo} alt='Gigo' />
                     </div>
                     <NavLink />
                     <div className={cx('left')}>
                         <div className={cx('icon')}>
-                            {!search && <Icon icon="bx:search-alt-2" onClick={() => setSearch(true)} />}
-                            {search && <Icon icon="fa-solid:times" onClick={() => setSearch(false)} />}
+                            {!searchOpen && <Icon icon="bx:search-alt-2" onClick={() => setSearchOpen(true)} />}
+                            {searchOpen && <Icon icon="fa-solid:times" onClick={() => setSearchOpen(false)} />}
                         </div>
                         <div className={cx('icon')}>
                             <Icon icon="bx:user" />
@@ -56,8 +57,8 @@ const Header = () => {
 
                 </nav>
             </header >
-            {search && <Search />}
-        </React.Fragment>
+            {searchOpen && <Search isOpen={searchOpen} />}
+        </div>
     )
 }
 

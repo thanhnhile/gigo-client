@@ -5,7 +5,7 @@ import styles from './Search.module.scss'
 
 const cx = className.bind(styles);
 
-const Search = () => {
+const Search = ({ isOpen }) => {
     const inputRef = useRef();
     const [searchValue, setSearchValue] = useState('');
     const handleChange = () => {
@@ -19,7 +19,7 @@ const Search = () => {
         inputRef.current.focus();
     }
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', { 'open': isOpen })}>
             <div className={cx('container', 'search-wrapper')}>
                 <div className={cx('inner-input')}>
                     <input ref={inputRef}

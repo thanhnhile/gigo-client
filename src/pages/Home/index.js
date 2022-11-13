@@ -1,14 +1,15 @@
 import React from 'react'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import Slider from '../../components/Slider'
+import Section from '../../components/Section'
 
 function Home() {
   return (
     <div>
-      <h1>
-      Day la trang chu
-    </h1>
-    <p>Nay gio lam khung lam dien vui ghe luon a</p>
+      <Slider />
+      <Section/>
     </div>
   )
 }
 
-export default Home;
+export default Home

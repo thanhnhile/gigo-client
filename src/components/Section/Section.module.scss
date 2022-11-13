@@ -1,0 +1,10 @@
+.wrapper{
+    display: flex;
+    padding: 30px 0;
+    background-color: red;
+    height: 50vh;
+    margin-bottom: 100px;
+    &.reserve{
+        flex-direction: row-reverse;
+    }
+}

@@ -1,3 +1,4 @@
+@use '../../../components/GlobalStyles/GlobalStyles.scss' as s;
 #footer {
   width: 100%;
   margin: 0;
@@ -6,8 +7,10 @@
   padding: 24px 0 60px;
   .footer {
     .footer-top {
-      display: flex;
-      justify-content: space-between;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 40% 30% 30%;
+      grid-column-gap: 15px;
       padding-bottom: 24px;
       h2 {
         text-transform: capitalize;
@@ -20,6 +23,7 @@
         }
       }
       .footer-top-about {
+        flex-basis: 30%;
         li {
           margin-bottom: 10px;
           a {
@@ -33,6 +37,7 @@
         }
       }
       .footer-top-sp {
+        flex-basis: 30%;
         .link-item {
           display: flex;
           align-items: center;
@@ -42,7 +47,7 @@
             color: var(--white);
             margin-right: 8px;
             padding: 5px;
-            &:hover{
+            &:hover {
               color: var(--primary);
             }
           }
@@ -59,29 +64,5 @@
       font-size: 1.1rem;
       justify-content: left;
     }
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .footer {
-    width: 100%;
-    padding: 0.5rem;
-  }
-  .footer-top-name,
-  .footer-top-about,
-  .footer-top-sp,
-  .footer-top-delivery {
-    width: calc(50%);
-  }
-}
-@media screen and (max-width: 400px) {
-  .footer-top-about h2,
-  .footer-top-sp h2,
-  .footer-top-delivery h2 {
-    font-size: 1.2rem;
-  }
-  .footer-top a,
-  p {
-    font-size: 1rem;
   }
 }

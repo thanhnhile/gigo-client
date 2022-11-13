@@ -1,10 +1,17 @@
-import React from 'react';
-import './Section.module.scss';
+import React from 'react'
+import className from 'classnames/bind'
+import styles from './Section.module.scss'
 
-const Section = () => {
+const cx = className.bind(styles)
+
+const Section = ({ reverse }) => {
+  //directtion =
   return (
-    <div>Section</div>
+    <div className={cx('wrapper', { reserve: reverse }, 'container')}>
+      <div className={cx('image')}>Hinh anh</div>
+      <div className={cx('content')}>Noi dung</div>
+    </div>
   )
 }
 
-export default Section;
+export default Section

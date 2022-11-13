@@ -3,12 +3,14 @@ $icon-width: 40px;
 
 .wrapper {
   width: 100%;
-  box-shadow: 0 1px 0 #cccc;
+  box-shadow: 0 1px 3px #cccc;
   z-index: 999;
   position: fixed;
   top: 0;
   left: 0;
   overflow: hidden;
+  background-color: var(--white);
+  opacity: 0.9;
 }
 .top-nav {
   display: flex;
@@ -36,8 +38,6 @@ $icon-width: 40px;
 }
 .nav-bar {
   height: var(--default-layout-header-height);
-  background-color: var(--white);
-  opacity: 0.9;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -76,7 +76,7 @@ $icon-width: 40px;
         border-radius: 50%;
         background-color: var(--primary);
         position: absolute;
-        top: -1px;
+        top: -5px;
         right: -5px;
         color: #ffff;
         font-size: 1.2rem;

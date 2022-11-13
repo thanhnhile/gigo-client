@@ -1,4 +1,3 @@
-import { BlankLayout } from "../layouts"
 import Home from "../pages/Home"
 import Login from "../pages/Login"
 import Register from "../pages/Register"
@@ -9,14 +8,12 @@ export const publicRoutes = [
         component: Home
     },
     {
-        path: "/login",
-        component: Login,
-        layout: BlankLayout
+        path: "/auth",
+        component: Login
     },
     {
         path: "/register",
-        component: Register,
-        layout: BlankLayout
+        component: Register
     }
 ]
 //Required login

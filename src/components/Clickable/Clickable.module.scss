@@ -1,0 +1,30 @@
+@mixin theme($theme) {
+  color: var(--white);
+  border-color: $theme;
+  background: linear-gradient(to right, var(--white) 50%, $theme 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.5s ease-out;
+  &:hover {
+    background-position: left bottom;
+    color: var(--primary);
+  }
+}
+.btn {
+  display: block;
+  margin: 8px 0;
+  // padding: 8px 20px;
+  min-width: var(--button-width);
+  height: var(--buton-height);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+  border: 1px solid transparent;
+  overflow: hidden;
+  &.primary {
+    @include theme(var(--primary));
+  }
+  &.second {
+    @include theme(var(--second));
+  }
+}

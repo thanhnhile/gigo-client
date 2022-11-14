@@ -4,20 +4,18 @@ $icon-width: 40px;
 .wrapper {
   width: 100%;
   box-shadow: 0 1px 3px #cccc;
-  z-index: 999;
+  z-index: 9999;
   position: fixed;
   top: 0;
   left: 0;
   overflow: hidden;
-  background-color: var(--white);
-  opacity: 0.9;
+  background-color: rgba($color: #ffff, $alpha: 0.95);
 }
 .top-nav {
   display: flex;
   justify-content: center;
   align-items: center;
   height: var(--top-nav-height);
-  background-color: var(--white);
   li {
     a {
       margin-right: 32px;

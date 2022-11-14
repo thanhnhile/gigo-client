@@ -66,8 +66,8 @@ const Header = () => {
             </div>
           </div>
         </nav>
+        {searchOpen && <Search isOpen={searchOpen} />}
       </header>
-      {searchOpen && <Search isOpen={searchOpen} />}
     </div>
   )
 }

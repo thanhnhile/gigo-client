@@ -1,14 +1,12 @@
 $wrapper-height: 50vh;
 .wrapper {
+  width: 100%;
   height: $wrapper-height;
-  background-color: #fff;
-  opacity: 0.8;
+  background-color: var(--white);
   padding-top: 100px;
   text-align: center;
   color: var(--text-color);
   box-shadow: 0 2px 5px #ccc;
-  position: relative;
-  margin-top: calc(var(--top-nav-height) + var(--default-layout-header-height));
   &:after {
     content: '';
     width: 100%;

@@ -4,5 +4,6 @@
       var(--top-nav-height) + var(--default-layout-header-height)
     );
     min-height: 100vh;
+    background-color: var(--white);
   }
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import className from 'classnames/bind'
 import styles from './Login.module.scss'
+import Clickable from '../../components/Clickable'
 
 const cx = className.bind(styles)
 
@@ -18,7 +19,7 @@ function Login() {
         <input type="text" placeholder="Tên đăng nhập" />
         <input type="password" placeholder="Mật khẩu" />
         <p>Quên mật khẩu?</p>
-        <button>Đăng nhập</button>
+        <Clickable text="Đăng nhập" primary />
       </form>
     </div>
   )

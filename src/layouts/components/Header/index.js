@@ -10,6 +10,7 @@ import logo from '~/assets/images/logo.png'
 const cx = className.bind(styles)
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [toggle, setTonggle] = useState(false)
   return (
     <div>
       <header className={cx('wrapper')}>
@@ -35,13 +36,23 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <nav className={cx('nav-bar', 'container')}>
+        <div className={cx('mobile-navbar')}>
+          <div className={cx('icon')} onClick={() => setTonggle(!toggle)}>
+            <Icon icon="ant-design:menu-outlined" />
+          </div>
+          <div className={cx('logo')}>
+            <Link to="/">GIGO Milk Tea</Link>
+          </div>
+        </div>
+        <nav className={cx('nav-bar', 'container', { 'open': toggle })}>
           <div className={cx('logo')}>
             <Link to="/">
               <img src={logo} alt="Gigo" />
             </Link>
           </div>
-          <NavLink />
+          <ul className={cx('nav-links')}>
+            <NavLink />
+          </ul>
           <div className={cx('left')}>
             <div className={cx('icon')}>
               {!searchOpen && (

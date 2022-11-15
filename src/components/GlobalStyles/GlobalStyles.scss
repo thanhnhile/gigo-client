@@ -1,3 +1,4 @@
+@use './Reponsive.scss' as *;
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
@@ -9,14 +10,14 @@
   //Default layout
   --default-layout-header-height: 60px;
   --top-nav-height: 35px;
-  --wrapper-width: 1200px;
+  --wrapper-width: 1150px;
   --color-border: rgb(124, 123, 123);
   --font-heading: 2.5rem;
   --font-paragraph: 1.4rem;
   --button-border-radius: 5px;
   --image-border-radius: 15px;
-  --button-width:150px;
-  --buton-height:40px;
+  --button-width: 150px;
+  --buton-height: 40px;
 }
 * {
   padding: 0;
@@ -41,6 +42,10 @@ a {
 p {
   line-height: 1.8;
   word-spacing: 3px;
+  font-size: 1.4rem;
+}
+input {
+  font-size: 1.4rem;
 }
 .container {
   max-width: var(--wrapper-width);
@@ -49,24 +54,4 @@ p {
 
 /* Mixin */
 /* Set các giá trị với màn hình tương ứng */
-$mobile-width: 480px;
-$tablet-width: 768px;
-$desktop-width: 1024px;
-
-@mixin mobile {
-  @media (max-width: #{$mobile -width - 1px}) {
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media (min-width: #{$desktop-width}) {
-    @content;
-  }
-}
+// Khai báo kích thước tương ứng với màn hình thiết bị

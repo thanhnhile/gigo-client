@@ -17,6 +17,7 @@ $wrapper-height: 50vh;
     left: 0;
   }
   .search-wrapper {
+    width: 60%;
     display: flex;
     border: 2px solid #cccc;
     border-radius: 10px;
@@ -53,6 +54,7 @@ $wrapper-height: 50vh;
       }
     }
     button {
+      min-width: 60px;
       border: none;
       outline: none;
       background-color: #fff;

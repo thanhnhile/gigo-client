@@ -10,7 +10,6 @@
     line-height: 1.4;
   }
   p {
-    font-size: 1.3rem;
     font-weight: 400;
     color: var(--text-color);
     span {
@@ -43,7 +42,8 @@
         border-color: #000;
       }
     }
-    p {
+    a {
+      font-size: 1.4rem;
       align-self: flex-end;
       cursor: pointer;
       position: relative;
@@ -54,7 +54,7 @@
         width: 0;
         height: 1px;
         background-color: var(--text-color);
-        bottom: 2px;
+        bottom: 0;
         transition: 0.2s ease-in;
       }
       &:hover {

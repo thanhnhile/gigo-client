@@ -18,7 +18,7 @@ function Login() {
       <form className={cx('form')}>
         <input type="text" placeholder="Tên đăng nhập" />
         <input type="password" placeholder="Mật khẩu" />
-        <p>Quên mật khẩu?</p>
+        <a href="reset">Quên mật khẩu?</a>
         <Clickable text="Đăng nhập" primary />
       </form>
     </div>

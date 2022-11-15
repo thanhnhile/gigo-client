@@ -1,10 +1,18 @@
-@use '../../../components/GlobalStyles/GlobalStyles.scss' as s;
+@use '../../../components//GlobalStyles/Reponsive.scss' as *;
 #footer {
   width: 100%;
   margin: 0;
   background-color: var(--text-color);
   color: var(--white);
   padding: 24px 0 60px;
+  @include tablet {
+    padding-left: $md-spacing;
+    padding-right: $md-spacing;
+  }
+  @include mobile {
+    padding-left: $sm-spacing;
+    padding-right: $sm-spacing;
+  }
   .footer {
     .footer-top {
       width: 100%;
@@ -17,13 +25,15 @@
         padding-bottom: 15px;
       }
       .footer-top-name {
-        flex-basis: 40%;
+        display: none;
         p {
           font-size: 1.2rem;
         }
+        @include desktop {
+          display: block;
+        }
       }
       .footer-top-about {
-        flex-basis: 30%;
         li {
           margin-bottom: 10px;
           a {
@@ -37,7 +47,6 @@
         }
       }
       .footer-top-sp {
-        flex-basis: 30%;
         .link-item {
           display: flex;
           align-items: center;

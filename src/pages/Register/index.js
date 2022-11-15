@@ -18,7 +18,7 @@ function Register() {
         <input type="text" placeholder="Tên đăng nhập" />
         <input type="password" placeholder="Mật khẩu" />
         <input type="password" placeholder="Nhập lại mật khẩu" />
-        <p>Quay về</p>
+        <a href="/">Quay lai trang chủ</a>
         <Clickable text="Đăng ký" primary />
       </form>
     </div>

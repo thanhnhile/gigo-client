@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import ListProduct from '../../layouts/components/Product/ListProduct';
 
 function Home() {
   return (
-    <div>home page</div>
+    <>
+      <ListProduct />
+    </>
   )
 }
 

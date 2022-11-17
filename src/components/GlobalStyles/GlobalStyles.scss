@@ -1,3 +1,4 @@
+@use './Reponsive.scss' as *;
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
@@ -5,10 +6,18 @@
   --primary: #e57905;
   --second: #b3ddca;
   --text-color: #161823;
-  --white:#fff;
+  --white: #fff;
   //Default layout
   --default-layout-header-height: 60px;
-  --wrapper-width: 1200px;
+  --top-nav-height: 35px;
+  --wrapper-width: 1150px;
+  --color-border: rgb(124, 123, 123);
+  --font-heading: 2.5rem;
+  --font-paragraph: 1.4rem;
+  --button-border-radius: 5px;
+  --image-border-radius: 15px;
+  --button-width: 150px;
+  --buton-height: 40px;
 }
 * {
   padding: 0;
@@ -30,7 +39,19 @@ a {
   text-decoration: none;
   color: var(--text-color);
 }
+p {
+  line-height: 1.8;
+  word-spacing: 3px;
+  font-size: 1.4rem;
+}
+input {
+  font-size: 1.4rem;
+}
 .container {
-  width: var(--wrapper-width);
+  max-width: var(--wrapper-width);
   margin: 0 auto;
 }
+
+/* Mixin */
+/* Set các giá trị với màn hình tương ứng */
+// Khai báo kích thước tương ứng với màn hình thiết bị

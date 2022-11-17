@@ -1,34 +1,106 @@
+$wrapper-height: 50vh;
 .wrapper {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  width: 100%;
+  height: $wrapper-height;
+  background-color: var(--white);
+  padding-top: 100px;
+  text-align: center;
   color: var(--text-color);
-  overflow: hidden;
-  padding: 3px 0;
-  .input-inner {
-    width: 250px;
+  box-shadow: 0 2px 5px #ccc;
+  &:after {
+    content: '';
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .search-wrapper {
+    width: 60%;
     display: flex;
-    align-items: center;
-    padding-right: 8px;
-    border-right: 2px solid #ccc;
-    input {
-      width: 200px;
+    border: 2px solid #cccc;
+    border-radius: 10px;
+    overflow: hidden;
+    .inner-input {
+      display: flex;
       flex: 1;
-      padding: 0 8px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 20px;
+      position: relative;
+      input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 1.8rem;
+        padding-right: 16px;
+      }
+      .icon {
+        width: auto;
+        height: 100%;
+        cursor: pointer;
+        font-size: 1.3rem;
+      }
+      &:after {
+        content: '';
+        width: 2px;
+        height: 60%;
+        background-color: #ccc;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    button {
+      min-width: 60px;
       border: none;
       outline: none;
-      font-size: 1.4rem;
+      background-color: #fff;
+      padding: 0 12px;
+      cursor: pointer;
+      .icon {
+        font-size: 2.5rem;
+      }
+      &:hover {
+        .icon {
+          color: var(--primary) !important;
+        }
+      }
     }
-    .clear {
+  }
+  p {
+    margin-top: 50px;
+    font-weight: 400;
+    color: #000;
+    font-size: 1.5rem;
+    span {
+      color: var(--primary);
       cursor: pointer;
     }
   }
-  button {
-    background-color: #fff;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 0 8px;
+}
+.open {
+  animation: open 0.4s forwards;
+}
+@keyframes open {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes close {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-50%);
   }
 }

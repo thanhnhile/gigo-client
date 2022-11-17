@@ -1,51 +1,141 @@
+@use '../../../components//GlobalStyles/Reponsive.scss' as *;
 $cart-number-width: 20px;
+$icon-width: 40px;
+
 .wrapper {
   width: 100%;
-  box-shadow: 0 1px 0 #cccc;
+  box-shadow: 0 1px 3px #cccc;
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: rgba($color: #ffff, $alpha: 0.95);
+  .mobile-navbar {
+    display: none;
+  }
+  @include tablet {
+    padding: 0 $md-spacing;
+  }
+  @include mobile {
+    padding: 0 $md-spacing;
+    .mobile-navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: $sm-spacing;
+      background-color: var(--white);
+      .icon {
+        font-size: 2rem;
+        margin-right: auto;
+        cursor: pointer;
+      }
+      .left {
+        display: flex;
+      }
+      .logo {
+        display: block;
+        font-size: 2rem;
+        font-weight: 600;
+        font-family: 'IBM Plex Sans';
+      }
+    }
+    .top-nav {
+      display: none;
+    }
+    .nav-bar {
+      display: none;
+      padding: $sm-spacing;
+      flex-direction: column-reverse;
+      height: fit-content;
+      background-color: var(--white);
+      justify-content: flex-start;
+      transform: translateX(-100%);
+      transition: all 0.5s linear;
+      &.open {
+        display: flex;
+        animation: appear 0.5s forwards;
+      }
+      .logo {
+        display: none;
+      }
+      .nav-links {
+        width: 100%;
+        gap: 0;
+        flex-direction: column;
+        margin-top: 15px;
+        a {
+          display: block;
+          width: 100%;
+          padding: 15px 25px;
+        }
+      }
+      .left {
+      }
+    }
+  }
 }
 .top-nav {
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 10px 0;
-  a {
-    margin-right: 32px;
-    font-size: 1.2rem;
-    display: inline-flex;
-    align-items: center;
-    .icon {
-      font-size: 2rem;
-      color: var(--primary);
-    }
-    span {
-      color: #00000099;
-      margin-left: 8px;
-    }
-    box-icon {
-      color: var(--primary);
+  align-items: center;
+  height: var(--top-nav-height);
+  li {
+    a {
+      margin-right: 32px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+
+      .icon {
+        font-size: 2rem;
+        color: var(--primary);
+      }
+      span {
+        color: #00000099;
+        margin-left: 8px;
+      }
     }
   }
 }
 .nav-bar {
   height: var(--default-layout-header-height);
-  opacity: 0.9;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
   .logo {
-    display: flex;
     img {
-      margin: auto;
+      height: 100%;
+      object-position: center;
       object-fit: contain;
+      margin-right: 15px;
     }
   }
+  ul.nav-links {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    gap: $lg-spacing;
+    line-height: 1.4;
+    line-height: 22px;
+    a {
+      font-size: 1.4rem;
+    }
+    a:hover {
+      color: var(--primary);
+    }
+    @include tablet {
+      gap: $md-spacing;
+    }
+  }
+
   .left {
     display: flex;
     align-items: center;
     gap: 32px;
     .icon {
-      width: 40px;
+      width: $icon-width;
       font-size: 2.5rem;
       color: #00000099;
       font-weight: 400;
@@ -67,7 +157,7 @@ $cart-number-width: 20px;
         border-radius: 50%;
         background-color: var(--primary);
         position: absolute;
-        top: -1px;
+        top: -5px;
         right: -5px;
         color: #ffff;
         font-size: 1.2rem;
@@ -78,3 +168,12 @@ $cart-number-width: 20px;
     }
   }
 }
+@keyframes appear {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+

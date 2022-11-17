@@ -2,26 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const NavLink = () => {
-
-  const MENU_ITEM = [
-    {
-      title: 'Cửa hàng',
-      to: '/stores'
-    },
-    {
-      title: 'Menu',
-      to: '/menu'
-    },
-    {
-      title: 'Giới thiệu',
-      to: '/about'
-    },
-    {
-      title: 'Liên hệ',
-      to: '/contact'
-    }
-  ]
-
   const MENU_ITEM = [
     {
       title: 'Cửa hàng',

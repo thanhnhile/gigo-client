@@ -7,8 +7,8 @@ function Home() {
   return (
     <div>
       <Slider />
-      <Section reverse />
       <ListProduct />
+      <Section reverse />
       <Section />
     </div>
   )

@@ -16,8 +16,7 @@ export const publicRoutes = [
     },
     {
         path: "/register",
-        component: Register,
-        layout: BlankLayout
+        component: Register
     },
     {
         path: "/products/:id",

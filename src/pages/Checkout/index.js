@@ -1,5 +1,5 @@
 import React from 'react';
-import Order from '../../layouts/components/Order/Order'
+import Order from '../../components/Order/Order'
 
 function Checkout(props) {
     return (

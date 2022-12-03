@@ -11,27 +11,28 @@ $icon-width: 40px;
   left: 0;
   overflow: hidden;
   background-color: rgba($color: #ffff, $alpha: 0.95);
+
   .mobile-navbar {
     display: none;
   }
+
   @include tablet {
     padding: 0 $md-spacing;
   }
+
   @include mobile {
     padding: 0 $md-spacing;
+
     .mobile-navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: $sm-spacing;
       background-color: var(--white);
+
       .icon {
         font-size: 2rem;
-        margin-right: auto;
         cursor: pointer;
-      }
-      .left {
-        display: flex;
       }
       .logo {
         display: block;
@@ -40,9 +41,11 @@ $icon-width: 40px;
         font-family: 'IBM Plex Sans';
       }
     }
+
     .top-nav {
       display: none;
     }
+
     .nav-bar {
       display: none;
       padding: $sm-spacing;
@@ -52,34 +55,42 @@ $icon-width: 40px;
       justify-content: flex-start;
       transform: translateX(-100%);
       transition: all 0.5s linear;
+
       &.open {
         display: flex;
         animation: appear 0.5s forwards;
       }
+
       .logo {
         display: none;
       }
+
       .nav-links {
         width: 100%;
         gap: 0;
         flex-direction: column;
         margin-top: 15px;
+
         a {
           display: block;
           width: 100%;
           padding: 15px 25px;
         }
       }
+
       .left {
+        display: none;
       }
     }
   }
 }
+
 .top-nav {
   display: flex;
   justify-content: center;
   align-items: center;
   height: var(--top-nav-height);
+
   li {
     a {
       margin-right: 32px;
@@ -91,6 +102,7 @@ $icon-width: 40px;
         font-size: 2rem;
         color: var(--primary);
       }
+
       span {
         color: #00000099;
         margin-left: 8px;
@@ -98,11 +110,13 @@ $icon-width: 40px;
     }
   }
 }
+
 .nav-bar {
   height: var(--default-layout-header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   .logo {
     img {
       height: 100%;
@@ -111,6 +125,7 @@ $icon-width: 40px;
       margin-right: 15px;
     }
   }
+
   ul.nav-links {
     display: flex;
     flex: 1;
@@ -119,61 +134,76 @@ $icon-width: 40px;
     gap: $lg-spacing;
     line-height: 1.4;
     line-height: 22px;
+
     a {
       font-size: 1.4rem;
     }
+
     a:hover {
       color: var(--primary);
     }
+
     @include tablet {
       gap: $md-spacing;
     }
   }
+}
 
-  .left {
+.left {
+  display: flex;
+  align-items: center;
+  gap: $lg-spacing;
+  @include tablet {
+    gap: $md-spacing;
+  }
+  @include mobile {
+    gap: $sm-spacing;
+  }
+
+  .icon {
+    width: $icon-width;
+    font-size: 2.5rem;
+    color: #00000099;
+    font-weight: 400;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 32px;
-    .icon {
-      width: $icon-width;
-      font-size: 2.5rem;
-      color: #00000099;
-      font-weight: 400;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      :hover {
-        color: var(--primary);
-      }
+    justify-content: center;
+
+    :hover {
+      color: var(--primary);
     }
-    .cart {
-      position: relative;
-      span {
-        width: $cart-number-width;
-        height: $cart-number-width;
-        text-align: center;
-        line-height: $cart-number-width;
-        border-radius: 50%;
-        background-color: var(--primary);
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        color: #ffff;
-        font-size: 1.2rem;
-        &:hover {
-          color: var(--white);
-        }
+  }
+
+  .cart {
+    position: relative;
+
+    span {
+      width: $cart-number-width;
+      height: $cart-number-width;
+      text-align: center;
+      line-height: $cart-number-width;
+      border-radius: 50%;
+      background-color: var(--primary);
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      color: #ffff;
+      font-size: 1.2rem;
+
+      &:hover {
+        color: var(--white);
       }
     }
   }
 }
+
 @keyframes appear {
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }
 }
-

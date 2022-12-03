@@ -9,7 +9,7 @@ const Section = (props) => {
   const { reverse } = props
   //directtion =
   return (
-    <div className={cx('wrapper', { reserve: reverse }, 'container')}>
+    <section className={cx('wrapper', { reserve: reverse }, 'container')}>
       <div className={cx('col', 'image')}>
         <img
           src="https://file.hstatic.net/1000075078/file/3_79de83d7fe14444780d3f11e1d07ab20_master.jpg"
@@ -26,7 +26,7 @@ const Section = (props) => {
         </p>
         <Clickable text="View more" second />
       </div>
-    </div>
+    </section>
   )
 }
 

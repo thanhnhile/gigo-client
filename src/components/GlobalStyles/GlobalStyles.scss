@@ -10,7 +10,7 @@
   //Default layout
   --default-layout-header-height: 60px;
   --top-nav-height: 35px;
-  --wrapper-width: 1150px;
+  --wrapper-width: 1200px;
   --color-border: rgb(124, 123, 123);
   --font-heading: 2.5rem;
   --font-paragraph: 1.4rem;
@@ -40,9 +40,9 @@ a {
   color: var(--text-color);
 }
 p {
-  line-height: 1.8;
+  line-height: 1.7;
   word-spacing: 3px;
-  font-size: 1.4rem;
+  font-size: var(--font-paragraph);
 }
 input {
   font-size: 1.4rem;
@@ -51,7 +51,28 @@ input {
   max-width: var(--wrapper-width);
   margin: 0 auto;
 }
+.container-fluid {
+  width: 100%;
+}
 
-/* Mixin */
-/* Set các giá trị với màn hình tương ứng */
-// Khai báo kích thước tương ứng với màn hình thiết bị
+/*Grid*/
+// $grid-width: 100%;
+// $gutter-vertical: 4rem;
+// $gutter-horizontal: 4rem;
+// .row {
+//   max-width: $grid-width;
+//   margin: 0 auto;
+//   &::after {
+//     content: '';
+//     display: table;
+//     clear: both;
+//   }
+//   [class^='col-'] {
+//     float: left;
+//     background-color: orange;
+//     padding: 1rem;
+//     &:not(:last-child) {
+//       margin-right: $gutter-horizontal;
+//     }
+//   }
+// }

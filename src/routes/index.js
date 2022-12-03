@@ -1,7 +1,9 @@
-import Home from '../pages/Home'
-import Login from '../pages/Login'
-import Register from '../pages/Register'
-import Menu from '../pages/Menu'
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import ProductDetail from '../pages/ProductDetail';
+import Stores from '../pages/Store';
+import Checkout from '../pages/Checkout';
 
 export const publicRoutes = [
   {
@@ -17,9 +19,17 @@ export const publicRoutes = [
     component: Register,
   },
   {
-    path: 'menu',
-    component: Menu,
+    path: '/products/:id',
+    component: ProductDetail,
   },
-]
+  {
+    path: '/stores/',
+    component: Stores,
+  },
+  {
+    path: '/checkout/',
+    component: Checkout,
+  },
+];
 //Required login
-export const privateRoutes = []
+export const privateRoutes = [];

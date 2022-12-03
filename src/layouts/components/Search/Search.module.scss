@@ -1,3 +1,4 @@
+@use '../../../components/GlobalStyles/Reponsive.scss' as *;
 $wrapper-height: 50vh;
 .wrapper {
   width: 100%;
@@ -7,6 +8,10 @@ $wrapper-height: 50vh;
   text-align: center;
   color: var(--text-color);
   box-shadow: 0 2px 5px #ccc;
+  @include mobile {
+    padding-left: $sm-spacing;
+    padding-right: $sm-spacing;
+  }
   &:after {
     content: '';
     width: 100%;
@@ -22,6 +27,11 @@ $wrapper-height: 50vh;
     border: 2px solid #cccc;
     border-radius: 10px;
     overflow: hidden;
+    @include mobile {
+      width: 100%;
+      flex-direction: column;
+      border: initial;
+    }
     .inner-input {
       display: flex;
       flex: 1;
@@ -29,16 +39,25 @@ $wrapper-height: 50vh;
       align-items: center;
       padding: 8px 20px;
       position: relative;
+      @include mobile {
+        border-bottom: 1px solid var(--color-border);
+        margin-bottom: 8px;
+        padding: 4px 15px;
+      }
       input {
         flex: 1;
         border: none;
         outline: none;
-        font-size: 1.8rem;
+        font-size:1.8rem;
         padding-right: 16px;
+        @include mobile{
+          font-size: var(--font-paragraph);
+          padding-right: $sm-spacing;
+        }
       }
       .icon {
-        width: auto;
         height: 100%;
+        width: auto;
         cursor: pointer;
         font-size: 1.3rem;
       }
@@ -54,12 +73,15 @@ $wrapper-height: 50vh;
       }
     }
     button {
-      min-width: 60px;
+      width: 60px;
       border: none;
       outline: none;
       background-color: #fff;
       padding: 0 12px;
       cursor: pointer;
+      @include mobile {
+        align-self: flex-end;
+      }
       .icon {
         font-size: 2.5rem;
       }

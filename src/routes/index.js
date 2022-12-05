@@ -4,6 +4,9 @@ import Register from '../pages/Register';
 import ProductDetail from '../pages/ProductDetail';
 import Stores from '../pages/Store';
 import Checkout from '../pages/Checkout';
+import Unauthorized from '../pages/Unauthorized';
+import SearchResult from '../pages/SearchResult';
+import Personal from '../pages/Personal';
 
 export const publicRoutes = [
   {
@@ -30,6 +33,20 @@ export const publicRoutes = [
     path: '/checkout/',
     component: Checkout,
   },
+  {
+    path: '/unauthorized',
+    component: Unauthorized,
+  },
+  {
+    path: '/search',
+    component: SearchResult,
+  },
 ];
 //Required login
-export const privateRoutes = [];
+export const userRoutes = [
+  {
+    path: '/personal',
+    component: Personal,
+  },
+];
+export const adminRoutes = [];

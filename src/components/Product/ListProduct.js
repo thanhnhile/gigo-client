@@ -5,7 +5,7 @@ import styles from './Product.module.scss';
 
 const cx = className.bind(styles);
 
-function ListProduct(props) {
+function ListProduct({ products, title }) {
   //    const {HotSaleProducts} = props;
   const HotSaleProducts = [
     {
@@ -67,10 +67,13 @@ function ListProduct(props) {
     <div className={cx('wrapper', 'container')}>
       <div className={cx('content')}>
         <div className={cx('product', 'product--flexbox')}>
+          {title && <h2>{title}</h2>}
           <div className={cx('product__wrapper')}>
-            {HotSaleProducts.map((product, index) => (
-              <ProductItem product={product} key={index}></ProductItem>
-            ))}
+            {products
+              ? products.map((product, index) => (
+                  <ProductItem product={product} key={index}></ProductItem>
+                ))
+              : 'Không có sản phẩm nào'}
           </div>
         </div>
       </div>

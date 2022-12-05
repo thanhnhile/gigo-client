@@ -48,9 +48,9 @@ $wrapper-height: 50vh;
         flex: 1;
         border: none;
         outline: none;
-        font-size:1.8rem;
+        font-size: 1.8rem;
         padding-right: 16px;
-        @include mobile{
+        @include mobile {
           font-size: var(--font-paragraph);
           padding-right: $sm-spacing;
         }
@@ -96,7 +96,7 @@ $wrapper-height: 50vh;
     margin-top: 50px;
     font-weight: 400;
     color: #000;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     span {
       color: var(--primary);
       cursor: pointer;

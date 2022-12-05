@@ -8,12 +8,12 @@ const product = {
     description: 'Vị đắng nhẹ từ cà phê phin truyền thống kết hợp Espresso Ý, lẫn chút ngọt ngào của kem sữa và lớp foam trứng cacao, nhấn thêm hạnh nhân nướng thơm bùi, kèm topping thạch cà phê dai giòn mê ly. Tất cả cùng quyện hoà trong một thức uống làm vị giác "thức giấc", thơm ngon hết nấc.',
 }
 const cx = className.bind(styles);
-function ProductDetail(props) {
+const ProductDetail= ({ product }) => {
 
     return (
         <div className={cx("container")}>
             <div className={cx("left-column")}>
-                <img src={product.image} alt="" />
+                <img src={product.imgURL} alt="" />
             </div>
 
             <div className={cx("right-column")}>
@@ -58,7 +58,7 @@ function ProductDetail(props) {
                 </div>
 
                 <div className={cx("product-price")}>
-                    <span>{product.price}</span>
+                    <span>{product.price}đ</span>
                     <a href="#" className={cx("cart-btn")}>Add to cart</a>
                 </div>
             </div>

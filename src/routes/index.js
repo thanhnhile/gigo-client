@@ -7,7 +7,7 @@ import Checkout from '../pages/Checkout';
 import Unauthorized from '../pages/Unauthorized';
 import SearchResult from '../pages/SearchResult';
 import Personal from '../pages/Personal';
-
+import Menu from "../pages/Menu";
 export const publicRoutes = [
   {
     path: '/',
@@ -30,6 +30,10 @@ export const publicRoutes = [
     component: Stores,
   },
   {
+    path: "/menu/",
+    component: Menu
+  },
+  {
     path: '/checkout/',
     component: Checkout,
   },
@@ -42,6 +46,7 @@ export const publicRoutes = [
     component: SearchResult,
   },
 ];
+
 //Required login
 export const userRoutes = [
   {

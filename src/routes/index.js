@@ -14,6 +14,7 @@ import Personal from '../pages/Personal';
 /*admin */
 import Dashboard from '../pages/Admin/Dashboard';
 
+import Menu from '../pages/Menu';
 export const publicRoutes = [
   {
     path: '/',
@@ -36,6 +37,10 @@ export const publicRoutes = [
     component: Stores,
   },
   {
+    path: '/menu/',
+    component: Menu,
+  },
+  {
     path: '/checkout/',
     component: Checkout,
   },
@@ -48,6 +53,7 @@ export const publicRoutes = [
     component: SearchResult,
   },
 ];
+
 //Required login
 export const userRoutes = [
   {

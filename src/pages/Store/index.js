@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Store.module.scss';
 import { Icon } from '@iconify/react';
 import Select from 'react-select';
-
+import { httpGetAllDistrict } from '../../apiService/districtService';
+import { httpGetAllStore } from '../../apiService/storeService';
 const cx = className.bind(styles);
 
 const Stores = () => {
-  const district = [
-    { label: 'TP HCM', value: 1 },
-    { label: 'BRVT', value: 2 },
-    { label: 'Tay Ninh', Value: 3 },
-  ];
+    const [district, setDistrict] = useState([]);
+
+    useEffect(() => {
+        const getAllDistrict = async () => {
+            const response = await httpGetAllDistrict();
+            console.log(response);
+            setDistrict(response.data);
+        };
+        getAllDistrict();
+    }, []);
+   
+    const options = district.map(d => ({
+        label: d.name,
+        value: d.id
+      }));
+    
+    const [store, setStore] = useState([]);
+
+    useEffect(() => {
+        const getAllStore = async () => {
+            const response = await httpGetAllStore();
+            console.log(response);
+            setStore(response.data);
+        };
+        getAllStore();
+    }, []);
   const storeData = [
     {
       id: 1,
@@ -39,15 +61,15 @@ const Stores = () => {
       </div>
       <div className={cx('container')}>
         <div className={cx('filter-bar')}>
-          <Select options={district} />
+          <Select options={options} />
         </div>
 
         <div className={cx('store-cards')}>
-          {storeData.map((store, index) => {
+          {store.map((store, index) => {
             // filter stores by state | facility
             return (
               <div className={cx('store-card')} key={index}>
-                <h3>{store.name}</h3>
+                <h3>{store.storeName}</h3>
                 <div className={cx('store-data')}>
                   <div className={cx('icon-wrapper')}>
                     <Icon icon={cx('clarity:store-solid')} />

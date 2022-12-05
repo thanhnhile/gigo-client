@@ -58,9 +58,14 @@ input {
   width: 100%;
 }
 .error {
+  font-weight: 500;
   margin-top: 15px;
   padding: 8px 0;
   color: var(--err-color) !important;
+  visibility: hidden;
+  &.show {
+    visibility: visible;
+  }
 }
 
 /*Grid*/

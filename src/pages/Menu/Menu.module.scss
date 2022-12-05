@@ -1,0 +1,23 @@
+$list-category-width:25%;
+.wrapper {
+  display: flex;
+  height: 100vh;
+  padding: 32px 0;
+  background-color: var(--white);
+  .col {
+    padding: 0 15px;
+  }
+  .list-categories {
+    width: $list-category-width;
+    border-right: 2px solid var(--color-border);
+    text-align: center;
+    li{
+      color:var(--text-color);
+      font-size: 1.8rem;
+    }
+  }
+  .list-products {
+    width: calc(100% - #{$list-category-width});
+    background-color: yellow;
+  }
+}

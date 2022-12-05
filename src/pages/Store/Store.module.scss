@@ -91,31 +91,14 @@ $largest-screen: 80rem;
             .store-data {
                 display: grid;
                 grid-template-columns: 2rem auto;
-                font-size: 1.125em;
+                font-size: 1.25em;
                 padding-bottom: 0.5rem;
 
                 .icon-wrapper {
                     justify-content: center;
-
                     i {
                         color: $primary;
                         padding-right: 0.7rem;
-                    }
-                }
-            }
-
-            .link-maps {
-                text-decoration: none;
-                padding-top: 0.1rem;
-                color: $gray-200;
-
-                p {
-                    text-decoration: none;
-                }
-
-                .icon-wrapper {
-                    i {
-                        color: $gray-200;
                     }
                 }
             }

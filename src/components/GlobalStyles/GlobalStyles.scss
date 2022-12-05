@@ -1,16 +1,17 @@
 @use './Reponsive.scss' as *;
 @import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 :root {
   --primary: #e57905;
   --second: #7edbb3;
   --text-color: #161823;
+  --err-color: #ff3333;
   --white: #fff;
   //Default layout
   --default-layout-header-height: 60px;
   --top-nav-height: 35px;
-  --wrapper-width: 1150px;
+  --wrapper-width: 1200px;
   --color-border: rgb(124, 123, 123);
   --font-heading: 2.5rem;
   --font-heading-sm: 2rem;
@@ -30,7 +31,7 @@ html {
   font-size: 62.5%;
 }
 body {
-  font-family: 'Lato', 'IBM Plex Sans', sans-serif;
+  font-family: 'Roboto', 'Lato', sans-serif;
   font-size: 1.6rem;
   line-height: 1.5;
 }
@@ -42,9 +43,9 @@ a {
   color: var(--text-color);
 }
 p {
-  line-height: 1.8;
+  line-height: 1.7;
   word-spacing: 3px;
-  font-size: 1.4rem;
+  font-size: var(--font-paragraph);
 }
 input {
   font-size: 1.4rem;
@@ -53,7 +54,33 @@ input {
   max-width: var(--wrapper-width);
   margin: 0 auto;
 }
+.container-fluid {
+  width: 100%;
+}
+.error {
+  margin-top: 15px;
+  padding: 8px 0;
+  color: var(--err-color) !important;
+}
 
-/* Mixin */
-/* Set các giá trị với màn hình tương ứng */
-// Khai báo kích thước tương ứng với màn hình thiết bị
+/*Grid*/
+// $grid-width: 100%;
+// $gutter-vertical: 4rem;
+// $gutter-horizontal: 4rem;
+// .row {
+//   max-width: $grid-width;
+//   margin: 0 auto;
+//   &::after {
+//     content: '';
+//     display: table;
+//     clear: both;
+//   }
+//   [class^='col-'] {
+//     float: left;
+//     background-color: orange;
+//     padding: 1rem;
+//     &:not(:last-child) {
+//       margin-right: $gutter-horizontal;
+//     }
+//   }
+// }

@@ -1,37 +1,58 @@
-import { Fragment } from 'react'
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
-import { publicRoutes } from '~/routes'
-import { DefaultLayout } from './layouts'
+import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { useAuth, useLocalStorage } from './hooks';
+import { publicRoutes, userRoutes, adminRoutes } from '~/routes';
+import RequireAuth from './components/RequireAuth';
+import { DefaultLayout } from './layouts';
+import { ROLE, LOCAL_STORAGE_KEY } from '~/utils/enum';
+import Missing from './pages/Missing';
 
 function App() {
+  const { auth, setAuth } = useAuth();
+  const { storedValue } = useLocalStorage(LOCAL_STORAGE_KEY, {});
+  useEffect(() => {
+    if (!auth?.user && storedValue) {
+      setAuth(storedValue);
+    }
+  }, []);
+  const createRoute = (routes) => {
+    return routes.map((route, index) => {
+      const Page = route.component;
+      const Layout = route?.layout || DefaultLayout;
+      return (
+        <Route
+          key={index}
+          path={route.path}
+          element={
+            <Layout>
+              <Page />
+            </Layout>
+          }
+        />
+      );
+    });
+  };
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          {publicRoutes.map((route, index) => {
-            //null only its layout Fragment
-            //none DefaultLayout
-            //hava layout
-            const Layout = route.hasOwnProperty('layout')
-              ? route.layout ?? Fragment
-              : DefaultLayout
-            const Page = route.component
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Layout>
-                    <Page />
-                  </Layout>
-                }
-              />
-            )
-          })}
-        </Routes>
-      </div>
-    </Router>
-  )
+    <div className='App'>
+      <Routes>
+        {/*public route*/}
+        {createRoute(publicRoutes)}
+        {/*USER  route*/}
+        <Route element={<RequireAuth allowedRoles={[ROLE.USER, ROLE.ADMIN]} />}>
+          {createRoute(userRoutes)}
+        </Route>
+        {/*ADMIN  route*/}
+        <Route
+          path='admin'
+          element={<RequireAuth allowedRoles={[ROLE.ADMIN]} />}
+        >
+          {createRoute(adminRoutes)}
+        </Route>
+        {/* catch all */}
+        <Route path='*' element={<Missing />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -33,7 +33,7 @@ const Search = ({ isOpen }) => {
                     <Icon className={cx('icon')} icon="bx:search-alt-2" color="#161823" />
                 </button>
             </div>
-            <p>Không tìm thấy kết quả</p>
+            {/* <p>Không tìm thấy kết quả</p> */}
             <p>Tìm thấy <span>20</span> kết quả trùng khớp </p>
         </div>
     )

@@ -40,11 +40,34 @@ const Header = () => {
           <div className={cx('icon')} onClick={() => setTonggle(!toggle)}>
             <Icon icon="ant-design:menu-outlined" />
           </div>
+          <div className={cx('left')}>
+            <div className={cx('icon')}>
+              {!searchOpen && (
+                <Icon
+                  icon="bx:search-alt-2"
+                  onClick={() => setSearchOpen(true)}
+                />
+              )}
+              {searchOpen && (
+                <Icon
+                  icon="fa-solid:times"
+                  onClick={() => setSearchOpen(false)}
+                />
+              )}
+            </div>
+            <div className={cx('icon')}>
+              <Icon icon="bx:user" />
+            </div>
+            <div className={cx('icon', 'cart')}>
+              <Icon icon="bx:cart-alt" />
+              <span>2</span>
+            </div>
+          </div>
           <div className={cx('logo')}>
-            <Link to="/">GIGO Milk Tea</Link>
+            <Link to="/">GIGO</Link>
           </div>
         </div>
-        <nav className={cx('nav-bar', 'container', { 'open': toggle })}>
+        <nav className={cx('nav-bar', 'container', { open: toggle })}>
           <div className={cx('logo')}>
             <Link to="/">
               <img src={logo} alt="Gigo" />

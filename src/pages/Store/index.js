@@ -71,7 +71,7 @@ const Stores = () => {
                     // filter stores by state | facility       
                     return (
                         <div className='store-card' key={index}>
-                            <h1>{store.name}</h1>
+                            <h1>{store.storeName}</h1>
                             <div className='store-data'>
                                 <div className='icon-wrapper'>
                                     <Icon icon="clarity:store-solid" />

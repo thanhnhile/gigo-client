@@ -4,6 +4,7 @@ import Register from "../pages/Register"
 import ProductDetail from "../pages/ProductDetail"
 import Stores from "../pages/Store"
 import Checkout from "../pages/Checkout"
+import Menu from "../pages/Menu"
 
 export const publicRoutes = [
     {
@@ -29,6 +30,10 @@ export const publicRoutes = [
     {
         path: "/checkout/",
         component: Checkout
+    },
+    {
+        path: "/menu/",
+        component: Menu
     },
 ]
 //Required login

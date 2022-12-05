@@ -5,7 +5,7 @@ const NavLink = () => {
   const MENU_ITEM = [
     {
       title: 'Cửa hàng',
-      to: '/store',
+      to: '/stores',
     },
     {
       title: 'Menu',

@@ -25,7 +25,7 @@ const Product = (props) => {
         <div className={cx("product__product-wrapper")}>
             <div className={cx("product__product")}>
                 <a href={"/products/" + product.id}>
-                    <img className={cx("product__img")} src={product.image} />
+                    <img className={cx("product__img")} src={product.imgURL} />
                     <span className={cx("product__name")}>{product.name}</span>
                     <span className={cx("product__price")}>{product.price}đ</span>
                 </a>

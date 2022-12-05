@@ -13,7 +13,7 @@ const ProductDetail= ({ product }) => {
     return (
         <div className={cx("container")}>
             <div className={cx("left-column")}>
-                <img src={product.image} alt="" />
+                <img src={product.imgURL} alt="" />
             </div>
 
             <div className={cx("right-column")}>
@@ -58,7 +58,7 @@ const ProductDetail= ({ product }) => {
                 </div>
 
                 <div className={cx("product-price")}>
-                    <span>{product.price}</span>
+                    <span>{product.price}đ</span>
                     <a href="#" className={cx("cart-btn")}>Add to cart</a>
                 </div>
             </div>

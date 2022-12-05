@@ -3,7 +3,7 @@ import className from 'classnames/bind';
 import styles from './Product.module.scss';
 
 const cx = className.bind(styles);
-function Product(props) {
+const Product = (props) => {
     const { product } = props;
 
     // function AddToCart(product) {

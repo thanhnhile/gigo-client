@@ -8,7 +8,7 @@ const product = {
     description: 'Vị đắng nhẹ từ cà phê phin truyền thống kết hợp Espresso Ý, lẫn chút ngọt ngào của kem sữa và lớp foam trứng cacao, nhấn thêm hạnh nhân nướng thơm bùi, kèm topping thạch cà phê dai giòn mê ly. Tất cả cùng quyện hoà trong một thức uống làm vị giác "thức giấc", thơm ngon hết nấc.',
 }
 const cx = className.bind(styles);
-function ProductDetail(props) {
+const ProductDetail= ({ product }) => {
 
     return (
         <div className={cx("container")}>

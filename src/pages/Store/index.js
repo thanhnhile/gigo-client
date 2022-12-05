@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import { Icon } from '@iconify/react';
 import Select from 'react-select';
+import { httpGetAllDistrict } from '../../apiService/districtService';
+import { httpGetAllStore } from '../../apiService/storeService';
 const Stores = () => {
-    const district = [
-        { label: "TP HCM", value: 1 },
-        { label: "BRVT", value: 2 },
-        { label: "Tay Ninh", Value: 3 },
-    ]
+    const [district, setDistrict] = useState([]);
+
+    useEffect(() => {
+        const getAllDistrict = async () => {
+            const response = await httpGetAllDistrict();
+            console.log(response);
+            setDistrict(response.data);
+        };
+        getAllDistrict();
+    }, []);
+   
+    const options = district.map(d => ({
+        label: d.name,
+        value: d.id
+      }));
+    
+    const [store, setStore] = useState([]);
+
+    useEffect(() => {
+        const getAllStore = async () => {
+            const response = await httpGetAllStore();
+            console.log(response);
+            setStore(response.data);
+        };
+        getAllStore();
+    }, []);
     const storeData = [
         {
             id: 1,
@@ -35,11 +58,16 @@ const Stores = () => {
             </div>
 
             <div className="filter-bar">
-                <Select options={district} />
+                <Select options={options} />
+                {/* {district.map((district, index) => {
+                    <select>
+                        <option value={district.id}>{district.name}</option>
+                    </select>
+                })} */}
             </div>
 
             <div className='store-cards'>
-                {storeData.map((store, index) => {
+                {store.map((store, index) => {
                     // filter stores by state | facility       
                     return (
                         <div className='store-card' key={index}>

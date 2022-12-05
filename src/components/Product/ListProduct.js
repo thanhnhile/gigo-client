@@ -60,7 +60,7 @@ function ListProduct(props) {
                 <div className={cx("product product--flexbox")}>
                     <div className={cx("product__wrapper")}>
                         {
-                            HotSaleProducts.map((product, index) => (
+                            props.product.map((product, index) => (
                                 <ProductItem product={product} key={index}></ProductItem>
                             ))
                         }

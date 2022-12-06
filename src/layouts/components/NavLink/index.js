@@ -17,11 +17,11 @@ const NavLink = () => {
     },
     {
       title: 'Liên hệ',
-      to: '/about',
+      to: '/contact',
     },
     {
       title: 'Tuyển dụng',
-      to: '/contact',
+      to: '/news',
     },
   ];
   return MENU_ITEM.map((item, index) => {

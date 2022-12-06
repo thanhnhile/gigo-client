@@ -64,6 +64,8 @@ function Order(props) {
                         <span className={cx('thin')}>{product.name}</span>
                         <br />
                         <span className={cx('thin small')}>Size: m</span>
+                        <br />
+                        <span className={cx('thin small')}>Số lượng: 1</span>
                       </td>
                     </tr>
                     <tr>

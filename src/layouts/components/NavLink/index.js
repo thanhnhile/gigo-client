@@ -9,7 +9,7 @@ const NavLink = () => {
     },
     {
       title: 'Menu',
-      to: '/menu',
+      to: '/menu/all',
     },
     {
       title: 'Giới thiệu',

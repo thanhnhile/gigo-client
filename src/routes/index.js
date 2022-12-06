@@ -37,8 +37,8 @@ export const publicRoutes = [
     component: Stores,
   },
   {
-    path: '/menu/',
-    component: Menu,
+    path: "/menu/:id",
+    component: Menu
   },
   {
     path: '/checkout/',

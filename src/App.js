@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useAuth, useLocalStorage } from './hooks';
 import { publicRoutes, userRoutes, adminRoutes } from '~/routes';
 import RequireAuth from './components/RequireAuth';
-import { DefaultLayout } from './layouts';
+import { DefaultLayout, AdminLayout } from './layouts';
 import { ROLE, LOCAL_STORAGE_KEY } from '~/utils/enum';
 import Missing from './pages/Missing';
 
@@ -15,10 +15,10 @@ function App() {
       setAuth(storedValue);
     }
   }, []);
-  const createRoute = (routes) => {
+  const createRoute = (routes, layout) => {
     return routes.map((route, index) => {
       const Page = route.component;
-      const Layout = route?.layout || DefaultLayout;
+      const Layout = layout || DefaultLayout;
       return (
         <Route
           key={index}
@@ -42,12 +42,12 @@ function App() {
           {createRoute(userRoutes)}
         </Route>
         {/*ADMIN  route*/}
-        <Route
-          path='admin'
+        {/* <Route
+          path='/admin'
           element={<RequireAuth allowedRoles={[ROLE.ADMIN]} />}
         >
-          {createRoute(adminRoutes)}
-        </Route>
+          {createRoute(adminRoutes, AdminLayout)}
+        </Route> */}
         {/* catch all */}
         <Route path='*' element={<Missing />} />
       </Routes>

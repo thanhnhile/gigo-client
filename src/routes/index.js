@@ -1,3 +1,4 @@
+/*public */
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -6,8 +7,14 @@ import Stores from '../pages/Store';
 import Checkout from '../pages/Checkout';
 import Unauthorized from '../pages/Unauthorized';
 import SearchResult from '../pages/SearchResult';
+
+/*user */
 import Personal from '../pages/Personal';
-import Menu from "../pages/Menu";
+
+/*admin */
+import Dashboard from '../pages/Admin/Dashboard';
+
+import Menu from '../pages/Menu';
 export const publicRoutes = [
   {
     path: '/',
@@ -54,4 +61,9 @@ export const userRoutes = [
     component: Personal,
   },
 ];
-export const adminRoutes = [];
+export const adminRoutes = [
+  {
+    path: '/dashboard',
+    component: Dashboard,
+  },
+];

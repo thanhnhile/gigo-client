@@ -30,7 +30,7 @@ export const publicRoutes = [
     component: Stores,
   },
   {
-    path: "/menu/",
+    path: "/menu/:id",
     component: Menu
   },
   {

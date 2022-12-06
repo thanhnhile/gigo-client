@@ -24,3 +24,11 @@ export const httpGetProductById = (id) => {
       console.log(error.response.data);
   }
 };
+export const httpGetProductByCateId = (id) => {
+  try {
+      const res = request.get(`/products/category/${id}`);
+      return res;
+  } catch (error) {
+      console.log(error.response.data);
+  }
+};

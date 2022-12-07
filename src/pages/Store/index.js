@@ -3,8 +3,8 @@ import className from 'classnames/bind';
 import styles from './Store.module.scss';
 import { Icon } from '@iconify/react';
 import Select from 'react-select';
-import { httpGetAllDistrict } from '../../apiService/districtService';
-import { httpGetAllStore } from '../../apiService/storeService';
+import { httpGetAllDistrict } from '../../apiServices/districtService';
+import { httpGetAllStore } from '../../apiServices/storeService';
 const cx = className.bind(styles);
 
 const Stores = () => {

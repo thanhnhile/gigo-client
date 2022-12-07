@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { httpGetProductById } from '../../apiService/productService';
+import { httpGetProductById } from '../../apiServices/productService';
 import Detail from '../../components/Product/Detail';
 
 function ProductDetail() {
@@ -16,9 +16,9 @@ function ProductDetail() {
   }, [id]);
   return (
     <>
-      <Detail product={product}/>
+      <Detail product={product} />
     </>
-  )
+  );
 }
 
 export default ProductDetail;

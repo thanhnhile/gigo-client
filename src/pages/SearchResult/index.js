@@ -11,7 +11,7 @@ const SearchResult = () => {
   const result = location.state.result;
   return (
     <div className={cx('container')}>
-      <ListProduct products={result} title='Kết quả tìm kiếm' />
+      <ListProduct product={result} title='Kết quả tìm kiếm' />
     </div>
   );
 };

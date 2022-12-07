@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import className from 'classnames/bind';
 import { Icon } from '@iconify/react';
 import styles from './Search.module.scss';
-import { httpSearchProduct } from '~/apiServices/productServices';
+import { httpSearchProduct } from '~/apiServices/productService';
 
 const cx = className.bind(styles);
 
@@ -28,9 +28,10 @@ const Search = ({ isOpen }) => {
     if (keyword) {
       const res = await httpSearchProduct(keyword);
       setCount(res.data.totalElements);
-      res.data.totalElements > 0 &&  setTimeout(() => {
-        navigate('/search', { state: { result: res.data.content } });
-      }, 500);
+      res.data.totalElements > 0 &&
+        setTimeout(() => {
+          navigate('/search', { state: { result: res.data.content } });
+        }, 500);
     }
   };
   return (

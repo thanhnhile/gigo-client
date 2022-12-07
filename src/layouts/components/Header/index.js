@@ -57,16 +57,16 @@ const Header = () => {
                 />
               )}
             </div>
-            <div className={cx('icon')}>
+            <Link to='/personal' className={cx('icon')}>
               <Icon icon='bx:user' />
-            </div>
+            </Link>
             <div className={cx('icon', 'cart')}>
               <Icon icon='bx:cart-alt' />
               <span>2</span>
             </div>
           </div>
           <div className={cx('logo')}>
-            <Link to='/'>GIGO</Link>
+            <Link to='/'>GOGI</Link>
           </div>
         </div>
         <nav className={cx('nav-bar', 'container', { open: toggle })}>

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import Slider from '../../components/Slider'
-import Section from '../../components/Section'
+import React, { useEffect, useState } from 'react';
+import Slider from '../../components/Slider';
+import Section from '../../components/Section';
 import ListProduct from '../../components/Product/ListProduct';
-import { httpGetAllProduct } from '../../apiService/productService';
+import { httpGetAllProduct } from '../../apiServices/productService';
 
 const Home = () => {
   const [product, setProduct] = useState([]);
@@ -18,11 +18,11 @@ const Home = () => {
   return (
     <div>
       <Slider />
-      <ListProduct product={product}/>
+      <ListProduct product={product} />
       <Section reverse />
       <Section />
     </div>
-  )
+  );
 };
 
 export default Home;

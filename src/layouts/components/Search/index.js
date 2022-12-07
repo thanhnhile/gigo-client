@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import className from 'classnames/bind';
 import { Icon } from '@iconify/react';
 import styles from './Search.module.scss';
-import { httpSearchProduct } from '~/apiServices/productService';
+import { httpSearchProduct } from '~/apiServices/productServices';
 
 const cx = className.bind(styles);
 

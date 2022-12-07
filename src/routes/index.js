@@ -7,6 +7,10 @@ import Stores from '../pages/Store';
 import Checkout from '../pages/Checkout';
 import Unauthorized from '../pages/Unauthorized';
 import SearchResult from '../pages/SearchResult';
+import Menu from '../pages/Menu';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+import News from '../pages/News';
 
 /*user */
 import Personal from '../pages/Personal';
@@ -14,7 +18,6 @@ import Personal from '../pages/Personal';
 /*admin */
 import Dashboard from '../pages/Admin/Dashboard';
 
-import Menu from '../pages/Menu';
 export const publicRoutes = [
   {
     path: '/',
@@ -37,8 +40,8 @@ export const publicRoutes = [
     component: Stores,
   },
   {
-    path: '/menu/',
-    component: Menu,
+    path: "/menu/:id",
+    component: Menu
   },
   {
     path: '/checkout/',
@@ -51,6 +54,18 @@ export const publicRoutes = [
   {
     path: '/search',
     component: SearchResult,
+  },
+  {
+    path: '/about',
+    component: About,
+  },
+  {
+    path: '/contact',
+    component: Contact,
+  },
+  {
+    path: '/news',
+    component: News,
   },
 ];
 

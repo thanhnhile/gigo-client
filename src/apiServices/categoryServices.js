@@ -1,5 +1,5 @@
 import * as request from '../utils/request';
-export const httpGetAllCategory = () => {
+export const httpGetAllCategories = () => {
     try {
         const res = request.get(`/categories`);
         return res;

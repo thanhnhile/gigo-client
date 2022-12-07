@@ -3,37 +3,37 @@ import className from 'classnames/bind';
 import styles from './Store.module.scss';
 import { Icon } from '@iconify/react';
 import Select from 'react-select';
-import { httpGetAllDistrict } from '../../apiServices/districtService';
-import { httpGetAllStore } from '../../apiServices/storeService';
+import { httpGetAllDistrict } from '../../apiServices/districtServices';
+import { httpGetAllStore } from '../../apiServices/storeServices';
 const cx = className.bind(styles);
 
 const Stores = () => {
-    const [district, setDistrict] = useState([]);
+  const [district, setDistrict] = useState([]);
 
-    useEffect(() => {
-        const getAllDistrict = async () => {
-            const response = await httpGetAllDistrict();
-            console.log(response);
-            setDistrict(response.data);
-        };
-        getAllDistrict();
-    }, []);
-   
-    const options = district.map(d => ({
-        label: d.name,
-        value: d.id
-      }));
-    
-    const [store, setStore] = useState([]);
+  useEffect(() => {
+    const getAllDistrict = async () => {
+      const response = await httpGetAllDistrict();
+      console.log(response);
+      setDistrict(response.data);
+    };
+    getAllDistrict();
+  }, []);
 
-    useEffect(() => {
-        const getAllStore = async () => {
-            const response = await httpGetAllStore();
-            console.log(response);
-            setStore(response.data);
-        };
-        getAllStore();
-    }, []);
+  const options = district.map((d) => ({
+    label: d.name,
+    value: d.id,
+  }));
+
+  const [store, setStore] = useState([]);
+
+  useEffect(() => {
+    const getAllStore = async () => {
+      const response = await httpGetAllStore();
+      console.log(response);
+      setStore(response.data);
+    };
+    getAllStore();
+  }, []);
   const storeData = [
     {
       id: 1,

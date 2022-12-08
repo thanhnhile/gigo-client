@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import className from 'classnames/bind'
-import styles from './Menu.module.scss'
-import { httpGetAllCategories } from '../../apiServices/categoryServices'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import className from 'classnames/bind';
+import styles from './Menu.module.scss';
+import { httpGetAllCategories } from '../../apiServices/categoryServices';
 import ListProduct from '../../components/Product/ListProduct';
-import { httpGetProductByCateId, httpGetAllProduct } from '../../apiServices/productServices';
-const cx = className.bind(styles)
+import {
+  httpGetProductByCateId,
+  httpGetAllProduct,
+} from '../../apiServices/productServices';
+const cx = className.bind(styles);
 
 const Menu = () => {
   const [menu, setMenu] = useState([]);
@@ -16,7 +19,7 @@ const Menu = () => {
       setMenu(response.data);
     };
     getAllCategories();
-  }, [])
+  }, []);
 
   const { id } = useParams();
   const [product, setProduct] = useState([]);
@@ -27,34 +30,37 @@ const Menu = () => {
       console.log(response.data);
       setProduct(response.data.content);
     };
-    
+
     const getProductAll = async () => {
       const response = await httpGetAllProduct();
       console.log(response.data);
       setProduct(response.data.content);
     };
-    
-    if(id === 'all') { 
-      getProductAll() 
-    } else { 
-      getProductByCateId()
-    };
+
+    if (id === 'all') {
+      getProductAll();
+    } else {
+      getProductByCateId();
+    }
   }, [id]);
   return (
-    <div className={cx("wrap")}>
-      <div className={cx("menu")}>
-        <h3>Categories</h3>
+    <div className={cx('container', 'wrap')}>
+      <div className={cx('col', 'menu')}>
+        <h3>MENU</h3>
         <ul>
-          {menu && menu.map((menuItem) =>
-            <li className={cx("category")} key={menuItem.id}><a href={menuItem.id}>{menuItem.name}</a></li>)}
+          {menu &&
+            menu.map((menuItem) => (
+              <li className={cx('category', 'active')} key={menuItem.id}>
+                <a href={menuItem.id}>{menuItem.name}</a>
+              </li>
+            ))}
         </ul>
       </div>
-      <div className={cx("product")}>
+      <div className={cx('col', 'product')}>
         <ListProduct product={product} />
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <div>
       <Slider />
-      <ListProduct product={product} />
+      <ListProduct product={product} title='Dành cho bạn' />
       <Section reverse />
       <Section />
     </div>

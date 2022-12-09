@@ -1,18 +1,3 @@
-ul {
-  margin: 0;
-  padding: 0;
-
-  li {
-    list-style: none;
-    padding-left: 10px;
-    cursor: pointer;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-  }
-}
-
 .thin {
   font-weight: 400;
 }
@@ -26,21 +11,16 @@ ul {
   width: 100%;
 
   td:first-of-type {
-    border-right: 10px solid #ddc644;
     width: 50%;
   }
 }
 
 .window {
-  height: 600px;
-  width: 900px;
   background: #fff;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  box-shadow: 0px 15px 50px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 30px;
   z-index: 10;
 }
 
@@ -98,34 +78,37 @@ ul {
 }
 
 .pay-btn {
-  border: none;
-  background: #da8816;
-  line-height: 2em;
-  border-radius: 10px;
-  font-size: 19px;
-  color: #fff;
+  display: block;
+  min-width: 100%;
+  padding: 4px 0;
+  background-color: var(--primary);
+  color: var(--white);
+  font-weight: 600;
   cursor: pointer;
-  position: absolute;
-  bottom: 25px;
-  width: calc(100% - 50px);
-  -webkit-transition: all .2s ease;
-  transition: all .2s ease;
+  border-radius: var(--button-border-radius);
+  border: 1px solid transparent;
+  overflow: hidden;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  :first-child {
+    font-size: 2.5rem;
+    margin-right: 10px;
+  }
 
   &:hover {
-    background: #a86522;
+    opacity: 0.8;
     color: #eee;
-    -webkit-transition: all .2s ease;
-    transition: all .2s ease;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
   }
 }
 
 .total {
   margin-top: 25px;
   font-size: 20px;
-  position: absolute;
-  bottom: 30px;
-  right: 27px;
-  left: 35px;
 }
 
 .dense {
@@ -134,45 +117,34 @@ ul {
   font-size: 1rem;
 }
 
-.input-field {
-  background: rgba(255, 255, 255, 0.678);
-  margin-bottom: 10px;
-  margin-top: 3px;
-  line-height: 1.5em;
-  font-size: 20px;
-  border: none;
-  padding: 5px 10px 5px 10px;
-  color: rgb(0, 0, 0);
-  box-sizing: border-box;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .customer-info {
-  background: #f1cea7;
-  height: 100%;
   width: 50%;
-  color: rgb(0, 0, 0);
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  font-size: 18px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  box-sizing: border-box;
-  padding-left: 25px;
-  padding-right: 25px;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  position: relative;
+  .customer-info-content {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    input {
+      border: 1px solid #ddd !important;
+      outline: none;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      margin-top: 3px;
+      line-height: 1.5em;
+      font-size: 20px;
+      color: var(--text-color) !important;
+      border: none;
+      padding: 5px 10px 5px 10px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      &:focus {
+        outline: none;
+        border-color: #000 !important;
+      }
+    }
+  }
 }
 
 .select-btn {
-  background: rgba(255, 255, 255, 0.632);
   width: 100%;
   height: 30px;
   border-radius: 5px;
@@ -186,36 +158,19 @@ ul {
     right: 8px;
     position: absolute;
   }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
 }
 
 .option {
-	position: absolute;
-	background: #f1d981;
-	text-align: left;
-	box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	width: 90%;
-	left: 2px;
-	line-height: 20px;
-	margin-top: 2px;
-	box-sizing: border-box;
-  }
-
-.customer-info-content {
-  margin-top: 25px;
-  -webkit-flex-flow: column;
-  -ms-flex-flow: column;
-  flex-flow: column;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
+  position: absolute;
+  text-align: left;
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  width: 90%;
+  left: 2px;
+  line-height: 20px;
+  margin-top: 2px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 600px) {
@@ -226,7 +181,8 @@ ul {
     border-radius: 0px;
   }
 
-  .order-info, .customer-info {
+  .order-info,
+  .customer-info {
     width: 100%;
     height: auto;
     padding-bottom: 100px;

@@ -60,10 +60,10 @@ const Header = () => {
             <Link to='/personal' className={cx('icon')}>
               <Icon icon='bx:user' />
             </Link>
-            <div className={cx('icon', 'cart')}>
+            <Link to='/checkout' className={cx('icon', 'cart')}>
               <Icon icon='bx:cart-alt' />
               <span>2</span>
-            </div>
+            </Link>
           </div>
           <div className={cx('logo')}>
             <Link to='/'>GOGI</Link>
@@ -96,13 +96,13 @@ const Header = () => {
             <Link to='/personal' className={cx('icon')}>
               <Icon icon='bx:user' />
             </Link>
-            <div to='/orders' className={cx('icon', 'cart')}>
+            <Link to='/checkout' className={cx('icon', 'cart')}>
               <Icon icon='bx:cart-alt' />
               <span>2</span>
-            </div>
+            </Link>
           </div>
         </nav>
-        {searchOpen && <Search isOpen={searchOpen} />}
+        {searchOpen && <Search open={searchOpen} setOpen={setSearchOpen} />}
       </header>
     </div>
   );

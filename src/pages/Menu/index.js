@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Menu.module.scss';
 import { httpGetAllCategories } from '../../apiServices/categoryServices';
@@ -22,6 +22,7 @@ const Menu = () => {
   }, []);
 
   const { id } = useParams();
+  const [currentId, setCurrentId] = useState(id);
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
@@ -42,16 +43,25 @@ const Menu = () => {
     } else {
       getProductByCateId();
     }
+    setCurrentId(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   return (
     <div className={cx('container', 'wrap')}>
       <div className={cx('col', 'menu')}>
-        <h3>MENU</h3>
+        <Link to='/menu/all'>
+          <h3>MENU</h3>
+        </Link>
         <ul>
           {menu &&
             menu.map((menuItem) => (
-              <li className={cx('category', 'active')} key={menuItem.id}>
-                <a href={menuItem.id}>{menuItem.name}</a>
+              <li
+                className={cx('category', {
+                  active: Number.parseInt(currentId) === menuItem.id,
+                })}
+                key={menuItem.id}
+              >
+                <Link to={`/menu/${menuItem.id}`}>{menuItem.name}</Link>
               </li>
             ))}
         </ul>

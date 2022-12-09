@@ -2,7 +2,7 @@ import React from 'react';
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
 
-import { formatPrice } from '../../utils';
+import { formatPrice } from '~/utils/format';
 const cx = className.bind(styles);
 const Product = (props) => {
   const { product } = props;
@@ -27,11 +27,13 @@ const Product = (props) => {
             alt={product.name}
           />
           <span className={cx('product__name')}>{product.name}</span>
-          <span className={cx('product__price')}>{formatPrice(product.price)}đ</span>
+          <span className={cx('product__price')}>
+            {formatPrice(product.price)}đ
+          </span>
         </a>
       </div>
     </div>
   );
-}
+};
 
 export default Product;

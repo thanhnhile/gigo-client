@@ -11,11 +11,11 @@
   }
 }
 .btn {
+  min-width: var(--button-width);
+  height: var(--buton-height);
   display: block;
   margin: 8px 0;
   // padding: 8px 20px;
-  min-width: var(--button-width);
-  height: var(--buton-height);
   font-weight: 600;
   cursor: pointer;
   border-radius: var(--button-border-radius);

@@ -1,35 +1,28 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import Select from 'react-select';
 import className from 'classnames/bind';
 import styles from './Order.module.scss';
+import CartItem from './CartItem';
 import { Icon } from '@iconify/react';
-import Clickable from '~/components/Clickable';
+
+import useCart from '../../hooks/useCart';
+import { formatPrice } from '~/utils/format';
+import { DELIVERY_METHOD } from '~/utils/enum';
+
 const cx = className.bind(styles);
+const cacl = (cart) => {
+  return cart.reduce(
+    (result, current) => (result += Number.parseInt(current.price)),
+    0
+  );
+};
 function Order(props) {
-  const method = [
-    { label: 'Trực tiếp', value: 1 },
-    { label: 'Giao hàng', value: 2 },
-  ];
-  const Products = [
-    {
-      id: 1,
-      name: 'CloudFee Hạnh Nhân Nướng',
-      image:
-        'https://product.hstatic.net/1000075078/product/1665655231_cloudfee-roasted-almond_fd7f9778e1814e81bc049f991ffacf60.jpg',
-      price: '49.000',
-      description:
-        'Vị đắng nhẹ từ cà phê phin truyền thống kết hợp Espresso Ý, lẫn chút ngọt ngào của kem sữa và lớp foam trứng cacao, nhấn thêm hạnh nhân nướng thơm bùi, kèm topping thạch cà phê dai giòn mê ly. Tất cả cùng quyện hoà trong một thức uống làm vị giác "thức giấc", thơm ngon hết nấc.',
-    },
-    {
-      id: 2,
-      name: 'CloudFee Hạnh Nhân Nướng',
-      image:
-        'https://product.hstatic.net/1000075078/product/1665655231_cloudfee-roasted-almond_fd7f9778e1814e81bc049f991ffacf60.jpg',
-      price: '49.000',
-      description:
-        'Vị đắng nhẹ từ cà phê phin truyền thống kết hợp Espresso Ý, lẫn chút ngọt ngào của kem sữa và lớp foam trứng cacao, nhấn thêm hạnh nhân nướng thơm bùi, kèm topping thạch cà phê dai giòn mê ly. Tất cả cùng quyện hoà trong một thức uống làm vị giác "thức giấc", thơm ngon hết nấc.',
-    },
-  ];
+  const { cart } = useCart();
+  const [shipPrice, setShipPrice] = useState(0);
+  const [sumPrice, setSumPrice] = useState(() => cacl(cart));
+  useMemo(() => {
+    setSumPrice(cacl(cart));
+  }, [cart]);
   const storeData = [
     {
       id: 1,
@@ -52,38 +45,21 @@ function Order(props) {
   ];
   return (
     <div className={cx('container')}>
-      <div className={cx('window')}>
+      <div className={cx('window')} scroll='no'>
         <div className={cx('order-info')}>
           <div className={cx('order-info-content')}>
             <h2>Món đã chọn</h2>
             <div className={cx('line')}></div>
-            {Products.map((product, index) => (
-              <table className={cx('order-table')}>
-                <tbody>
-                  <tr>
-                    <td>
-                      <img
-                        alt={product.name}
-                        src={product.image}
-                        className={cx('full-width')}
-                      ></img>
-                    </td>
-                    <td>
-                      <span className={cx('thin')}>{product.name}</span>
-                      <br />
-                      <span className={cx('thin small')}>Size: m</span>
-                      <br />
-                      <span className={cx('thin small')}>Số lượng: 1</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className={cx('price')}>{product.price}</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            ))}
+            <div className={cx('cart')}>
+              {cart.length > 0 ? (
+                cart.map((product, index) => <CartItem data={product} />)
+              ) : (
+                <Icon
+                  icon='ic:outline-remove-shopping-cart'
+                  className={cx('icon')}
+                />
+              )}
+            </div>
             <div className={cx('line')}></div>
             <div className={cx('total')}>
               <span style={{ float: 'left' }}>
@@ -92,9 +68,9 @@ function Order(props) {
                 TỔNG CỘNG
               </span>
               <span style={{ float: 'right', textAlign: 'right' }}>
-                <div className={cx('thin dense')}>$68.75</div>
-                <div className={cx('thin dense')}>$4.95</div>
-                $435.55
+                <div className={cx('thin dense')}>{formatPrice(sumPrice)}</div>
+                <div className={cx('thin dense')}>{formatPrice(shipPrice)}</div>
+                {formatPrice(sumPrice + shipPrice)}
               </span>
             </div>
           </div>
@@ -107,7 +83,23 @@ function Order(props) {
                 <tr>
                   <td>Phương thức đặt hàng: </td>
                   <td>
-                    <Select options={method} />
+                    <select
+                      className={cx('select-btn')}
+                      defaultValue={0}
+                      onChange={(e) =>
+                        setShipPrice(Number.parseInt(e.target.value))
+                      }
+                    >
+                      {DELIVERY_METHOD.map((method) => (
+                        <option
+                          className={cx('option')}
+                          key={method.id}
+                          value={method.price}
+                        >
+                          {method.name}
+                        </option>
+                      ))}
+                    </select>
                   </td>
                 </tr>
               </tbody>
@@ -130,10 +122,10 @@ function Order(props) {
             Địa chỉ
             <input className={cx('input-field')}></input>
           </div>
-          <buton className={cx('pay-btn')}>
+          <button className={cx('pay-btn')}>
             <Icon icon='carbon:wireless-checkout' />
             Thanh toán
-          </buton>
+          </button>
         </div>
       </div>
     </div>

@@ -2,14 +2,14 @@ import className from 'classnames/bind';
 import styles from './Product.module.scss';
 import { formatPrice } from '~/utils/format';
 import { useState } from 'react';
-import { useEffect } from 'react';
-import { useMemo } from 'react';
 import Clickable from '~/components/Clickable';
+import useCart from '~/hooks/useCart';
 const cx = className.bind(styles);
 
 const ProductDetail = ({ product }) => {
-  const [size, setSize] = useState('s');
+  const [size, setSize] = useState('S');
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
   const handlePlus = () => {
     setQuantity(quantity + 1);
   };
@@ -23,12 +23,13 @@ const ProductDetail = ({ product }) => {
     const surCharge = size === 's' ? 0 : size === 'm' ? 6000 : 10000;
     const cartItem = {
       id: product.id,
+      image: product.imgURL,
       name: product.name,
       quantity: quantity,
       size: size,
       price: (product.price + surCharge) * Number.parseInt(quantity),
     };
-    console.log(cartItem);
+    addToCart(cartItem);
   };
   return (
     <div className={cx('container')}>
@@ -39,9 +40,9 @@ const ProductDetail = ({ product }) => {
       <div className={cx('right-column')}>
         <div className={cx('product-description')}>
           <h1>{product.name}</h1>
+          <h3 className={cx('price')}>{formatPrice(product.price)}</h3>
           <p>{product.description}</p>
         </div>
-
         <div className={cx('product-size')}>
           <span>Chọn size (bắt buộc)</span>
           <div className={cx('switch-field')}>
@@ -50,8 +51,8 @@ const ProductDetail = ({ product }) => {
                 type='radio'
                 id='size-s'
                 name='size'
-                value='s'
-                checked={size === 's'}
+                value='S'
+                checked={size === 'S'}
                 hidden
                 onChange={handleChangeSize}
               />
@@ -62,8 +63,8 @@ const ProductDetail = ({ product }) => {
                 type='radio'
                 id='size-m'
                 name='size'
-                value='m'
-                checked={size === 'm'}
+                value='M'
+                checked={size === 'M'}
                 hidden
                 onChange={handleChangeSize}
               />
@@ -74,8 +75,8 @@ const ProductDetail = ({ product }) => {
                 type='radio'
                 id='size-l'
                 name='size'
-                checked={size === 'l'}
-                value='l'
+                checked={size === 'L'}
+                value='L'
                 hidden
                 onChange={handleChangeSize}
               />

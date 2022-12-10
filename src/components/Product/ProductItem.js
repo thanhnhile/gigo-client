@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
 
@@ -20,7 +21,7 @@ const Product = (props) => {
     // </div>
     <div className={cx('product__product-wrapper')}>
       <div className={cx('product__product')}>
-        <a href={'/products/' + product.id}>
+        <Link to={'/products/' + product.id}>
           <img
             className={cx('product__img')}
             src={product.imgURL}
@@ -28,9 +29,9 @@ const Product = (props) => {
           />
           <span className={cx('product__name')}>{product.name}</span>
           <span className={cx('product__price')}>
-            {formatPrice(product.price)}đ
+            {formatPrice(product.price)}
           </span>
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useAuth from '~/hooks/useAuth';
 import className from 'classnames/bind';
 import { Icon } from '@iconify/react';
 import styles from './Header.module.scss';
 import NavLink from '../NavLink';
 import Search from '../Search';
 import logo from '~/assets/images/logo.png';
+import useCart from '../../../hooks/useCart';
 
 const cx = className.bind(styles);
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [toggle, setTonggle] = useState(false);
-  const { auth } = useAuth();
+  const { cart } = useCart();
   return (
     <div>
+      {console.log('RERENDER HEADER')}
       <header className={cx('wrapper')}>
         <div>
           <ul className={cx('top-nav')}>
@@ -62,7 +63,13 @@ const Header = () => {
             </Link>
             <Link to='/checkout' className={cx('icon', 'cart')}>
               <Icon icon='bx:cart-alt' />
-              <span>2</span>
+              <span>
+                {cart.length > 0
+                  ? cart?.reduce((count, item) => {
+                      return (count += item.quantity);
+                    }, 0)
+                  : 0}
+              </span>
             </Link>
           </div>
           <div className={cx('logo')}>
@@ -98,7 +105,13 @@ const Header = () => {
             </Link>
             <Link to='/checkout' className={cx('icon', 'cart')}>
               <Icon icon='bx:cart-alt' />
-              <span>2</span>
+              <span>
+                {cart.length > 0
+                  ? cart?.reduce((count, item) => {
+                      return (count += item.quantity);
+                    }, 0)
+                  : 0}
+              </span>
             </Link>
           </div>
         </nav>

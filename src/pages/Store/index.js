@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Store.module.scss';
 import { Icon } from '@iconify/react';
 import Select from 'react-select';
 import { httpGetAllDistrict } from '../../apiServices/districtServices';
 import { httpGetAllStore } from '../../apiServices/storeServices';
+
+import SelectAddress from '../../components/SelectAddress';
+
 const cx = className.bind(styles);
 
 const Stores = () => {
@@ -34,12 +37,18 @@ const Stores = () => {
     };
     getAllStore();
   }, []);
+  const [address, setAddress] = useState({
+    province: '',
+    district: '',
+  });
   return (
     <div className={cx('container', 'stores')}>
       <h2>Hệ thống cửa hàng Gigo</h2>
+      {console.log(address)}
       <div className={cx('filter-bar')}>
         <Select options={options} />
       </div>
+      <SelectAddress address={address} setAddress={setAddress} />
       <div className={cx('store-cards')}>
         {store.map((store, index) => {
           // filter stores by state | facility

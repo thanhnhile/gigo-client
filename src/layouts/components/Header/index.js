@@ -15,7 +15,6 @@ const Header = () => {
   const { cart } = useCart();
   return (
     <div>
-      {console.log('RERENDER HEADER')}
       <header className={cx('wrapper')}>
         <div>
           <ul className={cx('top-nav')}>

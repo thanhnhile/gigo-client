@@ -3,6 +3,7 @@ import cartReducer, {
   initState,
   ADD_PRODUCT,
   REMOVE_PRODUCT,
+  REMOVE_ALL,
 } from '../stores/cartReducer';
 
 export const CartContext = createContext();
@@ -21,12 +22,19 @@ const CartProvider = ({ children }) => {
       payload: productId,
     });
   };
+
+  const removeAll = () => {
+    dispatch({
+      type: REMOVE_ALL,
+    });
+  };
   return (
     <CartContext.Provider
       value={{
         cart: cartState.cart,
         addToCart,
         removeFromCart,
+        removeAll,
       }}
     >
       {children}

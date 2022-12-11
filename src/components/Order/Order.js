@@ -3,6 +3,7 @@ import Select from 'react-select';
 import className from 'classnames/bind';
 import styles from './Order.module.scss';
 import CartItem from './CartItem';
+import Customer from './Customer';
 import { Icon } from '@iconify/react';
 
 import useCart from '../../hooks/useCart';
@@ -17,7 +18,7 @@ const cacl = (cart) => {
   );
 };
 function Order(props) {
-  const { cart } = useCart();
+  const { cart, removeAll } = useCart();
   const [shipPrice, setShipPrice] = useState(0);
   const [sumPrice, setSumPrice] = useState(() => cacl(cart));
   useMemo(() => {
@@ -49,10 +50,11 @@ function Order(props) {
         <div className={cx('order-info')}>
           <div className={cx('order-info-content')}>
             <h2>Món đã chọn</h2>
+            <button onClick={removeAll}>Xóa tất cả</button>
             <div className={cx('line')}></div>
             <div className={cx('cart')}>
               {cart.length > 0 ? (
-                cart.map((product, index) => <CartItem data={product} />)
+                cart.map((product) => <CartItem data={product} />)
               ) : (
                 <Icon
                   icon='ic:outline-remove-shopping-cart'
@@ -104,23 +106,9 @@ function Order(props) {
                 </tr>
               </tbody>
             </table>
-            <br />
-            <td>Chọn quán gần nhất: </td>
-            <td>
-              <select className={cx('select-btn')}>
-                {storeData.map((store) => (
-                  <option className={cx('option')} key={store.id}>
-                    {store.address}
-                  </option>
-                ))}
-              </select>
-            </td>
-            Tên
-            <input className={cx('input-field')}></input>
-            Số điện thoại
-            <input className={cx('input-field')}></input>
-            Địa chỉ
-            <input className={cx('input-field')}></input>
+            {/*Form customer */}
+            <Customer />
+            {/*Form customer */}
           </div>
           <button className={cx('pay-btn')}>
             <Icon icon='carbon:wireless-checkout' />

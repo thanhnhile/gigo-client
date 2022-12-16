@@ -35,7 +35,7 @@ function Login() {
   };
   return (
     <div className={cx('container', 'wrapper')}>
-      <h2>Đăng nhập</h2>
+      <h1>Đăng nhập</h1>
       <p>
         Chưa có tài khoản?
         <span onClick={() => navigate('/register')}>Đăng ký</span>

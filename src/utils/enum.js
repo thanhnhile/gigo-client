@@ -3,3 +3,15 @@ export const ROLE = {
   ADMIN: 'ADMIN',
   USER: 'USER',
 };
+export const DELIVERY_METHOD = [
+  {
+    id: 0,
+    name: 'Trực tiếp',
+    price: 0,
+  },
+  {
+    id: 1,
+    name: 'Giao hàng',
+    price: 20000,
+  },
+];

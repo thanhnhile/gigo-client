@@ -16,9 +16,9 @@ function ProductDetail() {
   }, [id]);
   return (
     <>
-      <Detail product={product}/>
+      <Detail product={product} />
     </>
-  )
+  );
 }
 
 export default ProductDetail;

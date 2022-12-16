@@ -10,161 +10,145 @@ $mobile-screen: 40rem;
 $medium-screen: 45rem;
 $largest-screen: 80rem;
 .stores {
-    .page-header {
-        margin: auto;
-        width: 100%;
-        height: 100px;
-        color: black;
-        font-size: x-large;
-        display: flex;
-        justify-content: center;
-        background-color: rgb(238, 149, 33);
-    }
+  .filter-bar {
+    justify-content: space-between;
+    height: 100%;
+    padding: 1.5rem;
+    background-color: $gray-100;
 
-    .filter-bar {
+    .filter-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      //@include slideDown(alternate, 1s, 1s);
+
+      div {
         justify-content: space-between;
-        height: 100%;
-        padding: 1.5rem;
-        background-color: $gray-100;
 
-        .filter-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: auto;
-            //@include slideDown(alternate, 1s, 1s);
+        button {
+          height: 3rem;
+          width: 3rem;
+          cursor: pointer;
+          transition: 0.2s;
+          border-radius: 100%;
+          border: none;
+          cursor: pointer;
+          background-color: $secondary;
+          color: $white;
+          transition: 0.2s;
+          margin-right: 1rem;
 
-            h2 {
-                font-size: $headline;
-                color: $secondary;
-                margin-right: 2rem;
-            }
+          &:last-child {
+            margin-right: 0;
+          }
 
-            div {
-                justify-content: space-between;
-
-                button {
-                    height: 3rem;
-                    width: 3rem;
-                    cursor: pointer;
-                    transition: 0.2s;
-                    border-radius: 100%;
-                    border: none;
-                    cursor: pointer;
-                    background-color: $secondary;
-                    color: $white;
-                    transition: 0.2s;
-                    margin-right: 1rem;
-
-                    &:last-child {
-                        margin-right: 0;
-                    }
-
-                    &:hover {
-                        transform: scale(1.2);
-                    }
-                }
-            }
+          &:hover {
+            transform: scale(1.2);
+          }
         }
+      }
     }
+  }
 
-    .store-cards {
+  .store-cards {
+    display: grid;
+    width: 75%;
+    height: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 6rem;
+    margin: 3rem auto 2.5rem;
+    gap: 1rem;
+
+    .store-card {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1.5rem;
+
+      h3 {
+        font-size: $headline;
+        color: var(--primary);
+      }
+
+      .store-data {
         display: grid;
-        width: 75%;
-        height: 100%;
-        grid-template-columns: repeat(2, 1fr);
-        padding-left: 6rem;
-        margin: 3rem auto 2.5rem;
-        gap: 1rem;
+        grid-template-columns: 2rem auto;
+        font-size: 1.25em;
+        padding-bottom: 0.5rem;
+        gap: 8px;
 
-        .store-card {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1.5rem;
-
-            h1 {
-                font-size: $headline;
-                color: $primary;
-                padding-bottom: 1rem;
-            }
-
-            .store-data {
-                display: grid;
-                grid-template-columns: 2rem auto;
-                font-size: 1.25em;
-                padding-bottom: 0.5rem;
-
-                .icon-wrapper {
-                    justify-content: center;
-                    i {
-                        color: $primary;
-                        padding-right: 0.7rem;
-                    }
-                }
-            }
+        .icon-wrapper {
+          justify-content: center;
+          margin-right: 16px;
+          i {
+            color: var(--primary);
+            padding-right: 0.7rem;
+          }
         }
+      }
     }
+  }
 }
 
 @media screen and (max-width: $largest-screen) {
-    .stores {
-        .store-cards {
-            justify-content: center;
-            padding-left: 0;
-            column-gap: 3rem;
-        }
+  .stores {
+    .store-cards {
+      justify-content: center;
+      padding-left: 0;
+      column-gap: 3rem;
     }
+  }
 }
 
 @media (max-width: $medium-screen) {
-    .stores {
-        .store-cards {
-            grid-template-columns: 1fr;
-            width: 80%;
+  .stores {
+    .store-cards {
+      grid-template-columns: 1fr;
+      width: 80%;
 
-            .store-card {
-                h1 {
-                    font-size: 1.75rem;
-                }
-            }
+      .store-card {
+        h1 {
+          font-size: 1.75rem;
         }
+      }
     }
+  }
 }
 
 @media (max-width: $mobile-screen) {
-    .stores {
-        .filter-bar {
-            padding: 1rem 0;
+  .stores {
+    .filter-bar {
+      padding: 1rem 0;
 
-            .filter-wrapper {
-                flex-direction: column;
+      .filter-wrapper {
+        flex-direction: column;
 
-                h2 {
-                    margin-right: 0;
-                    margin-bottom: 1rem;
-                }
-
-                div {
-                    width: 100%;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    margin: auto;
-
-                    button {
-                        margin-bottom: 0.5rem;
-                        height: 2rem;
-                        width: 2rem;
-                        margin-right: 1rem;
-                        background-color: $gray-100;
-
-                        i {
-                            color: $secondary;
-                            height: 3rem;
-                        }
-                    }
-                }
-            }
+        h2 {
+          margin-right: 0;
+          margin-bottom: 1rem;
         }
+
+        div {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          margin: auto;
+
+          button {
+            margin-bottom: 0.5rem;
+            height: 2rem;
+            width: 2rem;
+            margin-right: 1rem;
+            background-color: $gray-100;
+
+            i {
+              color: $secondary;
+              height: 3rem;
+            }
+          }
+        }
+      }
     }
+  }
 }

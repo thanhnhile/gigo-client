@@ -7,8 +7,7 @@ import { httpSearchProduct } from '~/apiServices/productServices';
 
 const cx = className.bind(styles);
 
-const Search = ({ isOpen }) => {
-  const [open, setOpen] = useState(false);
+const Search = ({ open, setOpen }) => {
   const inputRef = useRef();
   const [searchValue, setSearchValue] = useState('');
   const [count, setCount] = useState(0);
@@ -28,13 +27,15 @@ const Search = ({ isOpen }) => {
     if (keyword) {
       const res = await httpSearchProduct(keyword);
       setCount(res.data.totalElements);
-      res.data.totalElements > 0 &&  setTimeout(() => {
-        navigate('/search', { state: { result: res.data.content } });
-      }, 500);
+      res.data.totalElements > 0 &&
+        setTimeout(() => {
+          setOpen(false);
+          navigate('/search', { state: { result: res.data.content } });
+        }, 500);
     }
   };
   return (
-    <div className={cx('wrapper', { open: isOpen })}>
+    <div className={cx('wrapper', { open: open })}>
       <div className={cx('container', 'search-wrapper')}>
         <div className={cx('inner-input')}>
           <input

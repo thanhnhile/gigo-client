@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useAuth from '~/hooks/useAuth';
 import className from 'classnames/bind';
 import { Icon } from '@iconify/react';
 import styles from './Header.module.scss';
 import NavLink from '../NavLink';
 import Search from '../Search';
 import logo from '~/assets/images/logo.png';
+import useCart from '../../../hooks/useCart';
 
 const cx = className.bind(styles);
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [toggle, setTonggle] = useState(false);
-  const { auth } = useAuth();
+  const { cart } = useCart();
   return (
     <div>
       <header className={cx('wrapper')}>
@@ -57,16 +57,22 @@ const Header = () => {
                 />
               )}
             </div>
-            <div className={cx('icon')}>
+            <Link to='/personal' className={cx('icon')}>
               <Icon icon='bx:user' />
-            </div>
-            <div className={cx('icon', 'cart')}>
+            </Link>
+            <Link to='/checkout' className={cx('icon', 'cart')}>
               <Icon icon='bx:cart-alt' />
-              <span>2</span>
-            </div>
+              <span>
+                {cart.length > 0
+                  ? cart?.reduce((count, item) => {
+                      return (count += item.quantity);
+                    }, 0)
+                  : 0}
+              </span>
+            </Link>
           </div>
           <div className={cx('logo')}>
-            <Link to='/'>GIGO</Link>
+            <Link to='/'>GOGI</Link>
           </div>
         </div>
         <nav className={cx('nav-bar', 'container', { open: toggle })}>
@@ -96,13 +102,19 @@ const Header = () => {
             <Link to='/personal' className={cx('icon')}>
               <Icon icon='bx:user' />
             </Link>
-            <div to='/orders' className={cx('icon', 'cart')}>
+            <Link to='/checkout' className={cx('icon', 'cart')}>
               <Icon icon='bx:cart-alt' />
-              <span>2</span>
-            </div>
+              <span>
+                {cart.length > 0
+                  ? cart?.reduce((count, item) => {
+                      return (count += item.quantity);
+                    }, 0)
+                  : 0}
+              </span>
+            </Link>
           </div>
         </nav>
-        {searchOpen && <Search isOpen={searchOpen} />}
+        {searchOpen && <Search open={searchOpen} setOpen={setSearchOpen} />}
       </header>
     </div>
   );

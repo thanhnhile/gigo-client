@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
 
-import { formatPrice } from '../../utils';
+import { formatPrice } from '~/utils/format';
 const cx = className.bind(styles);
 const Product = (props) => {
   const { product } = props;
@@ -20,18 +21,20 @@ const Product = (props) => {
     // </div>
     <div className={cx('product__product-wrapper')}>
       <div className={cx('product__product')}>
-        <a href={'/products/' + product.id}>
+        <Link to={'/products/' + product.id}>
           <img
             className={cx('product__img')}
             src={product.imgURL}
             alt={product.name}
           />
           <span className={cx('product__name')}>{product.name}</span>
-          <span className={cx('product__price')}>{formatPrice(product.price)}đ</span>
-        </a>
+          <span className={cx('product__price')}>
+            {formatPrice(product.price)}
+          </span>
+        </Link>
       </div>
     </div>
   );
-}
+};
 
 export default Product;

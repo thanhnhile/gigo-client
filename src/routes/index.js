@@ -40,8 +40,8 @@ export const publicRoutes = [
     component: Stores,
   },
   {
-    path: "/menu/:id",
-    component: Menu
+    path: '/menu/:id',
+    component: Menu,
   },
   {
     path: '/checkout/',
@@ -75,10 +75,7 @@ export const publicRoutes = [
 
 //Required login
 export const userRoutes = [
-  {
-    path: '/personal',
-    component: Personal,
-  },
+  //personal
 ];
 export const adminRoutes = [
   // {

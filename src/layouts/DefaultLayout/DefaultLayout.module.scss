@@ -1,7 +1,29 @@
+$after-width: 5px;
+$distance-x: 16px;
 .wrapper {
   .content {
-    padding: calc(var(--top-nav-height) + var(--default-layout-header-height)) 0;
+    padding: calc(
+        var(--top-nav-height) + var(--default-layout-header-height) + 50px
+      )
+      0;
     min-height: 100vh;
     background-color: var(--white);
+    h2 {
+      position: relative;
+      padding-left: calc($after-width + $distance-x);
+      margin-bottom: 16px;
+      &:before {
+        display: block;
+        content: '';
+        width: $after-width;
+        height: 80%;
+        background-color: var(--primary);
+        position: absolute;
+        top: 50%;
+        bottom: 0;
+        transform: translateY(-50%);
+        left: 0;
+      }
+    }
   }
 }

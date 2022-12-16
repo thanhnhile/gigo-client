@@ -1,0 +1,44 @@
+.cart-item {
+  display: flex;
+  padding: 8px 0;
+  overflow: hidden;
+  padding-left: 25px;
+  padding-right: 25px;
+  justify-content: space-between;
+  &-img {
+    width: 150px;
+    max-height: 200px;
+    object-fit: contain;
+    margin-right: 15px;
+  }
+  &-info {
+    flex: 1;
+    margin-right: 15px;
+    span {
+      font-size: 1.2rem;
+      font-weight: 400px;
+      &:first-child {
+        font-size: 1.4rem;
+        text-transform: capitalize;
+      }
+      .price {
+        font-size: 1.2rem;
+        color: var(--price-color);
+      }
+    }
+  }
+  &-action {
+    width: 30px;
+    height: 30px;
+    .icon {
+      font-size: 2rem;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.2s;
+      &:hover {
+        transform: scale(1.2);
+        color: var(--primary);
+      }
+    }
+  }
+}

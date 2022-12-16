@@ -28,7 +28,7 @@ $product-box-shadow: 0px 0px 0px 2px $light-gray;
   &__product-wrapper {
     padding: 1.6rem;
     float: left;
-    width: calc(100% / 3);
+    width: calc(100% / 4);
   }
 
   &__product {
@@ -105,11 +105,11 @@ $product-box-shadow: 0px 0px 0px 2px $light-gray;
 
 .left-column {
   width: 65%;
+  text-align: center;
 
   img {
     border-radius: 5px;
-    width: 700px;
-    height: 750px;
+    height: 80vh;
   }
 }
 

@@ -13,6 +13,7 @@
   --default-layout-header-height: 60px;
   --top-nav-height: 35px;
   --wrapper-width: 1200px;
+  --min-wrapper-width: 980px;
   --color-border: rgb(124, 123, 123);
   --font-heading: 2.5rem;
   --font-heading-sm: 2rem;
@@ -21,7 +22,7 @@
   --button-border-radius: 5px;
   --image-border-radius: 15px;
   --button-width: 150px;
-  --buton-height: 40px;
+  --buton-height: 35px;
 }
 * {
   padding: 0;
@@ -59,15 +60,15 @@ input {
 .container-fluid {
   width: 100%;
 }
+.min-container {
+  max-width: var(--min-wrapper-width);
+  margin: 0 auto;
+}
 .error {
-  font-weight: 500;
   margin-top: 15px;
   padding: 8px 0;
   color: var(--err-color) !important;
-  visibility: hidden;
-  &.show {
-    visibility: visible;
-  }
+  text-align: center;
 }
 
 /*Grid*/

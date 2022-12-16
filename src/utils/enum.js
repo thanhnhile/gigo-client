@@ -5,7 +5,7 @@ export const ROLE = {
 };
 export const DELIVERY_METHOD = [
   {
-    id: 1,
+    id: 0,
     name: 'Trực tiếp',
     price: 0,
   },

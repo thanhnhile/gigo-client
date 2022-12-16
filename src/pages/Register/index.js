@@ -47,7 +47,7 @@ function Register() {
   };
   return (
     <div className={cx('container', 'wrapper')}>
-      <h2>Đăng ký</h2>
+      <h1>Đăng ký</h1>
       <p>
         Đã có tài khoản?<span onClick={() => navigate('/auth')}>Đăng nhập</span>
       </p>

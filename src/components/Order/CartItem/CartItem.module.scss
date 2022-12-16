@@ -1,8 +1,12 @@
 .cart-item {
   display: flex;
   padding: 8px 0;
+  overflow: hidden;
+  padding-left: 25px;
+  padding-right: 25px;
+  justify-content: space-between;
   &-img {
-    width: 25%;
+    width: 150px;
     max-height: 200px;
     object-fit: contain;
     margin-right: 15px;
@@ -18,14 +22,14 @@
         text-transform: capitalize;
       }
       .price {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         color: var(--price-color);
       }
     }
   }
   &-action {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     .icon {
       font-size: 2rem;
       color: var(--text-color);

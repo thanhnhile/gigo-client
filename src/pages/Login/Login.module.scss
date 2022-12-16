@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  h2 {
+  h1 {
     font-size: var(--font-heading);
     margin: 10px 0 5px;
     line-height: 1.4;
@@ -32,6 +32,7 @@
     background-color: var(--white);
     padding: 20px 0;
     input {
+      flex: 1;
       width: 100%;
       border: 1px solid var(--color-border);
       outline: none;

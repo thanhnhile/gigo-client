@@ -67,6 +67,10 @@ export const publicRoutes = [
     path: '/news',
     component: News,
   },
+  {
+    path: '/dashboard',
+    component: Dashboard,
+  },
 ];
 
 //Required login
@@ -77,8 +81,8 @@ export const userRoutes = [
   },
 ];
 export const adminRoutes = [
-  {
-    path: '/dashboard',
-    component: Dashboard,
-  },
+  // {
+  //   path: '/dashboard',
+  //   component: Dashboard,
+  // },
 ];

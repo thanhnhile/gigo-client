@@ -30,6 +30,7 @@ const ProductDetail = ({ product }) => {
       price: (product.price + surCharge) * Number.parseInt(quantity),
     };
     addToCart(cartItem);
+    setQuantity(1);
   };
   return (
     <div className={cx('container')}>

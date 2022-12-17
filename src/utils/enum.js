@@ -5,12 +5,12 @@ export const ROLE = {
 };
 export const DELIVERY_METHOD = [
   {
-    id: 0,
+    id: 1,
     name: 'Trực tiếp',
     price: 0,
   },
   {
-    id: 1,
+    id: 2,
     name: 'Giao hàng',
     price: 20000,
   },

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '~/hooks';
 import Clickable from '~/components/Clickable';
 import className from 'classnames/bind';
@@ -130,6 +130,9 @@ const Personal = () => {
           </div>
           <Clickable outline text='Lưu' onClick={handleSave} />
           <Icon onClick={toggle} className={cx('icon')} icon='mdi:pencil' />
+          <div className={cx('logout-btn')}>
+            <Clickable text='Đăng xuất' primary onClick={handleLogout} />
+          </div>
         </div>
         <div className={cx('order-info')}>
           <h4>Lịch sử đơn hàng</h4>

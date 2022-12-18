@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import className from 'classnames/bind';
 import { Icon } from '@iconify/react';
 import styles from './Header.module.scss';
-import NavLink from '../NavLink';
+import { Menu } from '../NavLink';
 import Search from '../Search';
 import logo from '~/assets/images/logo.png';
 import useCart from '../../../hooks/useCart';
@@ -87,7 +87,12 @@ const Header = () => {
             </Link>
           </div>
           <ul className={cx('nav-links')}>
-            <NavLink />
+            <Menu />
+            {auth?.roles?.includes('ADMIN') && (
+              <li key='100'>
+                <Link to='/admin'>Trang quản trị</Link>
+              </li>
+            )}
           </ul>
           <div className={cx('left')}>
             <div className={cx('icon')}>

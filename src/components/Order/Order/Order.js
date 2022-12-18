@@ -29,13 +29,14 @@ function Order(props) {
           product_id: item.id,
           quantity: item.quantity,
           price: item.price,
+          size: item.size,
         };
       });
       return {
         ...prev,
         details: newDetails,
         orderType: shipMethod,
-        total: sumPrice + getShipPrice(),
+        total: cacl(cart) + getShipPrice(),
       };
     });
   }, [cart, shipMethod]);

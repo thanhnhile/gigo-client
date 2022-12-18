@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import className from 'classnames/bind';
 import styles from './Customer.module.scss';
-import Select from 'react-select';
 import SelectAddress from '../../SelectAddress';
 import useOrder from '../../../hooks/useOrder';
 import { httpGetCustomerInfoByUsername } from '~/apiServices/userServices';
@@ -40,7 +39,7 @@ const Customer = () => {
       );
       console.log('ADDRESS ', address);
       console.log('STORE: ', res.data);
-      if (res.data.length > 0) {
+      if (res.data?.length > 0) {
         setStores(res.data);
         setCustomer({ ...customer, ...address, store_id: res.data[0].id });
       } else {

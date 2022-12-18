@@ -8,3 +8,12 @@ export const httpPostOrder = (payload) => {
     console.log(error.response.data);
   }
 };
+
+export const httpGetOrderByAccountUsername = (username) => {
+  try {
+    const res = request.get(`/orders/account/${username}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

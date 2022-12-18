@@ -1,11 +1,13 @@
 import React, { createContext, useMemo, useState } from 'react';
 import useAuth from '~/hooks/useAuth';
+import useCart from '~/hooks/useCart';
 import { httpPostOrder } from '../apiServices/orderServices';
 
 export const OrderContext = createContext({});
 
 const OrderProvider = ({ children }) => {
   const { auth } = useAuth();
+  const { removeAll } = useCart();
   const initValue = {
     orderType: null,
     total: null,
@@ -60,6 +62,7 @@ const OrderProvider = ({ children }) => {
     const res = await httpPostOrder(order);
     if (res.data) {
       console.log(res.data);
+      removeAll();
     } else console.log(res.errMsg);
   };
   return (

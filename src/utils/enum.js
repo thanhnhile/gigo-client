@@ -15,3 +15,10 @@ export const DELIVERY_METHOD = [
     price: 20000,
   },
 ];
+
+export const ORDER_STATUS = {
+  0: 'Chờ xác nhận',
+  1: 'Đang giao',
+  2: 'Giao thành công',
+  3: 'Đã hủy',
+};

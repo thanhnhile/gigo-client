@@ -20,14 +20,17 @@ const OrderItem = ({ order }) => {
         <div className={cx('product')}>
           {order.details.map((item) => (
             <div className={cx('product-item')}>
-              <span>{item.product_id}</span>
-              <br />
-              <span>Size: {item.size}</span>
-              <br />
-              <span>
-                {item.quantity ?? 1} x{' '}
-                <span className={cx('price')}>{formatPrice(item.price)}</span>
-              </span>
+              <img alt={item.productName} src={item.imgURL}></img>
+              <div className={cx('product-item-info')}>
+                <span>{item.productName}</span>
+                <br />
+                <span>Size: {item.size}</span>
+                <br />
+                <span>
+                  {item.quantity ?? 1} x{' '}
+                  <span className={cx('price')}>{formatPrice(item.price)}</span>
+                </span>
+              </div>
             </div>
           ))}
         </div>

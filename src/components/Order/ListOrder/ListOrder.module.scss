@@ -18,23 +18,39 @@
     .content {
       display: flex;
       justify-content: space-between;
-      row-gap: 1.5rem;
+      column-gap: 1.5rem;
+      padding: 8px 0;
       .price {
         color: var(--price-color);
       }
       .product {
         flex: 1;
         &-item {
-          span {
-            font-size: 1.2rem;
-            font-weight: 400px;
-            &:first-child {
-              font-size: 1.4rem;
-              text-transform: capitalize;
-            }
-            .price {
+          display: flex;
+          row-gap: 1.5rem;
+          align-items: center;
+          &:not(:last-child) {
+            margin-bottom: 15px;
+          }
+          img {
+            max-width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-right: 15px;
+          }
+          .product-item-info {
+            flex: 1;
+            span {
               font-size: 1.2rem;
-              color: var(--price-color);
+              font-weight: 400px;
+              &:first-child {
+                font-size: 1.3rem;
+                text-transform: capitalize;
+              }
+              .price {
+                font-size: 1.2rem;
+                color: var(--price-color);
+              }
             }
           }
         }

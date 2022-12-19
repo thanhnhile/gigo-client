@@ -1,22 +1,29 @@
+h1 {
+  font-size: 2.2rem;
+  color: var(--text-color);
+}
+
 .wrapper {
-  width: 650px;
-  h1 {
-    font-size: 2rem;
-    text-align: center;
-    color: var(--text-color);
-  }
-  .user-infor {
-    margin-top: 40px;
+  display: flex;
+  align-items: baseline;
+  column-gap: 2%;
+  margin-top: 4rem;
+  .user-infor,
+  .order-info {
+    padding: 0 15px;
     margin-bottom: 40px;
     border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 40px 25px 80px;
-    position: relative;
     h4 {
       font-size: 1.6rem;
       padding: 8px 0;
       margin-bottom: 15px;
     }
+  }
+  .user-infor {
+    width: 30%;
+    position: relative;
     .form-control {
       margin-bottom: 30px;
       input {
@@ -36,5 +43,13 @@
       right: 25px;
       bottom: 20px;
     }
+    .logout-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 25px;
+    }
+  }
+  .order-info {
+    width: 68%;
   }
 }

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Menu.module.scss';
 import { httpGetAllCategories } from '../../apiServices/categoryServices';
 import ListProduct from '../../components/Product/ListProduct';
+import Pagination from '../../components/Pagination';
 import {
   httpGetProductByCateId,
   httpGetAllProduct,
@@ -12,40 +13,44 @@ const cx = className.bind(styles);
 
 const Menu = () => {
   const [menu, setMenu] = useState([]);
+  const { id } = useParams();
+  const [data, setData] = useState({
+    products: [],
+    totalPages: 0,
+  });
+  const [page, setPage] = useState(1);
+  const location = useLocation();
   useEffect(() => {
     const getAllCategories = async () => {
       const response = await httpGetAllCategories();
-      console.log(response.data);
       setMenu(response.data);
     };
     getAllCategories();
+    setPage(1);
   }, []);
+  const getProductByCateId = async () => {
+    const response = await httpGetProductByCateId(id, 6, page);
+    setData({
+      products: response.data.content,
+      totalPages: response.data.totalPages,
+    });
+  };
 
-  const { id } = useParams();
-  const [currentId, setCurrentId] = useState(id);
-  const [product, setProduct] = useState([]);
-
+  const getProductAll = async () => {
+    const response = await httpGetAllProduct(6, page);
+    setData({
+      products: response.data.content,
+      totalPages: response.data.totalPages,
+    });
+  };
   useEffect(() => {
-    const getProductByCateId = async () => {
-      const response = await httpGetProductByCateId(id);
-      console.log(response.data);
-      setProduct(response.data.content);
-    };
-
-    const getProductAll = async () => {
-      const response = await httpGetAllProduct();
-      console.log(response.data);
-      setProduct(response.data.content);
-    };
-
     if (id === 'all') {
       getProductAll();
     } else {
       getProductByCateId();
     }
-    setCurrentId(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [page]);
   return (
     <div className={cx('container', 'wrap')}>
       <div className={cx('col', 'menu')}>
@@ -57,7 +62,7 @@ const Menu = () => {
             menu.map((menuItem) => (
               <li
                 className={cx('category', {
-                  active: Number.parseInt(currentId) === menuItem.id,
+                  active: location.pathname.includes(menuItem.id),
                 })}
                 key={menuItem.id}
               >
@@ -67,7 +72,12 @@ const Menu = () => {
         </ul>
       </div>
       <div className={cx('col', 'product')}>
-        <ListProduct product={product} />
+        <ListProduct product={data.products} />
+        <Pagination
+          onPageChange={(page) => setPage(page)}
+          totalPages={data.totalPages}
+          currentPage={page}
+        />
       </div>
     </div>
   );

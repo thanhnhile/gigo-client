@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import Select from 'react-select';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useMemo, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Order.module.scss';
 import CartItem from '../CartItem';
@@ -7,6 +7,7 @@ import { Icon } from '@iconify/react';
 import useCart from '../../../hooks/useCart';
 import { formatPrice } from '~/utils/format';
 import { DELIVERY_METHOD } from '../../../utils/enum';
+import useOrder from '../../../hooks/useOrder';
 
 const cx = className.bind(styles);
 const cacl = (cart) => {
@@ -17,11 +18,31 @@ const cacl = (cart) => {
 };
 function Order(props) {
   const { cart, removeAll } = useCart();
-  const [shipPrice, setShipPrice] = useState(0);
+  const { setOrderDetail } = useOrder();
+  const [shipMethod, setShipMethod] = useState(DELIVERY_METHOD[0].id);
   const [sumPrice, setSumPrice] = useState(() => cacl(cart));
-  useMemo(() => {
+  useEffect(() => {
     setSumPrice(cacl(cart));
-  }, [cart]);
+    setOrderDetail((prev) => {
+      const newDetails = cart.map((item) => {
+        return {
+          product_id: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          size: item.size,
+        };
+      });
+      return {
+        ...prev,
+        details: newDetails,
+        orderType: shipMethod,
+        total: cacl(cart) + getShipPrice(),
+      };
+    });
+  }, [cart, shipMethod]);
+  const getShipPrice = () => {
+    return DELIVERY_METHOD.find((item) => item.id === shipMethod).price;
+  };
   return (
     <div className={cx('container')}>
       <div className={cx('order-info')}>
@@ -49,14 +70,14 @@ function Order(props) {
               <select
                 name='deliver-method'
                 onChange={(e) => {
-                  console.log(e.target.value);
-                  setShipPrice(Number.parseInt(e.target.value));
+                  setShipMethod(Number.parseInt(e.target.value));
                 }}
+                value={shipMethod.id}
               >
-                {DELIVERY_METHOD.map((method) => (
+                {DELIVERY_METHOD.map((method, index) => (
                   <option
                     key={method.id}
-                    value={method.price}
+                    value={method.id}
                     data-price={method.price}
                   >
                     {method.name}
@@ -68,8 +89,10 @@ function Order(props) {
           </span>
           <span>
             <div className={cx('thin dense')}>{formatPrice(sumPrice)}</div>
-            <div className={cx('thin dense')}>{formatPrice(shipPrice)}</div>
-            {formatPrice(sumPrice + shipPrice)}
+            <div className={cx('thin dense')}>
+              {formatPrice(getShipPrice())}
+            </div>
+            {formatPrice(sumPrice + getShipPrice())}
           </span>
         </div>
       </div>

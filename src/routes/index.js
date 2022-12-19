@@ -17,6 +17,7 @@ import Personal from '../pages/Personal';
 
 /*admin */
 import Dashboard from '../pages/Admin/Dashboard';
+import Category from '../pages/Admin/Category';
 
 export const publicRoutes = [
   {
@@ -75,11 +76,18 @@ export const publicRoutes = [
 
 //Required login
 export const userRoutes = [
-  //personal
+  {
+    path: '/personal',
+    component: Personal,
+  },
 ];
 export const adminRoutes = [
-  // {
-  //   path: '/dashboard',
-  //   component: Dashboard,
-  // },
+  {
+    path: '/admin',
+    component: Dashboard,
+  },
+  {
+    path: '/admin/categories',
+    component: Category,
+  },
 ];

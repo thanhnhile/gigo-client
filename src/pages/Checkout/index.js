@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import Customer from '../../components/Order/Customer';
 import Order from '../../components/Order/Order/Order';
+import OrderProvider from '../../contexts/OrderProvider';
 
 const style = {
-  // checkout_container: {
-  //   maxWidth: '70%',
-  //   margin: '0 auto',
-  // },
   wrapper: {
     color: 'red',
     textAlign: 'center',
@@ -40,19 +37,21 @@ function Checkout(props) {
   };
   return (
     <div className='min-container'>
-      {handleGetPage()}
-      <div style={style.wrapper}>
-        {page > 0 && (
-          <button style={style.button} onClick={() => setPage(page - 1)}>
-            Trở lại
-          </button>
-        )}
-        {page < 1 && (
-          <button style={style.button} onClick={() => setPage(page + 1)}>
-            Tiếp tục
-          </button>
-        )}
-      </div>
+      <OrderProvider>
+        {handleGetPage()}
+        <div style={style.wrapper}>
+          {page > 0 && (
+            <button style={style.button} onClick={() => setPage(page - 1)}>
+              Trở lại
+            </button>
+          )}
+          {page < 1 && (
+            <button style={style.button} onClick={() => setPage(page + 1)}>
+              Tiếp tục
+            </button>
+          )}
+        </div>
+      </OrderProvider>
     </div>
   );
 }

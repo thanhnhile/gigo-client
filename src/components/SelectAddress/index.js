@@ -8,10 +8,12 @@ import axios from 'axios';
 const cx = className.bind(styles);
 const host = 'https://provinces.open-api.vn/api/?depth=2';
 
-const getOptions = (list) => {
-  return list.map((item) => {
+const getOptions = (list, label) => {
+  const options = list.map((item) => {
     return { label: item.name, value: item.code };
   });
+  options.unshift({ label, value: -1 });
+  return options;
 };
 
 const SelectAddress = ({ address, setAddress }) => {
@@ -23,7 +25,7 @@ const SelectAddress = ({ address, setAddress }) => {
     setAddress((prev) => {
       return {
         provinceId: data.code,
-        districtId: -1,
+        districtId: 2001,
       };
     });
   };
@@ -45,23 +47,20 @@ const SelectAddress = ({ address, setAddress }) => {
       setProvinces(data);
     };
     getProvince();
+    console.log('GET PROVINCES');
   }, []);
-  const provinceOptions = getOptions(provinces);
-  const districtOptions = getOptions(districts);
+  const provinceOptions = getOptions(provinces, 'Chọn tỉnh/thành phố');
+  const districtOptions = getOptions(districts, 'Chọn quận/huyện');
   return (
     <div className={cx('wrapper')}>
       <Select
-        defaultValue={
-          address.provinceId || provinceOptions[0] || 'Chọn tỉnh/thành phố'
-        }
+        defaultValue={provinceOptions[0]}
         className={cx('select')}
         options={provinceOptions}
         onChange={handleProvinceChange}
       />
       <Select
-        defaultValue={
-          address.districtId || districtOptions[0] || 'Chọn quận/huyện'
-        }
+        defaultValue={districtOptions[0]}
         className={cx('select')}
         options={districtOptions}
         onChange={handleDistrictChange}

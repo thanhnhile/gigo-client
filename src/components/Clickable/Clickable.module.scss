@@ -27,4 +27,12 @@
   &.second {
     @include theme(var(--second));
   }
+  &.outline {
+    color: var(--primary);
+    background-color: var(--white);
+    border-color: var(--primary);
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }

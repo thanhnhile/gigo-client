@@ -1,15 +1,17 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import className from 'classnames/bind';
 import { Icon } from '@iconify/react';
 import styles from './Header.module.scss';
-import NavLink from '../NavLink';
+import { Menu } from '../NavLink';
 import Search from '../Search';
 import logo from '~/assets/images/logo.png';
 import useCart from '../../../hooks/useCart';
+import useAuth from '~/hooks/useAuth';
 
 const cx = className.bind(styles);
 const Header = () => {
+  const { auth } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
   const [toggle, setTonggle] = useState(false);
   const { cart } = useCart();
@@ -57,7 +59,10 @@ const Header = () => {
                 />
               )}
             </div>
-            <Link to='/personal' className={cx('icon')}>
+            <Link
+              to={auth?.username ? '/personal' : '/auth'}
+              className={cx('icon')}
+            >
               <Icon icon='bx:user' />
             </Link>
             <Link to='/checkout' className={cx('icon', 'cart')}>
@@ -82,7 +87,12 @@ const Header = () => {
             </Link>
           </div>
           <ul className={cx('nav-links')}>
-            <NavLink />
+            <Menu />
+            {auth?.roles?.includes('ADMIN') && (
+              <li key='100'>
+                <Link to='/admin'>Trang quản trị</Link>
+              </li>
+            )}
           </ul>
           <div className={cx('left')}>
             <div className={cx('icon')}>
@@ -99,7 +109,10 @@ const Header = () => {
                 />
               )}
             </div>
-            <Link to='/personal' className={cx('icon')}>
+            <Link
+              to={auth?.username ? '/personal' : '/auth'}
+              className={cx('icon')}
+            >
               <Icon icon='bx:user' />
             </Link>
             <Link to='/checkout' className={cx('icon', 'cart')}>

@@ -42,12 +42,12 @@ function App() {
           {createRoute(userRoutes)}
         </Route>
         {/*ADMIN  route*/}
-        {/* <Route
+        <Route
           path='/admin'
           element={<RequireAuth allowedRoles={[ROLE.ADMIN]} />}
         >
           {createRoute(adminRoutes, AdminLayout)}
-        </Route> */}
+        </Route>
         {/* catch all */}
         <Route path='*' element={<Missing />} />
       </Routes>

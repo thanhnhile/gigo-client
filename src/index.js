@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import GlobalStyles from 'comps/GlobalStyles';
 import AuthProvider from '~/contexts/AuthProvider';
-import CartProvider from './contexts/CartContext';
+import CartProvider from './contexts/CartProvider';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -12,9 +12,9 @@ ReactDOM.render(
       <GlobalStyles>
         <AuthProvider>
           <CartProvider>
-          <Routes>
-            <Route path='/*' element={<App />} />
-          </Routes>
+            <Routes>
+              <Route path='/*' element={<App />} />
+            </Routes>
           </CartProvider>
         </AuthProvider>
       </GlobalStyles>

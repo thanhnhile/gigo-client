@@ -5,10 +5,10 @@ const cx = className.bind(styles);
 function Category() {
     return (
         <form >
-            <h1>Category</h1>
-            <label>Name</label>
+            <h1>Phân loại</h1>
+            <label>Tên</label>
             <input name="name" />
-            <label>Status</label>
+            <label>Trạng thái</label>
             <select name="status">
                 <option selected value="true">True</option>
                 <option value="false">False</option>

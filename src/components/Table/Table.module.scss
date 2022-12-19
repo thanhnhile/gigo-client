@@ -1,3 +1,6 @@
+.content {
+	margin: 30px;
+}
 .table-title {
 	display: inline;
 	vertical-align: middle;
@@ -10,17 +13,18 @@
 	height: 45px;
 }
 .btn-add {
-	background-color: rgb(17, 201, 17);
+	height: 30px;
+	width: 100px;
+	background-color: var(--primary);
 	cursor: pointer;
 	color: rgb(255, 255, 255);
 	font-size: 18px;
 	&:hover {
-		color: #0b0;
-		color: #0b0;
+		background-color: #f4af65;
 	}
 }
-.col-left {
-	text-align: left;
+.col-justify {
+	text-align: justify;
 }
 .add-icon {
 	display: none;
@@ -28,4 +32,5 @@
 }
 .table-content {
     text-align: center;
+	padding-top: 20px;
 }

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate} from "react-router-dom";
+import { Icon } from '@iconify/react';
 import { httpGetAllCategories } from '../../apiServices/categoryServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
@@ -14,25 +16,30 @@ function Category() {
         };
         getAllCategories();
     }, [])
+
+    const navigate = useNavigate();
+    const handleAdd = async () => {
+        navigate("/admin/categories/add");
+    };
     return (
         <div className={cx("container")}>
             <div className={cx("row")}>
                 <div className={cx("col-md-12")}>
-                    <from>
+                    <div className={cx("content")}>
                         <div className={cx("table-title")}>
-                            <h2>Category</h2>
+                            <h2>Danh sách phân loại</h2>
                             <div className={cx("table-subtitle-right")}>
-                                <button className={cx("btn-add")}>+ New</button>
+                                <button className={cx("btn-add")} onClick={() => handleAdd()}>+ Thêm </button>
                             </div>
                         </div>
                         <div className={cx("table-content")}>
-                            <table className={cx("table-table-striped")}>
+                            <table>
                                 <thead>
                                     <tr>
                                         <th width="200px" scope="col">ID</th>
-                                        <th width="30%" scope="col">Name</th>
-                                        <th width="20%" scope="col">Status</th>
-                                        <th width="30%" scope="col">Action</th>
+                                        <th width="30%" scope="col">Phân loại</th>
+                                        <th width="20%" scope="col">Trạng thái</th>
+                                        <th width="30%" scope="col">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,8 +48,11 @@ function Category() {
                                             <tr className>
                                                 <td>{cate.id}</td>
                                                 <td>{cate.name}</td>
-                                                <td>{cate.status}</td>
-                                                <td>Edit | Delete</td>
+                                                {cate.status === true
+                                                    ? (<td>Đang bán</td>)
+                                                    : (<td>Hết</td>)
+                                                }
+                                                <td><Icon icon='material-symbols:edit-square-outline-rounded' /> | <Icon icon='material-symbols:delete-outline' /></td>
                                             </tr>
                                         );
                                     })}
@@ -51,7 +61,7 @@ function Category() {
                             <div>
                             </div>
                         </div>
-                    </from>
+                    </div>
                 </div>
             </div>
         </div>

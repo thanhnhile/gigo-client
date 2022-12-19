@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useNavigate} from "react-router-dom";
+import { Icon } from '@iconify/react';
 import { httpGetAllProduct } from '../../apiServices/productServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
@@ -6,7 +8,6 @@ import styles from './Table.module.scss';
 const cx = className.bind(styles);
 function Product() {
     const [product, setProduct] = useState([]);
-
     useEffect(() => {
         const getAllProduct = async () => {
             const response = await httpGetAllProduct();
@@ -15,27 +16,32 @@ function Product() {
         };
         getAllProduct();
     }, []);
+
+    const navigate = useNavigate();
+    const handleAdd = async () => {
+        navigate("/admin/products/add");
+    };
     return (
         <div className={cx("container")}>
             <div className={cx("row")}>
                 <div className={cx("col-md-12")}>
-                    <from>
+                    <div className={cx("content")}>
                         <div className={cx("table-title")}>
-                            <h2>Product</h2>
+                            <h2>Danh sách sản phẩm</h2>
                             <div className={cx("table-subtitle-right")}>
-                                <button className={cx("btn-add")}>+ New</button>
+                                <button className={cx("btn-add")} onClick={() => handleAdd()}>+ Thêm </button>
                             </div>
                         </div>
                         <div className={cx("table-content")}>
-                            <table className={cx("table table-striped")}>
+                            <table>
                                 <thead>
                                     <tr>
                                         <th width="10%" scope="col">ID</th>
-                                        <th width="20%" scope="col">Name</th>
-                                        <th width="15%" scope="col">Price</th>
-                                        <th width="35%" scope="col">Description</th>
-                                        <th width="10%" scope="col">Status</th>
-                                        <th width="10%" scope="col">Action</th>
+                                        <th width="20%" scope="col">Tên sản phẩm</th>
+                                        <th width="15%" scope="col">Giá</th>
+                                        <th width="35%" scope="col">Mô tả</th>
+                                        <th width="10%" scope="col">Trạng thái</th>
+                                        <th width="10%" scope="col">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,9 +51,12 @@ function Product() {
                                                 <td>{product.id}</td>
                                                 <td>{product.name}</td>
                                                 <td>{product.price}</td>
-                                                <td>{product.description}</td>
-                                                <td>{product.status}</td>
-                                                <td>Edit | Delete</td>
+                                                <td className={cx("col-justify")}>{product.description}</td>
+                                                {product.status === true
+                                                    ? (<td>Đang bán</td>)
+                                                    : (<td>Hết</td>)
+                                                }
+                                                <td><Icon icon='material-symbols:edit-square-outline-rounded' /> | <Icon icon='material-symbols:delete-outline' /></td>
                                             </tr>
                                         );
                                     })}
@@ -56,7 +65,7 @@ function Product() {
                             <div>
                             </div>
                         </div>
-                    </from>
+                    </div>
                 </div>
             </div>
         </div>

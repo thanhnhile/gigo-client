@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useNavigate} from "react-router-dom";
+import { Icon } from '@iconify/react';
 import { httpGetAllEmployee } from '../../apiServices/employeeServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
@@ -15,15 +17,20 @@ function Employee() {
         };
         getAllEmployee();
     }, []);
+
+    const navigate = useNavigate();
+    const handleAdd = async () => {
+        navigate("/admin/employees/add");
+    };
     return (
         <div className={cx("container")}>
             <div className={cx("row")}>
                 <div className={cx("col-md-12")}>
-                    <from>
+                    <div className={cx("content")}>
                         <div className={cx("table-title")}>
-                            <h2>Employee</h2>
+                            <h2>Danh sách nhân viên</h2>
                             <div className={cx("table-subtitle-right")}>
-                                <button className={cx("btn-add")}>+ New</button>
+                                <button className={cx("btn-add")} onClick={() => handleAdd()}>+ Thêm </button>
                             </div>
                         </div>
                         <div className={cx("table-content")}>
@@ -31,10 +38,10 @@ function Employee() {
                                 <thead>
                                     <tr>
                                         <th width="100px" scope="col">ID</th>
-                                        <th width="30%" scope="col">Name</th>
-                                        <th width="20%" scope="col">Store</th>
-                                        <th width="20%" scope="col">District</th>
-                                        <th width="20%" scope="col">Action</th>
+                                        <th width="30%" scope="col">Tên</th>
+                                        <th width="20%" scope="col">Cửa hàng</th>
+                                        <th width="20%" scope="col">Quận/ Huyện</th>
+                                        <th width="20%" scope="col">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,7 +52,7 @@ function Employee() {
                                                 <td>{employee.name}</td>
                                                 <td>{employee.store.storeName}</td>
                                                 <td>{employee.store.district.name}</td>
-                                                <td>Edit | Delete</td>
+                                                <td><Icon icon='material-symbols:edit-square-outline-rounded' /> | <Icon icon='material-symbols:delete-outline' /></td>
                                             </tr>
                                         );
                                     })}
@@ -54,7 +61,7 @@ function Employee() {
                             <div>
                             </div>
                         </div>
-                    </from>
+                    </div>
                 </div>
             </div>
         </div>

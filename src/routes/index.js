@@ -17,7 +17,14 @@ import Personal from '../pages/Personal';
 
 /*admin */
 import Dashboard from '../pages/Admin/Dashboard';
-import Category from '../pages/Admin/Category';
+import Product from '../components/Table/Product';
+import Category from '../components/Table/Category';
+import Store from '../components/Table/Store';
+import Employee from '../components/Table/Employee';
+import AddProduct from '../components/Form/Product';
+import AddCategory from '../components/Form/Category';
+import AddStore from '../components/Form/Store';
+import AddEmployee from '../components/Form/Employee';
 
 export const publicRoutes = [
   {
@@ -87,7 +94,35 @@ export const adminRoutes = [
     component: Dashboard,
   },
   {
+    path: '/admin/products',
+    component: Product,
+  },
+  {
     path: '/admin/categories',
     component: Category,
+  },
+  {
+    path: '/admin/stores',
+    component: Store,
+  },
+  {
+    path: '/admin/employees',
+    component: Employee,
+  },
+  {
+    path: '/admin/products/add',
+    component: AddProduct,
+  },
+  {
+    path: '/admin/categories/add',
+    component: AddCategory,
+  },
+  {
+    path: '/admin/stores/add',
+    component: AddStore,
+  },
+  {
+    path: '/admin/employees/add',
+    component: AddEmployee,
   },
 ];

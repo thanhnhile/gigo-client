@@ -27,20 +27,20 @@ function Employee() {
 
     return (
         <form >
-            <h1>Employee</h1>
-            <label>Name</label>
+            <h1>Nhân viên</h1>
+            <label>Tên</label>
             <input name="name" />
-            <label>Store</label>
+            <label>Cửa hàng</label>
             <select name="store">
-                <option>Please choose one option</option>
+                <option>--Chọn--</option>
                 {store.map((store) => {
                     return (
                         <option value={store.id}>{store.storeName}</option>);
                 })}
             </select>
-            <label>Account</label>
+            <label>Tài khoản</label>
             <select name="account">
-                <option>Please choose one option</option>
+                <option>--Chọn--</option>
                 {account.map((account) => {
                     return (
                         <option value={account.id}>{account.username}</option>);

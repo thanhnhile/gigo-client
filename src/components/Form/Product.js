@@ -16,28 +16,28 @@ function Product() {
     }, []);
     return (
         <form >
-            <h1>Product</h1>
-            <label>Category</label>
+            <h1>Sản phẩm</h1>
+            <label>Phân loại</label>
             <select name="category">
-                <option>Please choose one option</option>
+                <option>--Chọn--</option>
                 {category.map((category) => {
                     return (
                         <option value={category.id}>{category.name}</option>);
                 })}
             </select>
-            <label>Name</label>
+            <label>Tên sản phẩm</label>
             <input name="name" />
-            <label>Price</label>
+            <label>Giá</label>
             <input name="price" />
-            <label>Description</label>
+            <label>Mô tả</label>
             <textarea name="description" />
-            <label>Status</label>
+            <label>Trạng thái</label>
             <select name="status">
                 <option selected value="true">True</option>
                 <option value="false">False</option>
             </select>
-            <label>Image</label>
-            <input name="image" type="file"/>
+            <label>Ảnh</label>
+            <input name="image" type="file" />
             <input type="submit" className={cx("submitButton")} />
         </form>
     )

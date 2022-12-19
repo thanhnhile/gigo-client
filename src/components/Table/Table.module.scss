@@ -1,0 +1,36 @@
+.content {
+	margin: 30px;
+}
+.table-title {
+	display: inline;
+	vertical-align: middle;
+	height: 15px;
+}
+.table-subtitle-right {
+	display: table-cell;
+	float: right;
+	vertical-align: middle;
+	height: 45px;
+}
+.btn-add {
+	height: 30px;
+	width: 100px;
+	background-color: var(--primary);
+	cursor: pointer;
+	color: rgb(255, 255, 255);
+	font-size: 18px;
+	&:hover {
+		background-color: #f4af65;
+	}
+}
+.col-justify {
+	text-align: justify;
+}
+.add-icon {
+	display: none;
+	display: none;
+}
+.table-content {
+    text-align: center;
+	padding-top: 20px;
+}

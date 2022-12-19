@@ -44,7 +44,7 @@ const Stores = () => {
   }, [address.provinceId, address.districtId, address]);
   return (
     <div className={cx('container', 'stores')}>
-      <h2>Hệ thống cửa hàng Gigo</h2>
+      <h2>Hệ thống cửa hàng Gogi</h2>
       <div className={cx('filter-bar')}>
         <SelectAddress address={address} setAddress={setAddress} />
       </div>
@@ -87,7 +87,7 @@ const Stores = () => {
                 </div>
               );
             })
-          : 'Xin lỗi, Gogi chưa có cửa hàng tai địa chỉ này'}
+          : 'Xin lỗi, Gogi chưa có cửa hàng tại địa chỉ này'}
       </div>
     </div>
   );

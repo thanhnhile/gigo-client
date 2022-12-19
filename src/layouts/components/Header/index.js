@@ -88,10 +88,16 @@ const Header = () => {
           </div>
           <ul className={cx('nav-links')}>
             <Menu />
-            {auth?.roles?.includes('ADMIN') && (
+            {auth?.roles?.includes('ADMIN') ? (
               <li key='100'>
                 <Link to='/admin'>Trang quản trị</Link>
               </li>
+            ) : auth?.roles?.includes('EMPLOYEE') ? (
+              <li key='100'>
+                <Link to='/employee'>Trang cửa hàng</Link>
+              </li>
+            ) : (
+              ''
             )}
           </ul>
           <div className={cx('left')}>

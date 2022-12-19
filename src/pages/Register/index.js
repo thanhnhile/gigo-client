@@ -43,7 +43,7 @@ function Register() {
     setError('');
     setUser(initValue);
     console.log(response);
-    response.errMsg && navigate('/auth');
+    !response.errMsg && navigate('/auth');
   };
   return (
     <div className={cx('container', 'wrapper')}>

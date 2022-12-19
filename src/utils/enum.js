@@ -2,6 +2,7 @@ export const LOCAL_STORAGE_KEY = 'GIGO_USER';
 export const ROLE = {
   ADMIN: 'ADMIN',
   USER: 'USER',
+  EMPLOYEE: 'EMPLOYEE',
 };
 export const DELIVERY_METHOD = [
   {
@@ -16,9 +17,21 @@ export const DELIVERY_METHOD = [
   },
 ];
 
-export const ORDER_STATUS = {
-  0: 'Chờ xác nhận',
-  1: 'Đang giao',
-  2: 'Giao thành công',
-  3: 'Đã hủy',
-};
+export const ORDER_STATUS = [
+  {
+    id: 0,
+    name: 'Chờ xác nhận',
+  },
+  {
+    id: 1,
+    name: 'Đang giao',
+  },
+  {
+    id: 2,
+    name: 'Giao thành công',
+  },
+  {
+    id: 3,
+    name: 'Đã hủy',
+  },
+];

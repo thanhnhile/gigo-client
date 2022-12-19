@@ -19,6 +19,9 @@ import Personal from '../pages/Personal';
 import Dashboard from '../pages/Admin/Dashboard';
 import Category from '../pages/Admin/Category';
 
+/*store employee */
+import ManageOrders from '../pages/Employee/ManageOrders';
+
 export const publicRoutes = [
   {
     path: '/',
@@ -85,5 +88,15 @@ export const adminRoutes = [
   {
     path: '/admin/categories',
     component: Category,
+  },
+];
+export const employeeRoutes = [
+  {
+    path: '/employee',
+    component: Dashboard,
+  },
+  {
+    path: '/employee/orders',
+    component: ManageOrders,
   },
 ];

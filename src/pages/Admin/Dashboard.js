@@ -57,7 +57,7 @@ const Dashboard = () => {
           <AddEmployee/>
           <AddStore/>
           <AddProduct/>*/}
-          <AddProduct/>
+          <AddCategory/>
         </div>
       </div>
   )

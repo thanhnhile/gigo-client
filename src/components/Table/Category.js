@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { httpGetAllCategories } from '../../apiServices/categoryServices';
 import className from 'classnames/bind';
@@ -52,7 +52,8 @@ function Category() {
                                                     ? (<td>Đang bán</td>)
                                                     : (<td>Hết</td>)
                                                 }
-                                                <td><Icon icon='material-symbols:edit-square-outline-rounded' /> | <Icon icon='material-symbols:delete-outline' /></td>
+                                                <td><Link to={`/admin/categories/edit/${cate.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                                                    | <Link to={'/admin/categories/add'} ><Icon icon='material-symbols:delete-outline' /></Link></td>
                                             </tr>
                                         );
                                     })}

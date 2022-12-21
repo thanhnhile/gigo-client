@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { httpGetAllEmployee } from '../../apiServices/employeeServices';
 import className from 'classnames/bind';
@@ -51,8 +51,9 @@ function Employee() {
                                                 <td>{employee.id}</td>
                                                 <td>{employee.name}</td>
                                                 <td>{employee.store.storeName}</td>
-                                                <td>{employee.store.district.name}</td>
-                                                <td><Icon icon='material-symbols:edit-square-outline-rounded' /> | <Icon icon='material-symbols:delete-outline' /></td>
+                                                <td>{employee.store.districtId}</td>
+                                                <td><Link to={`/admin/employees/edit/${employee.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                                                    | <Link to={'/admin/employees/add'} ><Icon icon='material-symbols:delete-outline' /></Link></td>
                                             </tr>
                                         );
                                     })}

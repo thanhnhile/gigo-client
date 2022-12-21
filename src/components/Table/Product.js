@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { httpGetAllProduct } from '../../apiServices/productServices';
 import className from 'classnames/bind';
@@ -56,7 +56,8 @@ function Product() {
                                                     ? (<td>Đang bán</td>)
                                                     : (<td>Hết</td>)
                                                 }
-                                                <td><Icon icon='material-symbols:edit-square-outline-rounded' /> | <Icon icon='material-symbols:delete-outline' /></td>
+                                                <td><Link to={`/admin/products/edit/${product.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                                                    | <Link to={'/admin/products/add'} ><Icon icon='material-symbols:delete-outline' /></Link></td>
                                             </tr>
                                         );
                                     })}

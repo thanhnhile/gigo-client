@@ -21,10 +21,14 @@ import Product from '../components/Table/Product';
 import Category from '../components/Table/Category';
 import Store from '../components/Table/Store';
 import Employee from '../components/Table/Employee';
-import AddProduct from '../components/Form/Product';
-import AddCategory from '../components/Form/Category';
-import AddStore from '../components/Form/Store';
-import AddEmployee from '../components/Form/Employee';
+import AddProduct from '../components/Form/AddProduct';
+import AddCategory from '../components/Form/AddCategory';
+import AddStore from '../components/Form/AddStore';
+import AddEmployee from '../components/Form/AddEmployee';
+import EditProduct from '../components/Form/EditProduct';
+import EditCategory from '../components/Form/EditCategory';
+import EditStore from '../components/Form/EditStore';
+import EditEmployee from '../components/Form/EditEmployee';
 
 export const publicRoutes = [
   {
@@ -93,36 +97,56 @@ export const adminRoutes = [
     path: '/admin',
     component: Dashboard,
   },
+
   {
     path: '/admin/products',
     component: Product,
-  },
-  {
-    path: '/admin/categories',
-    component: Category,
-  },
-  {
-    path: '/admin/stores',
-    component: Store,
-  },
-  {
-    path: '/admin/employees',
-    component: Employee,
   },
   {
     path: '/admin/products/add',
     component: AddProduct,
   },
   {
+    path: '/admin/products/edit/:id',
+    component: EditProduct,
+  },
+
+  {
+    path: '/admin/categories',
+    component: Category,
+  },
+  {
     path: '/admin/categories/add',
     component: AddCategory,
+  },
+  {
+    path: '/admin/categories/edit/:id',
+    component: EditCategory,
+  },
+
+  {
+    path: '/admin/stores',
+    component: Store,
   },
   {
     path: '/admin/stores/add',
     component: AddStore,
   },
   {
+    path: '/admin/stores/edit/:id',
+    component: EditStore,
+  },
+
+  {
+    path: '/admin/employees',
+    component: Employee,
+  },
+  {
     path: '/admin/employees/add',
     component: AddEmployee,
+  },
+  {
+    path: '/admin/employees/edit/:id',
+    component: EditEmployee,
   },
 ];

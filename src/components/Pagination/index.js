@@ -7,7 +7,6 @@ const cx = className.bind(styles);
 
 const Pagination = (props) => {
   const { onPageChange, totalPages, currentPage } = props;
-  console.log('TOTAL PAGE:', totalPages);
   const getRange = () => {
     let range = [];
     for (let i = 1; i <= totalPages; i++) {
@@ -21,7 +20,7 @@ const Pagination = (props) => {
   const onPrevious = () => {
     onPageChange(currentPage - 1);
   };
-  return (
+  return totalPages > 0 ? (
     <ul className={cx('pagination-container', { [className]: className })}>
       {/* Left navigation arrow */}
       <li
@@ -56,6 +55,8 @@ const Pagination = (props) => {
         <Icon icon='ic:baseline-keyboard-arrow-right' />
       </li>
     </ul>
+  ) : (
+    <p>Không có sản phẩm nào</p>
   );
 };
 

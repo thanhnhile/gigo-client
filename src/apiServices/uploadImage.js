@@ -1,17 +1,27 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage } from '~/firebase';
 
-const uploadImageToFirebase = (file) => {
-  if (file) return;
-  const imageName = Math.random().toString(36).substring(2, 9);
-  const imageRef = ref(storage, `productImages/${imageName}`);
-  uploadBytes(imageRef, file)
-    .then((snapshot) => {
-      getDownloadURL(snapshot.ref)
-        .then((url) => url)
-        .catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
+const uploadImage = (file) => {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      alert('Please choose a file first!');
+    }
+    const fileName = Math.random().toString(36).substring(2, 9);
+    const storageRef = ref(storage, `/files/${fileName}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {},
+      (err) => reject(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+          resolve(url);
+        });
+      }
+    );
+  });
 };
 
-export default uploadImageToFirebase;
+export default uploadImage;

@@ -34,3 +34,11 @@ export const httpGetProductByCateId = (id, limit = 6, offSet = 1) => {
     console.log(error.response.data);
   }
 };
+export const httpPostProduct = (payload) => {
+  try {
+    const res = request.post('/products', payload);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

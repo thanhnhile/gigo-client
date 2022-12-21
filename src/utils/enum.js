@@ -6,12 +6,12 @@ export const ROLE = {
 };
 export const DELIVERY_METHOD = [
   {
-    id: 1,
+    id: 0,
     name: 'Trực tiếp',
     price: 0,
   },
   {
-    id: 2,
+    id: 1,
     name: 'Giao hàng',
     price: 20000,
   },
@@ -33,5 +33,15 @@ export const ORDER_STATUS = [
   {
     id: 3,
     name: 'Đã hủy',
+  },
+];
+export const STATUS = [
+  {
+    id: 0,
+    name: 'Hoạt động',
+  },
+  {
+    id: 1,
+    name: 'Ẩn',
   },
 ];

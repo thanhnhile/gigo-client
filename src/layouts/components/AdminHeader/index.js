@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 
 const Header = () => {
@@ -7,9 +8,9 @@ const Header = () => {
       <span>
         <Icon icon='mdi:bell-check' />
       </span>
-      <span>
+      <Link to='/'>
         <Icon icon='material-symbols:logout' />
-      </span>
+      </Link>
     </header>
   );
 };

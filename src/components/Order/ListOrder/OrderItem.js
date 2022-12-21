@@ -36,7 +36,7 @@ const OrderItem = ({ order }) => {
         </div>
         <div className={cx('total')}>
           <p className={cx('price')}>{formatPrice(order.total)}</p>
-          <p>{ORDER_STATUS[order.status]}</p>
+          <p>{ORDER_STATUS[order.status].name}</p>
         </div>
       </div>
     </div>

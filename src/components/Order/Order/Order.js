@@ -18,7 +18,7 @@ const cacl = (cart) => {
 };
 function Order(props) {
   const { cart, removeAll } = useCart();
-  const { setOrderDetail } = useOrder();
+  const { orderDetail, setOrderDetail } = useOrder();
   const [shipMethod, setShipMethod] = useState(DELIVERY_METHOD[0].id);
   const [sumPrice, setSumPrice] = useState(() => cacl(cart));
   useEffect(() => {
@@ -72,7 +72,7 @@ function Order(props) {
                 onChange={(e) => {
                   setShipMethod(Number.parseInt(e.target.value));
                 }}
-                value={shipMethod.id}
+                value={orderDetail.orderType}
               >
                 {DELIVERY_METHOD.map((method, index) => (
                   <option

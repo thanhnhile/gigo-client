@@ -6,37 +6,17 @@ import styles from '../Sidebar/Sidebar.module.scss';
 
 const cx = className.bind(styles);
 
-const AdminMenu = () => {
+const EmployeeMenu = () => {
   const MENU_ITEM = [
     {
       title: 'Thống kê',
-      to: '/admin',
+      to: '/employee',
       icon: <Icon icon='ri:dashboard-3-line' />,
     },
     {
-      title: 'Sản phẩm',
-      to: '/admin/products',
-      icon: <Icon icon='ic:outline-shopping-bag' />,
-    },
-    {
-      title: 'Phân loại',
-      to: '/admin/categories',
-      icon: <Icon icon='tabler:category' />,
-    },
-    {
       title: 'Đơn hàng',
-      to: '/admin/orders',
+      to: '/employee/orders',
       icon: <Icon icon='material-symbols:order-play-outline-rounded' />,
-    },
-    {
-      title: 'Cửa hàng',
-      to: '/admin/stores',
-      icon: <Icon icon='ic:outline-store-mall-directory' />,
-    },
-    {
-      title: 'Nhân viên',
-      to: '/admin/employees',
-      icon: <Icon icon='clarity:employee-group-line' />,
     },
   ];
   const location = useLocation().pathname.split('/').pop();
@@ -45,9 +25,7 @@ const AdminMenu = () => {
     return (
       <li
         key={index}
-        className={cx({
-          active: item.to.split('/').pop().includes(location),
-        })}
+        className={cx({ active: item.to.split('/').pop().includes(location) })}
       >
         <Link to={item.to}>
           <span>{item.icon}</span>
@@ -58,4 +36,4 @@ const AdminMenu = () => {
   });
 };
 
-export default AdminMenu;
+export default EmployeeMenu;

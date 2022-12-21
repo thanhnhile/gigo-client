@@ -30,6 +30,9 @@ import EditCategory from '../components/Form/EditCategory';
 import EditStore from '../components/Form/EditStore';
 import EditEmployee from '../components/Form/EditEmployee';
 
+/*store employee */
+import ManageOrders from '../pages/Employee/ManageOrders';
+
 export const publicRoutes = [
   {
     path: '/',
@@ -148,5 +151,15 @@ export const adminRoutes = [
   {
     path: '/admin/employees/edit/:id',
     component: EditEmployee,
+  },
+];
+export const employeeRoutes = [
+  {
+    path: '/employee',
+    component: Dashboard,
+  },
+  {
+    path: '/employee/orders',
+    component: ManageOrders,
   },
 ];

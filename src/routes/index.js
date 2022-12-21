@@ -26,6 +26,9 @@ import AddCategory from '../components/Form/Category';
 import AddStore from '../components/Form/Store';
 import AddEmployee from '../components/Form/Employee';
 
+/*store employee */
+import ManageOrders from '../pages/Employee/ManageOrders';
+
 export const publicRoutes = [
   {
     path: '/',
@@ -124,5 +127,15 @@ export const adminRoutes = [
   {
     path: '/admin/employees/add',
     component: AddEmployee,
+  },
+];
+export const employeeRoutes = [
+  {
+    path: '/employee',
+    component: Dashboard,
+  },
+  {
+    path: '/employee/orders',
+    component: ManageOrders,
   },
 ];

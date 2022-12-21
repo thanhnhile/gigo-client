@@ -18,7 +18,8 @@ $header-height: 60px;
       justify-content: flex-end;
       font-size: 2.5rem;
       box-shadow: 3px 2px 5px #ccc;
-      span {
+      span,
+      a {
         color: var(--primary);
         cursor: pointer;
         &:not(:last-child) {
@@ -27,7 +28,8 @@ $header-height: 60px;
       }
     }
     main {
-      padding-top: $header-height;
+      padding: calc($header-height + 20px) 30px;
+      background-color: var(--bg-gray);
     }
   }
 }

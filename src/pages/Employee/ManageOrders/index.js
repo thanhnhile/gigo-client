@@ -18,21 +18,22 @@ const ManageOrders = () => {
     const res = await httpGetOrderByStoreId(2);
     if (res.data.content) {
       setData(res.data.content);
+      setDataRow(res.data.content);
     }
   };
   const handleFilterByUserphone = async (e) => {
     setUserPhone(e.target.value.trim());
     if (e.target.value.trim().length >= 10) {
       const result = data.filter(
-        (item) => item.account_username === e.target.value.trim()
+        (item) => item?.customer?.phone === e.target.value.trim()
       );
-      setData(result);
+      setDataRow(result);
     }
   };
   const handleFilterByStatus = async (e) => {
     setStatus(e.target.value);
     const result = data.filter(
-      (item) => item.status === Number.parseInt(status)
+      (item) => item.status === Number.parseInt(e.target.value)
     );
     console.log(result);
     setDataRow(result);
@@ -47,7 +48,7 @@ const ManageOrders = () => {
         <div className={cx('filter-item', 'icon')}>
           <Icon
             onClick={() => {
-              getOrderByStoreId();
+              //getOrderByStoreId();
               console.log(data);
               setDataRow(data);
             }}
@@ -79,7 +80,7 @@ const ManageOrders = () => {
           <Clickable primary text='Downloads' />
         </div>
       </div>
-      <TableOrder data={dataRow.length || data} />
+      <TableOrder data={dataRow} />
     </div>
   );
 };

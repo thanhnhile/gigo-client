@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '~/hooks';
 import Clickable from '~/components/Clickable';
@@ -27,7 +27,10 @@ const Personal = () => {
   });
   const [orders, setOrders] = useState([]);
   const [address, setAddress] = useState(() => {
-    return { provinceId: customer.provinceId, districtId: customer.districtId };
+    return {
+      provinceId: Number.parseInt(customer.provinceId),
+      districtId: Number.parseInt(customer.districtId),
+    };
   });
   const [toggleInput, setToggleInput] = useState(true);
   const [error, setError] = useState('');
@@ -38,14 +41,13 @@ const Personal = () => {
   useEffect(() => {
     const getCustomerInfo = async () => {
       const res = await httpGetCustomerInfoByUsername(auth.username);
-      console.log(res);
       if (res.data) {
         setCustomer(res.data);
-      }
+      } else setCustomer({ ...customer, provinceId: -1 });
     };
     const getHistoryOrders = async () => {
       const res = await httpGetOrderByAccountUsername(auth.username);
-      console.log(res);
+
       if (res.data) {
         setOrders(res.data);
       }
@@ -57,6 +59,7 @@ const Personal = () => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
   };
   const handleSave = async () => {
+    console.log(address);
     const updatedCustomer = { ...customer, ...address };
     console.log(updatedCustomer);
     if (
@@ -85,61 +88,69 @@ const Personal = () => {
     fullNameRef.current.focus();
   };
   return (
-    <div className={cx('container')}>
-      <h1>Xin chào {auth.username} </h1>
-      <div className={cx('wrapper')}>
-        <div className={cx('user-infor')}>
-          {error && <p className={cx('error')}>{error}</p>}
-          <h4>Thông tin cá nhân</h4>
-          <div className={cx('form-control')}>
-            <input
-              ref={fullNameRef}
-              value={customer.name}
-              onChange={handleChange}
-              name='name'
-              type='text'
-              placeholder='Họ và tên'
-              readOnly={toggleInput}
-            />
+    customer.provinceId && (
+      <div className={cx('container')}>
+        <h1>Xin chào {auth.username} </h1>
+        <div className={cx('wrapper')}>
+          <div className={cx('user-infor')}>
+            {error && <p className={cx('error')}>{error}</p>}
+            <h4>Thông tin cá nhân</h4>
+            <div className={cx('form-control')}>
+              <input
+                ref={fullNameRef}
+                value={customer.name}
+                onChange={handleChange}
+                name='name'
+                type='text'
+                placeholder='Họ và tên'
+                readOnly={toggleInput}
+              />
+            </div>
+            <div className={cx('form-control')}>
+              <input
+                ref={phoneRef}
+                name='phone'
+                onChange={handleChange}
+                value={customer.phone}
+                type='phone'
+                placeholder='Số điện thoại'
+                readOnly={toggleInput}
+              />
+            </div>
+            <div className={cx('form-control')}>
+              <h4>Địa chỉ</h4>
+              <SelectAddress
+                address={{
+                  provinceId: customer.provinceId,
+                  districtId: customer.districtId,
+                }}
+                setAddress={setAddress}
+              />
+            </div>
+            <div className={cx('form-control')}>
+              <input
+                ref={addressRef}
+                name='address'
+                onChange={handleChange}
+                value={customer.address}
+                type='text'
+                placeholder='Địa chỉ chi tiết'
+                readOnly={toggleInput}
+              />
+            </div>
+            <Clickable outline text='Lưu' onClick={handleSave} />
+            <Icon onClick={toggle} className={cx('icon')} icon='mdi:pencil' />
+            <div className={cx('logout-btn')}>
+              <Clickable text='Đăng xuất' primary onClick={handleLogout} />
+            </div>
           </div>
-          <div className={cx('form-control')}>
-            <input
-              ref={phoneRef}
-              name='phone'
-              onChange={handleChange}
-              value={customer.phone}
-              type='phone'
-              placeholder='Số điện thoại'
-              readOnly={toggleInput}
-            />
+          <div className={cx('order-info')}>
+            <h4>Lịch sử đơn hàng</h4>
+            <ListOrder orders={orders} />
           </div>
-          <div className={cx('form-control')}>
-            <h4>Địa chỉ</h4>
-            <SelectAddress address={address} setAddress={setAddress} />
-          </div>
-          <div className={cx('form-control')}>
-            <input
-              ref={addressRef}
-              name='address'
-              onChange={handleChange}
-              value={customer.address}
-              type='text'
-              placeholder='Địa chỉ chi tiết'
-              readOnly={toggleInput}
-            />
-          </div>
-          <Clickable outline text='Lưu' onClick={handleSave} />
-          <Icon onClick={toggle} className={cx('icon')} icon='mdi:pencil' />
-          <div className={cx('logout-btn')}>
-            <Clickable text='Đăng xuất' primary onClick={handleLogout} />
-          </div>
-        </div>
-        <div className={cx('order-info')}>
-          <h4>Lịch sử đơn hàng</h4>
-          <ListOrder orders={orders} />
         </div>
       </div>
-    </div>
+    )
   );
 };
 

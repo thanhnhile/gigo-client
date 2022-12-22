@@ -8,7 +8,7 @@ const cx = className.bind(styles);
 
 const OrderItem = ({ order }) => {
   return (
-    <div className={cx('order-item')}>
+    <div key={order.id} className={cx('order-item')}>
       <div className={cx('header')}>
         <span>Mã đơn hàng: {order.id}</span>
         <span>

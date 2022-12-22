@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import { Icon } from '@iconify/react';
 import { DELIVERY_METHOD, ORDER_STATUS } from '~/utils/enum';
+import Status from '~/components/Status';
 
 const columns = [
   {
@@ -31,30 +33,37 @@ const columns = [
     name: 'Phương thức',
     selector: (row) => {
       return row.orderType === DELIVERY_METHOD[0].id ? (
-        <div>OFFLINE</div>
+        <div>Tại cửa hàng</div>
       ) : (
-        <div>OFFLINE</div>
+        <div>Giao hàng</div>
       );
     },
   },
   {
     name: 'Trạng thái',
     selector: (row) => {
-      return (
-        <div className={ORDER_STATUS[row.status].name}>
-          {ORDER_STATUS[row.status].name}
-        </div>
-      );
+      switch (row.status) {
+        case 0:
+          return <Status text={ORDER_STATUS[row.status].name} inProgress />;
+        case 1:
+          return <Status text={ORDER_STATUS[row.status].name} delivering />;
+        case 2:
+          return <Status text={ORDER_STATUS[row.status].name} success />;
+        case 3:
+          return <Status text={ORDER_STATUS[row.status].name} canceled />;
+        default:
+          return <Status text={ORDER_STATUS[row.status].name} inProgress />;
+      }
     },
   },
   {
     name: 'Chi tiết',
     button: true,
     cell: (row) => (
-      <Icon
-        onClick={() => handleViewMore(row.id)}
-        icon='mdi:eye-plus-outline'
-      />
+      <Link to={`/employee/order/${row.id}`}>
+        {' '}
+        <Icon icon='mdi:eye-plus-outline' />
+      </Link>
     ),
     style: {
       color: 'var(--primary-color)',

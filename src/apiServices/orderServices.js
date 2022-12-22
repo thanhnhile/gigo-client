@@ -26,3 +26,12 @@ export const httpGetOrderByStoreId = (id) => {
     console.log(error.response.data);
   }
 };
+
+export const httpGetOrderById = (id) => {
+  try {
+    const res = request.get(`/orders/${id}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

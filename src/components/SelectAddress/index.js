@@ -1,11 +1,8 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useState } from 'react';
-import className from 'classnames/bind';
-import styles from './SelectAddress.module.scss';
 import Select from 'react-select';
 import axios from 'axios';
 
-const cx = className.bind(styles);
 const host = 'https://provinces.open-api.vn/api/?depth=2';
 
 const getOptions = (list, label) => {
@@ -17,21 +14,27 @@ const getOptions = (list, label) => {
 };
 
 const SelectAddress = ({ address, setAddress }) => {
+  const provinceValue = useRef();
+  const districtValue = useRef();
   const [provinces, setProvinces] = useState([]);
-  const [districts, setDistrict] = useState([]);
+  const [districts, setDistricts] = useState([]);
   const handleProvinceChange = (e) => {
     const data = provinces.find((item) => item.code === e.value);
-    setDistrict(data.districts);
+    provinceValue.current = e;
+    districtValue.current = '';
+    setDistricts(data.districts);
     setAddress((prev) => {
       return {
         provinceId: data.code,
+        provinceName: data.name,
         districtId: 2001,
       };
     });
   };
   const handleDistrictChange = (e) => {
+    districtValue.current = e;
     setAddress((prev) => {
-      return { ...prev, districtId: e.value };
+      return { ...prev, districtId: e.value, districtName: e.label };
     });
   };
   useEffect(() => {
@@ -44,24 +47,37 @@ const SelectAddress = ({ address, setAddress }) => {
           districts: province.districts,
         };
       });
+      console.log('ADDRESS ', address);
+      if (address.provinceId && address.districtId) {
+        const target = data.find((item) => item.code === address.provinceId);
+        if (target) {
+          provinceValue.current = { value: target.code, label: target.name };
+          const disTarget = target.districts.find(
+            (item) => item.code === address.districtId
+          );
+          districtValue.current = {
+            value: disTarget.code,
+            label: disTarget.name,
+          };
+          setDistricts(target.districts);
+        }
+      }
       setProvinces(data);
     };
     getProvince();
-    console.log('GET PROVINCES');
   }, []);
   const provinceOptions = getOptions(provinces, 'Chọn tỉnh/thành phố');
   const districtOptions = getOptions(districts, 'Chọn quận/huyện');
   return (
-    <div className={cx('wrapper')}>
+    <div>
+      {console.log('CURRENt ', provinceValue.current, districtValue.current)}
       <Select
-        defaultValue={provinceOptions[0]}
-        className={cx('select')}
+        value={provinceValue.current || provinceOptions[0]}
         options={provinceOptions}
         onChange={handleProvinceChange}
       />
       <Select
-        defaultValue={districtOptions[0]}
-        className={cx('select')}
+        value={districtValue.current || districtOptions[0]}
         options={districtOptions}
         onChange={handleDistrictChange}
       />

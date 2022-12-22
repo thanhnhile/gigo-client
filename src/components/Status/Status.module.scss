@@ -1,0 +1,26 @@
+$success: #5cb85c;
+$in-progress: #0275d8;
+$delivering: #f0ad4e;
+$canceled: #d9534f;
+
+@mixin status($bg) {
+  background-color: $bg;
+  color: #fff;
+}
+.wrapper {
+  font-size: 1.3rem;
+  padding: 5px 8px;
+  border-radius: 25px;
+  &.success {
+    @include status($success);
+  }
+  &.canceled {
+    @include status($canceled);
+  }
+  &.inProgress {
+    @include status($in-progress);
+  }
+  &.delivering {
+    @include status($delivering);
+  }
+}

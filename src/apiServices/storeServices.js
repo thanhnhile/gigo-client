@@ -13,6 +13,7 @@ export const httpGetStoreByAddress = (provinceId, districtId) => {
   return res;
 };
 
+<<<<<<< HEAD
 export const httpGetStoreById = (id) => {
   try {
     const res = request.get(`/stores/${id}`);

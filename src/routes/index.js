@@ -32,6 +32,7 @@ import EditEmployee from '../components/Form/EditEmployee';
 
 /*store employee */
 import ManageOrders from '../pages/Employee/ManageOrders';
+import Invoice from '../pages/Employee/Invoice';
 
 export const publicRoutes = [
   {
@@ -161,5 +162,9 @@ export const employeeRoutes = [
   {
     path: '/employee/orders',
     component: ManageOrders,
+  },
+  {
+    path: '/employee/order/:id',
+    component: Invoice,
   },
 ];

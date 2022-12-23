@@ -7,14 +7,20 @@
     background-color: var(--white);
     border-radius: var(--image-border-radius);
     .filter-item {
-      min-width: 300px;
       font-size: 1.6rem;
+      &.icon {
+        font-size: 2.3rem;
+        cursor: pointer;
+        &:hover {
+          color: var(--primary);
+        }
+      }
       &:not(:last-child) {
         margin-right: 25px;
       }
       input,
       select {
-        width: 100%;
+        min-width: 300px;
         padding: 10px 15px;
         border: none;
         border-radius: 8px;
@@ -28,14 +34,6 @@
   }
   .table-wrapper {
     width: 100%;
-    table {
-      thead {
-      }
-      tbody {
-      }
-      td {
-        padding: 5px 8px;
-      }
-    }
+    font-size: 1.4rem;
   }
 }

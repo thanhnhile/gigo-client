@@ -6,9 +6,7 @@ import {
   httpGetAllStore,
   httpGetStoreByAddress,
 } from '../../apiServices/storeServices';
-
 import SelectAddress from '../../components/SelectAddress';
-
 const cx = className.bind(styles);
 
 const Stores = () => {
@@ -28,6 +26,7 @@ const Stores = () => {
   useEffect(() => {
     console.log(address);
     const getStoreByAddress = async () => {
+      console.log(address);
       try {
         const res = await httpGetStoreByAddress(
           address.provinceId,

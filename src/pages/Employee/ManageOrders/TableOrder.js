@@ -1,5 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
+import { Icon } from '@iconify/react';
+import { DELIVERY_METHOD, ORDER_STATUS } from '~/utils/enum';
+import Status from '~/components/Status';
 
 const columns = [
   {
@@ -27,252 +31,81 @@ const columns = [
   },
   {
     name: 'Phương thức',
-    selector: (row) => row.orderType,
+    selector: (row) => {
+      return row.orderType === DELIVERY_METHOD[0].id ? (
+        <div>Tại cửa hàng</div>
+      ) : (
+        <div>Giao hàng</div>
+      );
+    },
   },
   {
     name: 'Trạng thái',
-    selector: (row) => row.status,
+    selector: (row) => {
+      switch (row.status) {
+        case 0:
+          return <Status text={ORDER_STATUS[row.status].name} inProgress />;
+        case 1:
+          return <Status text={ORDER_STATUS[row.status].name} delivering />;
+        case 2:
+          return <Status text={ORDER_STATUS[row.status].name} success />;
+        case 3:
+          return <Status text={ORDER_STATUS[row.status].name} canceled />;
+        default:
+          return <Status text={ORDER_STATUS[row.status].name} inProgress />;
+      }
+    },
   },
   {
     name: 'Chi tiết',
-    selector: (row) => row.status,
+    button: true,
+    cell: (row) => (
+      <Link to={`/employee/order/${row.id}`}>
+        {' '}
+        <Icon icon='mdi:eye-plus-outline' />
+      </Link>
+    ),
+    style: {
+      color: 'var(--primary-color)',
+      cursor: 'pointer',
+      fontSize: '1.8rem',
+    },
   },
 ];
-
-const data = [
-  {
-    id: 16,
-    status: 0,
-    orderType: 2,
-    pay: false,
-    total: 185000.0,
-    details: [
-      {
-        detail_id: 25,
-        price: 110000.0,
-        quantity: 2,
-        size: 'M',
-        product_id: 1,
-        productName: 'Tra sua full topping 2',
-        imgURL:
-          'https://product.hstatic.net/1000075078/product/1669736893_hi-tea-vai_82726e3ec8b445d8a76e2960b9a16f67_large.png',
-      },
-      {
-        detail_id: 26,
-        price: 55000.0,
-        quantity: 1,
-        size: 'S',
-        product_id: 1,
-        productName: 'Tra sua full topping 2',
-        imgURL:
-          'https://product.hstatic.net/1000075078/product/1669736893_hi-tea-vai_82726e3ec8b445d8a76e2960b9a16f67_large.png',
-      },
-    ],
-    customer: {
-      id: 1,
-      name: 'le thanh nhi',
-      phone: '0975802555',
-      address: 'số 10, vo van ngan',
-      provinceId: 1,
-      districtId: 1,
-      accountUsername: null,
+const customStyles = {
+  rows: {
+    style: {
+      minHeight: '50px', // override the row height
     },
-    employee_name: null,
-    store: {
-      id: 3,
-      storeName: 'Gigo Thu Duc 5',
-      provinceId: 1,
-      districtId: 1,
-      address: 'so 1, vo van ngan',
-    },
-    createdDate: '2022-12-19T07:27:18.000+00:00',
-    account_username: '0975802554',
   },
-  {
-    id: 15,
-    status: 0,
-    orderType: 1,
-    pay: false,
-    total: 55000.0,
-    details: [
-      {
-        detail_id: 22,
-        price: 55000.0,
-        quantity: 1,
-        size: 'S',
-        product_id: 3,
-        productName: 'Tra sua full topping 2',
-        imgURL:
-          'https://product.hstatic.net/1000075078/product/1669736893_hi-tea-vai_82726e3ec8b445d8a76e2960b9a16f67_large.png',
-      },
-    ],
-    customer: {
-      id: 15,
-      name: 'Lê Thị Thanh Nhi',
-      phone: '0975802554',
-      address: 'Long Đại, Long Vĩnh, Châu Thành',
-      provinceId: 1,
-      districtId: 1,
-      accountUsername: null,
+  headCells: {
+    style: {
+      paddingLeft: '8px', // override the cell padding for head cells
+      paddingRight: '8px',
+      fontSize: '1.5rem',
+      fontWeight: '500',
     },
-    employee_name: null,
-    store: {
-      id: 3,
-      storeName: 'Gigo Thu Duc 5',
-      provinceId: 1,
-      districtId: 1,
-      address: 'so 1, vo van ngan',
-    },
-    createdDate: '2022-12-18T04:15:26.000+00:00',
-    account_username: null,
   },
-  {
-    id: 12,
-    status: 0,
-    orderType: 2,
-    pay: false,
-    total: 55000.0,
-    details: [
-      {
-        detail_id: 12,
-        price: 35000.0,
-        quantity: 1,
-        size: 'S',
-        product_id: 2,
-        productName: 'Tra sua full topping 2',
-        imgURL:
-          'https://product.hstatic.net/1000075078/product/1669736893_hi-tea-vai_82726e3ec8b445d8a76e2960b9a16f67_large.png',
-      },
-    ],
-    customer: {
-      id: 14,
-      name: 'Lê Thị Thanh Nhi',
-      phone: '0975802554',
-      address: 'Long Đại, Long Vĩnh, Châu Thành',
-      provinceId: 1,
-      districtId: 1,
-      accountUsername: null,
+  cells: {
+    style: {
+      paddingLeft: '8px', // override the cell padding for data cells
+      paddingRight: '8px',
+      fontSize: '1.2rem',
     },
-    employee_name: null,
-    store: {
-      id: 3,
-      storeName: 'Gigo Thu Duc 5',
-      provinceId: 1,
-      districtId: 1,
-      address: 'so 1, vo van ngan',
-    },
-    createdDate: '2022-12-18T04:04:34.000+00:00',
-    account_username: null,
   },
-  {
-    id: 11,
-    status: 0,
-    orderType: 1,
-    pay: false,
-    total: 35000.0,
-    details: [
-      {
-        detail_id: 10,
-        price: 35000.0,
-        quantity: 1,
-        size: 'S',
-        product_id: 2,
-        productName: 'Tra sua full topping 2',
-        imgURL:
-          'https://product.hstatic.net/1000075078/product/1669736893_hi-tea-vai_82726e3ec8b445d8a76e2960b9a16f67_large.png',
-      },
-    ],
-    customer: {
-      id: 13,
-      name: 'Lê Thị Thanh Nhi',
-      phone: '0975802554',
-      address: 'Long Đại, Long Vĩnh, Châu Thành',
-      provinceId: 1,
-      districtId: 1,
-      accountUsername: null,
-    },
-    employee_name: null,
-    store: {
-      id: 3,
-      storeName: 'Gigo Thu Duc 5',
-      provinceId: 1,
-      districtId: 1,
-      address: 'so 1, vo van ngan',
-    },
-    createdDate: '2022-12-18T03:57:31.000+00:00',
-    account_username: null,
-  },
-  {
-    id: 9,
-    status: 0,
-    orderType: 1,
-    pay: false,
-    total: 70000.0,
-    details: [
-      {
-        detail_id: 6,
-        price: 35000.0,
-        quantity: 1,
-        size: null,
-        product_id: 2,
-        productName: 'Tra sua full topping 2',
-        imgURL:
-          'https://product.hstatic.net/1000075078/product/1669736893_hi-tea-vai_82726e3ec8b445d8a76e2960b9a16f67_large.png',
-      },
-    ],
-    customer: {
-      id: 1,
-      name: 'le thanh nhi',
-      phone: '0975802555',
-      address: 'số 10, vo van ngan',
-      provinceId: 1,
-      districtId: 1,
-      accountUsername: null,
-    },
-    employee_name: null,
-    store: {
-      id: 3,
-      storeName: 'Gigo Thu Duc 5',
-      provinceId: 1,
-      districtId: 1,
-      address: 'so 1, vo van ngan',
-    },
-    createdDate: '2022-12-18T03:51:07.000+00:00',
-    account_username: '0975802554',
-  },
-  {
-    id: 7,
-    status: 0,
-    orderType: 2,
-    pay: false,
-    total: 55000.0,
-    details: [],
-    customer: {
-      id: 1,
-      name: 'le thanh nhi',
-      phone: '0975802555',
-      address: 'số 10, vo van ngan',
-      provinceId: 1,
-      districtId: 1,
-      accountUsername: null,
-    },
-    employee_name: null,
-    store: {
-      id: 3,
-      storeName: 'Gigo Thu Duc 5',
-      provinceId: 1,
-      districtId: 1,
-      address: 'so 1, vo van ngan',
-    },
-    createdDate: '2022-12-17T17:12:06.000+00:00',
-    account_username: '0975802554',
-  },
-];
-
-const TableOrder = ({ list }) => {
+};
+const handleViewMore = (id) => {
+  alert('View more ' + id);
+};
+const TableOrder = ({ data }) => {
   return (
     <div className='table-wrapper'>
-      <DataTable pagination columns={columns} data={data} />
+      <DataTable
+        pagination
+        columns={columns}
+        data={data}
+        customStyles={customStyles}
+      />
     </div>
   );
 };

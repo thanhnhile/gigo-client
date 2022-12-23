@@ -17,3 +17,21 @@ export const httpGetOrderByAccountUsername = (username) => {
     console.log(error.response.data);
   }
 };
+
+export const httpGetOrderByStoreId = (id) => {
+  try {
+    const res = request.get(`/orders?store_id=${id}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const httpGetOrderById = (id) => {
+  try {
+    const res = request.get(`/orders/${id}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

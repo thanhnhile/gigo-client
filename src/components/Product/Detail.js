@@ -20,7 +20,7 @@ const ProductDetail = ({ product }) => {
     setSize(e.target.value);
   };
   const handleAddToCart = () => {
-    const surCharge = size === 's' ? 0 : size === 'm' ? 6000 : 10000;
+    const surCharge = size === 'S' ? 0 : size === 'M' ? 6000 : 10000;
     const cartItem = {
       id: product.id,
       image: product.imgURL,

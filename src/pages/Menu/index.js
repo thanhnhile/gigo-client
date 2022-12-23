@@ -26,8 +26,14 @@ const Menu = () => {
       setMenu(response.data);
     };
     getAllCategories();
+    if (id === 'all') {
+      getProductAll();
+    } else {
+      getProductByCateId();
+    }
     setPage(1);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   const getProductByCateId = async () => {
     const response = await httpGetProductByCateId(id, 6, page);
     setData({

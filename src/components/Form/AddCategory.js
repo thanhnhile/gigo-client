@@ -11,14 +11,13 @@ function Category() {
     const navigate = useNavigate();
     const [category, setCategory] = useState(initValue);
     const handleChange = (e) => {
+        console.log(e.target.value);
         setCategory({ ...category, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
-        if(category.name === '')
-        {
-            e.preventDefault();
-        }
+        e.preventDefault();
+        
         const newCategory = {
             name: category.name,
         };
@@ -37,9 +36,21 @@ function Category() {
                 <label>Tên</label>
                 <input name="name"
                     type="text"
+                    value={category.name}
                     onChange={handleChange}
                     required />
                 
+                <label>Trạng thái</label>
+                <select name="status"
+                    value={category.status}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="default">--Chọn--</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+
                 <input type="submit" className={cx("submitButton")} onClick={() => handleSubmit()} />
             </form>
         </div>

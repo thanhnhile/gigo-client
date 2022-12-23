@@ -31,8 +31,8 @@ export const httpPostStore = (payload) => {
   }
 };
 
-export const httpPutStore = (id,name,status) => {
-  const data ={name,status};
+export const httpPutStore = (id,name,provinceId,districtId,address) => {
+  const data ={name,provinceId,districtId,address};
   try {
       const res = request.put(`/stores/${id}`, data);
       return res;

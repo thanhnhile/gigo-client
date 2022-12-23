@@ -7,13 +7,25 @@ import { useNavigate } from 'react-router-dom';
 import { httpPostEmployee } from '../../apiServices/employeeServices';
 
 const cx = className.bind(styles);
-const initValue = { name: '' };
+const initValue = { name: '', store: '', account: '' };
 
 function Employee() {
     const navigate = useNavigate();
+
     const [employee, setEmployee] = useState({});
     const handleChange = (e) => {
         setEmployee({ ...employee, [e.target.name]: e.target.value });
+    };
+    const [storeId, setStoreId] = useState();
+    const handleChangeStore = (e) => {
+        console.log(e.target.value);
+        setStoreId(e.target.value);
+    };
+
+    const [accountId, setAccountId] = useState();
+    const handleChangeAccount = (e) => {
+        console.log(e.target.value);
+        setStoreId(e.target.value);
     };
 
     const [store, setStore] = useState([]);
@@ -35,15 +47,16 @@ function Employee() {
     }, []);
 
     const handleSubmit = async (e) => {
-        if(employee.name === '' )
-        {
+        if (employee.name === '') {
             e.preventDefault();
         }
         const newEmployee = {
-            name: employee.name
+            name: employee.name,
+            store: storeId.store,
+            account: accountId.account
         };
         const response = await httpPostEmployee(newEmployee);
-        
+
         setEmployee(initValue);
         console.log(response);
         response.errMsg && navigate('/admin/employees');
@@ -61,7 +74,10 @@ function Employee() {
                     required />
 
                 <label>Cửa hàng</label>
-                <select name="store">
+                <select name="store"
+                    value={storeId}
+                    onChange={handleChangeStore}
+                    required>
                     <option>--Chọn--</option>
                     {store.map((store) => {
                         return (
@@ -70,7 +86,10 @@ function Employee() {
                 </select>
 
                 <label>Tài khoản</label>
-                <select name="account">
+                <select name="account"
+                    value={accountId}
+                    onChange={handleChangeAccount}
+                    required>
                     <option>--Chọn--</option>
                     {account.map((account) => {
                         return (
@@ -78,7 +97,7 @@ function Employee() {
                     })}
                 </select>
 
-                <input type="submit" className={cx("submitButton")} onClick={() => handleSubmit()}/>
+                <input type="submit" className={cx("submitButton")} onClick={() => handleSubmit()} />
             </form>
         </div>
 

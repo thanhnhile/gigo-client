@@ -21,6 +21,10 @@ function Employee() {
     const handleChange = (e) => {
         setEmployee({ ...employee, [e.target.name]: e.target.value });
     };
+    const handleChangeStore = (e) => {
+        console.log(e.target.value);
+        setStoreId(e.target.value);
+    };
     useEffect(() => {
         const getEmployeeById = async () => {
             const response = await httpGetEmployeeById(id);
@@ -32,7 +36,7 @@ function Employee() {
         getEmployeeById();
     }, [id]);
 
-    const [store, setStore] = useState([]);
+    const [stores, setStore] = useState([]);
     useEffect(() => {
         const getAllStore = async () => {
             const response = await httpGetAllStore();
@@ -74,24 +78,27 @@ function Employee() {
         <div className={cx("wrapper")}>
             <form >
                 <h1>Nhân viên</h1>
+                
                 <label>Tên</label>
                 <input name="name" 
                     ref={nameRef}
                     value={employee.name}
                     onChange={handleChange}/>
+                
                 <label>Cửa hàng</label>
                 <select name="store"
                     ref={storeRef}
                     value={storeId}
-                    onChange={handleChange}
+                    onChange={handleChangeStore}
                     required
                 >
                     <option value='default'>--Chọn--</option>
-                    {store.map((store) => {
+                    {stores.map((store) => {
                         return (
                             <option value={store.id}>{store.storeName}</option>);
                     })}
                 </select>
+                
                 <label>Tài khoản</label>
                 <select name="account"
                     ref={accountRef}

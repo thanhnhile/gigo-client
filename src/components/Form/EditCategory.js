@@ -24,11 +24,12 @@ function Category() {
     }, [id]);
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         const name = nameRef.current.value;
         const status = statusRef.current.value;
         if(name === '')
         {
-            e.preventDefault();
+            
         }
         try {
             await httpPutCategory(category.id, name, status)

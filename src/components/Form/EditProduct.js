@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Form.module.scss';
 import { httpGetAllCategories } from '../../apiServices/categoryServices';
-import { httpGetProductById } from '../../apiServices/productServices';
+import { httpGetProductById, httpPutProduct } from '../../apiServices/productServices';
 
 
 const cx = className.bind(styles);
 function Product() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const categoryRef = useRef(null);
     const nameRef = useRef(null);
     const priceRef = useRef(null);
@@ -19,6 +20,10 @@ function Product() {
     const [product, setProduct] = useState({});
     const handleChange = (e) => {
         setProduct({ ...product, [e.target.name]: e.target.value });
+    };
+    const handleChangeCate = (e) => {
+        console.log(e.target.value);
+        setCategory(e.target.value);
     };
     useEffect(() => {
         const getProductById = async () => {
@@ -39,14 +44,41 @@ function Product() {
         };
         getAllCategories();
     }, []);
+
+    const handleSubmit = async (e) => {
+        const name = nameRef.current.value;
+        const price = priceRef.current.value;
+        const description = descriptonRef.current.value;
+        const status = statusRef.current.value;
+        if(name === '')
+        {
+            e.preventDefault();
+        }
+        try {
+            await httpPutProduct(category.id, name, status)
+                .then
+                (
+                    () => {
+                        navigate('/admin/products');
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
     return (
         <div className={cx("wrapper")}>
             <form >
                 <h1>Sản phẩm</h1>
                 <label>Phân loại</label>
                 <select name="category"
+                    ref={categoryRef}
                     value={category}
-                    onChange={handleChange}
+                    onChange={handleChangeCate}
                     required
                 >
                     <option value='default'>--Chọn--</option>

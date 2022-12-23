@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import className from 'classnames/bind';
 import SelectAddress from '../SelectAddress';
 import styles from './Form.module.scss';
-import { httpGetStoreByAddress, httpPostStore } from '../../apiServices/storeServices';
+import { httpPostStore } from '../../apiServices/storeServices';
 import { useNavigate } from 'react-router-dom';
 
 const cx = className.bind(styles);
-const initValue = { name: '', address: '' };
+const initValue = { name: '', provinceId: '', districtId: '', address: '' };
 
 function Store() {
     const navigate = useNavigate();
@@ -19,23 +19,6 @@ function Store() {
         provinceId: '',
         districtId: '',
     });
-    useEffect(() => {
-        console.log(address);
-        const getStoreByAddress = async () => {
-            try {
-                const res = await httpGetStoreByAddress(
-                    address.provinceId,
-                    address.districtId
-                );
-                // if (res.data) {
-                //     setStore(res.data);
-                // }
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getStoreByAddress();
-    }, [address.provinceId, address.districtId, address]);
 
     const handleSubmit = async (e) => {
         if(store.name === '' || store.address === '')
@@ -44,6 +27,8 @@ function Store() {
         }
         const newStore = {
             name: store.name,
+            provinceId: address.provinceId, 
+            districtId: address.districtId,
             address: store.address
         };
         const response = await httpPostStore(newStore);
@@ -66,7 +51,8 @@ function Store() {
 
                 <label>District</label>
                 <SelectAddress address={address} setAddress={setAddress} />
-
+                {console.log(address)}
+                
                 <label>Address</label>
                 <input name="address"
                     type="text"

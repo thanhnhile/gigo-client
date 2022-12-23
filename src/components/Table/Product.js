@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { httpGetAllProduct } from '../../apiServices/productServices';
+import { httpDeleteProduct, httpGetAllProduct } from '../../apiServices/productServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
 
@@ -21,6 +21,15 @@ function Product() {
     const handleAdd = async () => {
         navigate("/admin/products/add");
     };
+    const deleteData = async(id) => {
+        if (window.confirm("Bạn có muốn xóa không?")) 
+        {
+            await httpDeleteProduct(id)
+                .then(console.log("Deleted"))
+                .catch(err => console.log(err));
+        }
+    };
+
     return (
         <div className={cx("container")}>
             <div className={cx("row")}>
@@ -57,7 +66,7 @@ function Product() {
                                                     : (<td>Hết</td>)
                                                 }
                                                 <td><Link to={`/admin/products/edit/${product.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
-                                                    | <Link to={'/admin/products/add'} ><Icon icon='material-symbols:delete-outline' /></Link></td>
+                                                    | <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(product.id)}/></td>
                                             </tr>
                                         );
                                     })}

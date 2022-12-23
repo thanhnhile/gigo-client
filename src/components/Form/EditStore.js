@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import className from 'classnames/bind';
 import SelectAddress from '../SelectAddress';
 import styles from './Form.module.scss';
-import { httpGetStoreByAddress, httpGetStoreById } from '../../apiServices/storeServices';
+import { httpGetStoreById, httpPutStore } from '../../apiServices/storeServices';
 
 const cx = className.bind(styles);
 function Store() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const nameRef = useRef(null);
     const addressRef = useRef(null);
-    const statusRef = useRef(null);
     const [store, setStore] = useState({});
     const handleChange = (e) => {
         setStore({ ...store, [e.target.name]: e.target.value });
@@ -27,23 +27,31 @@ function Store() {
         provinceId: '',
         districtId: '',
     });
-    useEffect(() => {
-        console.log(address);
-        const getStoreByAddress = async () => {
-            try {
-                const res = await httpGetStoreByAddress(
-                    address.provinceId,
-                    address.districtId
+    const handleSubmit = async (e) => {
+        const name = nameRef.current.value;
+        const address = addressRef.current.value;
+        const province = address.provinceId;
+        const district = address.districtId;
+        if(name === '' || address === '')
+        {
+            e.preventDefault();
+        }
+        try {
+            await httpPutStore(store.id, name, province, district, address)
+                .then
+                (
+                    () => {
+                        navigate('/admin/stores');
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
                 );
-                // if (res.data) {
-                //     setStore(res.data);
-                // }
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getStoreByAddress();
-    }, [address.provinceId, address.districtId, address]);
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
     return (
         <div className={cx("wrapper")}>
             <form >
@@ -60,7 +68,7 @@ function Store() {
                     ref={addressRef}
                     value={store.address}
                     onChange={handleChange} />
-                <input type="submit" className={cx("submitButton")} />
+                <input type="submit" className={cx("submitButton")} onClick={() => handleSubmit()}/>
             </form>
         </div>
     )

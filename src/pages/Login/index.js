@@ -5,6 +5,8 @@ import styles from './Login.module.scss';
 import Clickable from '../../components/Clickable';
 import useAuth from '~/hooks/useAuth';
 import { httpAuth } from '../../apiServices/authServices';
+import { httpGetEmployeeAccountUsername } from '~/apiServices/employeeServices';
+import { ROLE } from '~/utils/enum';
 
 const cx = className.bind(styles);
 const initValue = { username: '', password: '' };
@@ -28,7 +30,18 @@ function Login() {
     const username = response.data.username;
     const accessToken = response.data.accessToken;
     const roles = response.data.roles.map((role) => role.authority);
-    setAuth({ username, accessToken, roles });
+    if (roles.includes(ROLE['EMPLOYEE'])) {
+      const res = await httpGetEmployeeAccountUsername(username);
+      if (response.data) {
+        const employeeInfo = {
+          employeeId: res.data.id,
+          storeId: res.data?.store?.id,
+        };
+        setAuth({ username, accessToken, roles, employeeInfo });
+      }
+    } else {
+      setAuth({ username, accessToken, roles });
+    }
     setUser(initValue);
     setError('');
     navigate('/');

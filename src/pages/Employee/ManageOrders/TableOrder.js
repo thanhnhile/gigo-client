@@ -4,6 +4,7 @@ import DataTable from 'react-data-table-component';
 import { Icon } from '@iconify/react';
 import { DELIVERY_METHOD, ORDER_STATUS } from '~/utils/enum';
 import Status from '~/components/Status';
+import { formatPrice } from '~/utils/format';
 
 const columns = [
   {
@@ -27,7 +28,7 @@ const columns = [
   },
   {
     name: 'Tổng đơn',
-    selector: (row) => row.total,
+    selector: (row) => formatPrice(row.total),
   },
   {
     name: 'Phương thức',
@@ -44,15 +45,15 @@ const columns = [
     selector: (row) => {
       switch (row.status) {
         case 0:
-          return <Status text={ORDER_STATUS[row.status].name} inProgress />;
+          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
         case 1:
-          return <Status text={ORDER_STATUS[row.status].name} delivering />;
+          return <Status text={ORDER_STATUS.DELIVERING.name} delivering />;
         case 2:
-          return <Status text={ORDER_STATUS[row.status].name} success />;
+          return <Status text={ORDER_STATUS.SUCCESS.name} success />;
         case 3:
-          return <Status text={ORDER_STATUS[row.status].name} canceled />;
+          return <Status text={ORDER_STATUS.CANCELED.name} canceled />;
         default:
-          return <Status text={ORDER_STATUS[row.status].name} inProgress />;
+          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
       }
     },
   },
@@ -93,9 +94,6 @@ const customStyles = {
       fontSize: '1.2rem',
     },
   },
-};
-const handleViewMore = (id) => {
-  alert('View more ' + id);
 };
 const TableOrder = ({ data }) => {
   return (

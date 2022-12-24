@@ -19,7 +19,9 @@ const cacl = (cart) => {
 function Order(props) {
   const { cart, removeAll } = useCart();
   const { orderDetail, setOrderDetail } = useOrder();
-  const [shipMethod, setShipMethod] = useState(DELIVERY_METHOD[0].id);
+  const [shipMethod, setShipMethod] = useState(
+    orderDetail.orderType || DELIVERY_METHOD[0].id
+  );
   const [sumPrice, setSumPrice] = useState(() => cacl(cart));
   useEffect(() => {
     setSumPrice(cacl(cart));

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
@@ -34,7 +34,11 @@ const SelectAddress = ({ address, setAddress }) => {
   const handleDistrictChange = (e) => {
     districtValue.current = e;
     setAddress((prev) => {
-      return { ...prev, districtId: e.value, districtName: e.label };
+      return {
+        ...prev,
+        districtId: e.value,
+        districtName: e.label,
+      };
     });
   };
   useEffect(() => {

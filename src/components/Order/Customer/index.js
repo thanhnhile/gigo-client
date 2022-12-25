@@ -22,7 +22,7 @@ const Customer = () => {
       console.log(res.data);
       if (res.data) {
         const customer = res.data;
-        setCustomer(customer);
+        setCustomer({ ...customer, id: '' });
         setAddress({
           provinceId: customer.provinceId,
           districtId: customer.districtId,
@@ -37,8 +37,6 @@ const Customer = () => {
         address.provinceId,
         address.districtId
       );
-      console.log('ADDRESS ', address);
-      console.log('STORE: ', res.data);
       if (res.data?.length > 0) {
         setStores(res.data);
         setCustomer({ ...customer, ...address, store_id: res.data[0].id });

@@ -17,28 +17,28 @@ export const DELIVERY_METHOD = [
   },
 ];
 
-export const ORDER_STATUS = [
-  {
+export const ORDER_STATUS = {
+  IN_PROGRESS: {
     id: 0,
     name: 'In Progress',
     status: 'inProgress',
   },
-  {
+  DELIVERING: {
     id: 1,
     name: 'Delivering',
     status: 'delivering',
   },
-  {
+  SUCCESS: {
     id: 2,
     name: 'Success',
     status: 'success',
   },
-  {
+  CANCELED: {
     id: 3,
     name: 'Canceled',
     status: 'canceled',
   },
-];
+};
 export const STATUS = [
   {
     id:0,

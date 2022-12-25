@@ -6,16 +6,19 @@ import Clickable from '~/components/Clickable';
 import TableOrder from './TableOrder';
 import { httpGetOrderByStoreId } from '~/apiServices/orderServices';
 import { Icon } from '@iconify/react';
+import { useAuth } from '~/hooks';
 
 const cx = className.bind(styles);
 
 const ManageOrders = () => {
+  const { auth } = useAuth();
+  console.log('AUTHL ', auth);
   const [data, setData] = useState([]);
   const [dataRow, setDataRow] = useState(data);
   const [userPhone, setUserPhone] = useState('');
   const [status, setStatus] = useState('');
   const getOrderByStoreId = async () => {
-    const res = await httpGetOrderByStoreId(2);
+    const res = await httpGetOrderByStoreId(auth?.employeeInfo?.storeId);
     if (res.data.content) {
       setData(res.data.content);
       setDataRow(res.data.content);
@@ -69,7 +72,7 @@ const ManageOrders = () => {
             value={status}
             onChange={(e) => handleFilterByStatus(e)}
           >
-            {ORDER_STATUS.map((item) => (
+            {Object.values(ORDER_STATUS).map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>

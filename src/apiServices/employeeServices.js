@@ -17,6 +17,15 @@ export const httpGetEmployeeById = (id) => {
   }
 };
 
+export const httpGetEmployeeAccountUsername = (username) => {
+  try {
+    const res = request.get(`/employees/account/${username}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
 export const httpPostEmployee = (payload) => {
   try {
     const res = request.post('/employees', payload);
@@ -43,3 +52,4 @@ export const httpDeleteEmployee = (id) => {
     console.log(error.response.data.errMsg);
   }
 };
+

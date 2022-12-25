@@ -31,11 +31,12 @@ const Pagination = (props) => {
       >
         <Icon icon='ic:baseline-keyboard-arrow-left' />
       </li>
-      {getRange().map((pageNumber) => {
+      {getRange().map((pageNumber, index) => {
         // If the pageItem is a DOT, render the DOTS unicode character
         // Render our Page Pills
         return (
           <li
+            key={index}
             className={cx('pagination-item', {
               selected: pageNumber === currentPage,
             })}

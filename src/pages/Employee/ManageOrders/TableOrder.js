@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DataTable from 'react-data-table-component';
 import { Icon } from '@iconify/react';
 import { DELIVERY_METHOD, ORDER_STATUS } from '~/utils/enum';
 import Status from '~/components/Status';
+import { formatPrice } from '~/utils/format';
+import CustomDataTable from '~/components/CustomDataTable';
 
 const columns = [
   {
@@ -27,7 +28,7 @@ const columns = [
   },
   {
     name: 'Tổng đơn',
-    selector: (row) => row.total,
+    selector: (row) => formatPrice(row.total),
   },
   {
     name: 'Phương thức',
@@ -44,15 +45,15 @@ const columns = [
     selector: (row) => {
       switch (row.status) {
         case 0:
-          return <Status text={ORDER_STATUS[row.status].name} inProgress />;
+          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
         case 1:
-          return <Status text={ORDER_STATUS[row.status].name} delivering />;
+          return <Status text={ORDER_STATUS.DELIVERING.name} delivering />;
         case 2:
-          return <Status text={ORDER_STATUS[row.status].name} success />;
+          return <Status text={ORDER_STATUS.SUCCESS.name} success />;
         case 3:
-          return <Status text={ORDER_STATUS[row.status].name} canceled />;
+          return <Status text={ORDER_STATUS.CANCELED.name} canceled />;
         default:
-          return <Status text={ORDER_STATUS[row.status].name} inProgress />;
+          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
       }
     },
   },
@@ -72,40 +73,10 @@ const columns = [
     },
   },
 ];
-const customStyles = {
-  rows: {
-    style: {
-      minHeight: '50px', // override the row height
-    },
-  },
-  headCells: {
-    style: {
-      paddingLeft: '8px', // override the cell padding for head cells
-      paddingRight: '8px',
-      fontSize: '1.5rem',
-      fontWeight: '500',
-    },
-  },
-  cells: {
-    style: {
-      paddingLeft: '8px', // override the cell padding for data cells
-      paddingRight: '8px',
-      fontSize: '1.2rem',
-    },
-  },
-};
-const handleViewMore = (id) => {
-  alert('View more ' + id);
-};
 const TableOrder = ({ data }) => {
   return (
     <div className='table-wrapper'>
-      <DataTable
-        pagination
-        columns={columns}
-        data={data}
-        customStyles={customStyles}
-      />
+      <CustomDataTable data={data} columns={columns} />
     </div>
   );
 };

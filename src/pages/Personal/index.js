@@ -7,7 +7,10 @@ import styles from './Personal.module.scss';
 import { Icon } from '@iconify/react';
 import SelectAddress from '~/components/SelectAddress';
 import { httpGetCustomerInfoByUsername } from '~/apiServices/userServices';
-import { httpEditCustomer } from '~/apiServices/customerServices';
+import {
+  httpEditCustomer,
+  httpPostCustomer,
+} from '~/apiServices/customerServices';
 import { httpGetOrderByAccountUsername } from '~/apiServices/orderServices';
 import ListOrder from '~/components/Order/ListOrder/ListOrder';
 
@@ -43,6 +46,11 @@ const Personal = () => {
       const res = await httpGetCustomerInfoByUsername(auth.username);
       if (res.data) {
         setCustomer(res.data);
+        setAddress({
+          provinceId: res.data.provinceId,
+          districtId: res.data.districtId,
+        });
+        console.log(res.data);
       } else setCustomer({ ...customer, provinceId: -1 });
     };
     const getHistoryOrders = async () => {
@@ -59,8 +67,28 @@ const Personal = () => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
   };
   const handleSave = async () => {
-    console.log(address);
-    const updatedCustomer = { ...customer, ...address };
+    let fullAddress = customer.address;
+    if (address.provinceName) {
+      if (!address.districtName) {
+        setError('Vui lòng chọn quận/huyện');
+        return;
+      }
+      const index = fullAddress.includes('huyện')
+        ? fullAddress.indexOf('huyện')
+        : fullAddress.indexOf('quận');
+
+      const prefix =
+        fullAddress.includes('huyện') || fullAddress.includes('quận')
+          ? customer.address.slice(0, index - 2)
+          : customer.address;
+      fullAddress = `${prefix}, ${address.districtName}, ${address.provinceName}`;
+    }
+    const updatedCustomer = {
+      ...customer,
+      districtId: address.districtId,
+      provinceId: address.provinceId,
+      address: fullAddress.toLowerCase(),
+    };
     console.log(updatedCustomer);
     if (
       updatedCustomer.name === '' ||
@@ -73,7 +101,14 @@ const Personal = () => {
       return;
     }
     try {
-      const res = await httpEditCustomer(updatedCustomer.id, updatedCustomer);
+      let res = {};
+      if (customer.id) {
+        res = await httpEditCustomer(updatedCustomer.id, updatedCustomer);
+        console.log(res.data);
+      } else {
+        res = await httpPostCustomer(updatedCustomer);
+        console.log(res.data);
+      }
       setCustomer(res.data);
     } catch (error) {
       console.log(error);
@@ -88,7 +123,7 @@ const Personal = () => {
     fullNameRef.current.focus();
   };
   return (
-    customer.provinceId && (
+    customer?.provinceId && (
       <div className={cx('container')}>
         <h1>Xin chào {auth.username} </h1>
         <div className={cx('wrapper')}>

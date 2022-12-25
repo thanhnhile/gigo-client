@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { httpGetAllProduct } from '../../apiServices/productServices';
+import { httpDeleteProduct, httpGetAllProduct } from '../../apiServices/productServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
 
@@ -9,18 +9,30 @@ const cx = className.bind(styles);
 function Product() {
     const [product, setProduct] = useState([]);
     useEffect(() => {
-        const getAllProduct = async () => {
-            const response = await httpGetAllProduct();
-            console.log(response);
-            setProduct(response.data.content);
-        };
         getAllProduct();
     }, []);
+
+    const getAllProduct = async () => {
+        const response = await httpGetAllProduct();
+        console.log(response);
+        setProduct(response.data.content);
+    };
 
     const navigate = useNavigate();
     const handleAdd = async () => {
         navigate("/admin/products/add");
     };
+    const deleteData = async(id) => {
+        if (window.confirm("Bạn có muốn xóa không?")) 
+        {
+            await httpDeleteProduct(id)
+                .then(console.log("Deleted"))
+                .catch(err => console.log(err));
+                getAllProduct();
+        }
+        
+    };
+
     return (
         <div className={cx("container")}>
             <div className={cx("row")}>
@@ -53,10 +65,16 @@ function Product() {
                                                 <td>{product.price}</td>
                                                 <td className={cx("col-justify")}>{product.description}</td>
                                                 {product.status === true
-                                                    ? (<td>Đang bán</td>)
-                                                    : (<td>Hết</td>)
+                                                    ? (<td>Hoạt động</td>)
+                                                    : (<td>Ẩn</td>)
                                                 }
-                                                <td><Icon icon='material-symbols:edit-square-outline-rounded' /> | <Icon icon='material-symbols:delete-outline' /></td>
+                                                <td><Link to={`/admin/products/${product.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                                                    |   {product.status === true
+                                                            ? (<Icon icon='material-symbols:delete-outline' onClick={() => deleteData(product.id)}/>)
+                                                            : (<Icon icon='material-symbols:auto-delete-outline'/>)
+                                                        }
+                                                        
+                                                </td>
                                             </tr>
                                         );
                                     })}

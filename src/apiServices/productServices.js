@@ -39,6 +39,29 @@ export const httpPostProduct = (payload) => {
     const res = request.post('/products', payload);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response.data.errMsg);
+  }
+};
+
+export const httpPutProduct = (id, payload) => {
+  try {
+    const res = request.put(`/products/${id}`, payload);
+    return res;
+  } catch (error) {
+    console.log(error.response.data.errMsg);
+  }
+};
+export const httpDeleteProduct = (id) => {
+  // try {
+  //   const res = request.deleteRequest(`/products/${id}`);
+  //   return res;
+  // } catch (error) {
+  //   console.log(error.response.data.errMsg);
+  // }
+  try {
+    const res = request.put(`/products/product/${id}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data.errMsg);
   }
 };

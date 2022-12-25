@@ -21,10 +21,10 @@ import Product from '../components/Table/Product';
 import Category from '../components/Table/Category';
 import Store from '../components/Table/Store';
 import Employee from '../components/Table/Employee';
-import AddProduct from '../components/Form/Product';
-import AddCategory from '../components/Form/Category';
-import AddStore from '../components/Form/Store';
-import AddEmployee from '../components/Form/Employee';
+import CreateOrUpdateProduct from '../components/Form/Product';
+import CreateOrUpdateCategory from '../components/Form/Category';
+import CreateOrUpdateStore from '../components/Form/Store';
+import CreateOrUpdateEmployee from '../components/Form/Employee';
 
 /*store employee */
 import ManageOrders from '../pages/Employee/ManageOrders';
@@ -97,37 +97,41 @@ export const adminRoutes = [
     path: '/admin',
     component: Dashboard,
   },
+
   {
     path: '/admin/products',
     component: Product,
   },
   {
+    path: '/admin/products/:id',
+    component: CreateOrUpdateProduct,
+  },
+
+  {
     path: '/admin/categories',
     component: Category,
   },
+  {
+    path: '/admin/categories/:id',
+    component: CreateOrUpdateCategory,
+  },
+
   {
     path: '/admin/stores',
     component: Store,
   },
   {
+    path: '/admin/stores/:id',
+    component: CreateOrUpdateStore,
+  },
+
+  {
     path: '/admin/employees',
     component: Employee,
   },
   {
-    path: '/admin/products/add',
-    component: AddProduct,
-  },
-  {
-    path: '/admin/categories/add',
-    component: AddCategory,
-  },
-  {
-    path: '/admin/stores/add',
-    component: AddStore,
-  },
-  {
-    path: '/admin/employees/add',
-    component: AddEmployee,
+    path: '/admin/employees/:id',
+    component: CreateOrUpdateEmployee,
   },
 ];
 export const employeeRoutes = [

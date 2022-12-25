@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { httpGetAllEmployee } from '../../apiServices/employeeServices';
+import { httpDeleteEmployee, httpGetAllEmployee } from '../../apiServices/employeeServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
 
@@ -22,6 +22,16 @@ function Employee() {
     const handleAdd = async () => {
         navigate("/admin/employees/add");
     };
+
+    const deleteData = async(id) => {
+        if (window.confirm("Bạn có muốn xóa không?")) 
+        {
+            await httpDeleteEmployee(id)
+                .then(console.log("Deleted"))
+                .catch(err => console.log(err));
+        }
+        
+    };
     return (
         <div className={cx("container")}>
             <div className={cx("row")}>
@@ -40,7 +50,7 @@ function Employee() {
                                         <th width="100px" scope="col">ID</th>
                                         <th width="30%" scope="col">Tên</th>
                                         <th width="20%" scope="col">Cửa hàng</th>
-                                        <th width="20%" scope="col">Quận/ Huyện</th>
+                                        <th width="20%" scope="col">Địa chỉ</th>
                                         <th width="20%" scope="col">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -51,8 +61,9 @@ function Employee() {
                                                 <td>{employee.id}</td>
                                                 <td>{employee.name}</td>
                                                 <td>{employee.store.storeName}</td>
-                                                <td>{employee.store.district.name}</td>
-                                                <td><Icon icon='material-symbols:edit-square-outline-rounded' /> | <Icon icon='material-symbols:delete-outline' /></td>
+                                                <td>{employee.store.address}</td>
+                                                <td><Link to={`/admin/employees/${employee.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                                                    | <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(employee.id)} /></td>
                                             </tr>
                                         );
                                     })}

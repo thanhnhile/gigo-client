@@ -41,11 +41,13 @@ export const ORDER_STATUS = {
 };
 export const STATUS = [
   {
-    id: 0,
+    id:0,
+    value: true,
     name: 'Hoạt động',
   },
   {
-    id: 1,
+    id:1,
+    value: false,
     name: 'Ẩn',
   },
 ];

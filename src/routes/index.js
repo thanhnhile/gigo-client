@@ -21,14 +21,10 @@ import Product from '../components/Table/Product';
 import Category from '../components/Table/Category';
 import Store from '../components/Table/Store';
 import Employee from '../components/Table/Employee';
-import AddProduct from '../components/Form/AddProduct';
-import AddCategory from '../components/Form/AddCategory';
-import AddStore from '../components/Form/AddStore';
-import AddEmployee from '../components/Form/AddEmployee';
-import EditProduct from '../components/Form/EditProduct';
-import EditCategory from '../components/Form/EditCategory';
-import EditStore from '../components/Form/EditStore';
-import EditEmployee from '../components/Form/EditEmployee';
+import CreateOrUpdateProduct from '../components/Form/Product';
+import CreateOrUpdateCategory from '../components/Form/Category';
+import CreateOrUpdateStore from '../components/Form/Store';
+import CreateOrUpdateEmployee from '../components/Form/Employee';
 
 /*store employee */
 import ManageOrders from '../pages/Employee/ManageOrders';
@@ -107,12 +103,8 @@ export const adminRoutes = [
     component: Product,
   },
   {
-    path: '/admin/products/add',
-    component: AddProduct,
-  },
-  {
-    path: '/admin/products/edit/:id',
-    component: EditProduct,
+    path: '/admin/products/:id',
+    component: CreateOrUpdateProduct,
   },
 
   {
@@ -120,12 +112,8 @@ export const adminRoutes = [
     component: Category,
   },
   {
-    path: '/admin/categories/add',
-    component: AddCategory,
-  },
-  {
-    path: '/admin/categories/edit/:id',
-    component: EditCategory,
+    path: '/admin/categories/:id',
+    component: CreateOrUpdateCategory,
   },
 
   {
@@ -133,12 +121,8 @@ export const adminRoutes = [
     component: Store,
   },
   {
-    path: '/admin/stores/add',
-    component: AddStore,
-  },
-  {
-    path: '/admin/stores/edit/:id',
-    component: EditStore,
+    path: '/admin/stores/:id',
+    component: CreateOrUpdateStore,
   },
 
   {
@@ -146,12 +130,8 @@ export const adminRoutes = [
     component: Employee,
   },
   {
-    path: '/admin/employees/add',
-    component: AddEmployee,
-  },
-  {
-    path: '/admin/employees/edit/:id',
-    component: EditEmployee,
+    path: '/admin/employees/:id',
+    component: CreateOrUpdateEmployee,
   },
 ];
 export const employeeRoutes = [

@@ -25,10 +25,18 @@ export const httpPostCategory = (payload) => {
   }
 };
 
-export const httpPutCategory = (id, name, status) => {
-  const data = { name, status };
+export const httpPutCategory = (id, payload) => {
   try {
-    const res = request.put(`/categories/${id}`, data);
+    const res = request.put(`/categories/${id}`, payload);
+    return res;
+  } catch (error) {
+    console.log(error.response.data.errMsg);
+  }
+};
+
+export const httpDeleteCategory = (id) => {
+  try {
+    const res = request.put(`/categories/category/${id}`);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);

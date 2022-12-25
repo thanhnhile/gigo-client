@@ -26,10 +26,18 @@ export const httpPostEmployee = (payload) => {
   }
 };
 
-export const httpPutEmployee = (id, name, store, account) => {
-  const data = { name, store, account };
+export const httpPutEmployee = (id, payload) => {
   try {
-    const res = request.put(`/employees/${id}`, data);
+    const res = request.put(`/employees/${id}`, payload);
+    return res;
+  } catch (error) {
+    console.log(error.response.data.errMsg);
+  }
+};
+
+export const httpDeleteEmployee = (id) => {
+  try {
+    const res = request.deleteRequest(`/employees/${id}`);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);

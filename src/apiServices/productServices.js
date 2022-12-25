@@ -52,8 +52,14 @@ export const httpPutProduct = (id, payload) => {
   }
 };
 export const httpDeleteProduct = (id) => {
+  // try {
+  //   const res = request.deleteRequest(`/products/${id}`);
+  //   return res;
+  // } catch (error) {
+  //   console.log(error.response.data.errMsg);
+  // }
   try {
-    const res = request.deleteRequest(`/products/${id}`);
+    const res = request.put(`/products/product/${id}`);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);

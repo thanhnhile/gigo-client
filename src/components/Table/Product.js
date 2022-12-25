@@ -9,13 +9,14 @@ const cx = className.bind(styles);
 function Product() {
     const [product, setProduct] = useState([]);
     useEffect(() => {
-        const getAllProduct = async () => {
-            const response = await httpGetAllProduct();
-            console.log(response);
-            setProduct(response.data.content);
-        };
         getAllProduct();
     }, []);
+
+    const getAllProduct = async () => {
+        const response = await httpGetAllProduct();
+        console.log(response);
+        setProduct(response.data.content);
+    };
 
     const navigate = useNavigate();
     const handleAdd = async () => {
@@ -27,7 +28,9 @@ function Product() {
             await httpDeleteProduct(id)
                 .then(console.log("Deleted"))
                 .catch(err => console.log(err));
+                getAllProduct();
         }
+        
     };
 
     return (
@@ -62,11 +65,16 @@ function Product() {
                                                 <td>{product.price}</td>
                                                 <td className={cx("col-justify")}>{product.description}</td>
                                                 {product.status === true
-                                                    ? (<td>Đang bán</td>)
-                                                    : (<td>Hết</td>)
+                                                    ? (<td>Hoạt động</td>)
+                                                    : (<td>Ẩn</td>)
                                                 }
-                                                <td><Link to={`/admin/products/edit/${product.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
-                                                    | <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(product.id)}/></td>
+                                                <td><Link to={`/admin/products/${product.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                                                    |   {product.status === true
+                                                            ? (<Icon icon='material-symbols:delete-outline' onClick={() => deleteData(product.id)}/>)
+                                                            : (<Icon icon='material-symbols:auto-delete-outline'/>)
+                                                        }
+                                                        
+                                                </td>
                                             </tr>
                                         );
                                     })}

@@ -50,7 +50,6 @@ const Personal = () => {
           provinceId: res.data.provinceId,
           districtId: res.data.districtId,
         });
-        console.log(res.data);
       } else setCustomer({ ...customer, provinceId: -1 });
     };
     const getHistoryOrders = async () => {

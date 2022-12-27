@@ -24,11 +24,6 @@ const AdminMenu = () => {
       icon: <Icon icon='tabler:category' />,
     },
     {
-      title: 'Đơn hàng',
-      to: '/admin/orders',
-      icon: <Icon icon='material-symbols:order-play-outline-rounded' />,
-    },
-    {
       title: 'Cửa hàng',
       to: '/admin/stores',
       icon: <Icon icon='ic:outline-store-mall-directory' />,
@@ -40,7 +35,6 @@ const AdminMenu = () => {
     },
   ];
   const location = useLocation().pathname.split('/').pop();
-  console.log(location);
   return MENU_ITEM.map((item, index) => {
     return (
       <li

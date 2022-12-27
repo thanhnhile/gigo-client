@@ -1,13 +1,16 @@
 import React, { createContext, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '~/hooks/useAuth';
 import useCart from '~/hooks/useCart';
 import { httpPostOrder } from '../apiServices/orderServices';
+import { toast } from 'react-toastify';
 
 export const OrderContext = createContext({});
 
 const OrderProvider = ({ children }) => {
   const { auth } = useAuth();
   const { removeAll } = useCart();
+  const navigate = useNavigate();
   const initValue = {
     orderType: null,
     total: null,
@@ -63,7 +66,18 @@ const OrderProvider = ({ children }) => {
     if (res.data) {
       console.log(res.data);
       removeAll();
-    } else console.log(res.errMsg);
+      toast.success('Đặt hàng thành công', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      setTimeout(() => {
+        navigate('/personal');
+      }, 2000);
+    } else
+      toast.error(res.errMsg, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
   };
   return (
     <OrderContext.Provider

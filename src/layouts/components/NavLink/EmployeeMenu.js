@@ -20,7 +20,6 @@ const EmployeeMenu = () => {
     },
   ];
   const location = useLocation().pathname.split('/').pop();
-  console.log(location);
   return MENU_ITEM.map((item, index) => {
     return (
       <li

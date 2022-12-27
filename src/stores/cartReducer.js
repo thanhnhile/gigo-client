@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 export const initState = { cart: [] };
 
 export const ADD_PRODUCT = 'ADD_PRODUCT';
@@ -20,11 +21,14 @@ const addToCart = (state, product) => {
   } else {
     updatedCart.push(product);
   }
+  toast.success('Thêm giỏ hàng thành công', {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 2000,
+  });
   return { ...state, cart: updatedCart };
 };
 const removeFromCart = (state, productId) => {
   console.log(state.cart);
-  console.log('REMOVING FROM CART');
   const updatedCart = [...state.cart];
   const index = updatedCart.findIndex(
     (item) => Number.parseInt(item.id) === Number.parseInt(productId)
@@ -32,6 +36,10 @@ const removeFromCart = (state, productId) => {
   if (index >= 0) {
     updatedCart.splice(index, 1);
   }
+  toast.success('Xóa sản phẩm khỏi giỏ hàng', {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 2000,
+  });
   return { ...state, cart: updatedCart };
 };
 const removeAll = (state) => {

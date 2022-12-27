@@ -8,7 +8,10 @@ import { httpPostProduct } from '~/apiServices/productServices';
 import uploadImage from '~/apiServices/uploadImage';
 import { STATUS } from '~/utils/enum';
 import { useNavigate, useParams } from 'react-router-dom';
-import { httpGetProductById, httpPutProduct } from '../../apiServices/productServices';
+import {
+  httpGetProductById,
+  httpPutProduct,
+} from '../../apiServices/productServices';
 
 const cx = className.bind(styles);
 function Product() {
@@ -33,8 +36,7 @@ function Product() {
   useEffect(() => {
     if (id === 'add') {
       return;
-    }
-    else {
+    } else {
       getProductById();
     }
   }, [id]);
@@ -55,13 +57,13 @@ function Product() {
     };
     getAllCategory();
   }, []);
-  
+
   const handleChange = (e) => {
     setProduct((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  
+
   const handleChangeImage = (e) => {
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
@@ -78,8 +80,7 @@ function Product() {
           if (res.data) {
             console.log(res.data);
           } else console.log(res.errMsg);
-        }
-        else {
+        } else {
           const res = await httpPutProduct(product.id, productToAdd);
           if (res.data) {
             console.log(res.data);
@@ -98,7 +99,7 @@ function Product() {
     navigate('/admin/products');
   };
   return (
-    <div className={cx("wrapper")}>
+    <div className={cx('wrapper')}>
       <form onSubmit={handleSubmit}>
         <h1>Sản phẩm</h1>
 
@@ -130,10 +131,7 @@ function Product() {
         />
 
         <label>Trạng thái</label>
-        <select name="status"
-          value={product.status}
-          onChange={handleChange}
-        >
+        <select name='status' value={product.status} onChange={handleChange}>
           {STATUS.map((item) => (
             <option key={item.id} value={item.value}>
               {item.name}
@@ -145,16 +143,13 @@ function Product() {
         <div className={cx('image-wrapper')}>
           {image.url && <img className={cx('image')} src={image.url} alt='' />}
           {!image.file && (
-            <label for='image'>
-              <Icon className={cx('icon')} icon='ri:upload-cloud-line' />
-            </label>
+            <input
+              name='image'
+              id='image'
+              type='file'
+              onChange={handleChangeImage}
+            />
           )}
-          <input
-            name='image'
-            id='image'
-            type='file'
-            onChange={handleChangeImage}
-          />
         </div>
 
         <input type='submit' className={cx('submitButton')} />

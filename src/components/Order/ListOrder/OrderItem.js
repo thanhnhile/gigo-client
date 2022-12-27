@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import className from 'classnames/bind';
 import styles from './ListOrder.module.scss';
 import { formatPrice } from '~/utils/format';
 import { ORDER_STATUS } from '~/utils/enum';
+import { httpUpdateStatusOrder } from '~/apiServices/orderServices';
 
 const cx = className.bind(styles);
 
-const OrderItem = ({ order }) => {
+const OrderItem = (props) => {
+  const [order, setOrder] = useState(props.order);
+  const handleCancel = async (id) => {
+    const res = await httpUpdateStatusOrder(id, ORDER_STATUS.CANCELED.id);
+    if (res.data) {
+      setOrder(res.data);
+    }
+  };
   return (
     <div key={order.id} className={cx('order-item')}>
       <div className={cx('header')}>
@@ -38,6 +46,14 @@ const OrderItem = ({ order }) => {
           <p className={cx('price')}>{formatPrice(order.total)}</p>
           <p>{Object.values(ORDER_STATUS)[order.status].name}</p>
         </div>
+      </div>
+      <div className={cx('action')}>
+        <button
+          onClick={() => handleCancel(order.id)}
+          disabled={order.status !== ORDER_STATUS.IN_PROGRESS.id}
+        >
+          Hủy
+        </button>
       </div>
     </div>
   );

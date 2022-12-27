@@ -7,40 +7,6 @@ import { formatPrice } from '~/utils/format';
 import { getAdminStatistics } from '~/apiServices/statisticsServices';
 
 const cx = className.bind(styles);
-const data = [
-  {
-    store: {
-      id: 1,
-      name: 'Gigo Thu Duc',
-      address: 'so 1, Vo Van Ngan',
-    },
-    countOrders: 50,
-  },
-  {
-    store: {
-      id: 1,
-      name: 'Gigo Thu Duc',
-      address: 'so 1, Vo Van Ngan',
-    },
-    countOrders: 50,
-  },
-  {
-    store: {
-      id: 1,
-      name: 'Gigo Thu Duc',
-      address: 'so 1, Vo Van Ngan',
-    },
-    countOrders: 50,
-  },
-  {
-    store: {
-      id: 1,
-      name: 'Gigo Thu Duc',
-      address: 'so 1, Vo Van Ngan',
-    },
-    countOrders: 50,
-  },
-];
 const countOrderColumns = [
   {
     name: 'ID',
@@ -67,7 +33,20 @@ const countOrderColumns = [
     },
   },
 ];
-const revenueOrderColumns = [];
+const revenueOrderColumns = [
+  {
+    name: 'Ngày',
+    selector: (row) => row.date.split('-').reverse().join('/'),
+  },
+  {
+    name: 'Doanh Thu',
+    selector: (row) => formatPrice(row.revenue),
+  },
+  {
+    name: 'Đơn thành công',
+    selector: (row) => row.countOrders,
+  },
+];
 
 const Dashboard = () => {
   const [data, setData] = useState({});
@@ -139,8 +118,11 @@ const Dashboard = () => {
         </div>
       </div>
       <div className={cx('store')}>
-        <h3>Doanh thu trong tuần</h3>
-        <CustomDataTable data={data.stores} columns={revenueOrderColumns} />
+        <h3>Doanh thu theo ngày</h3>
+        <CustomDataTable
+          data={data.weeklyRevenue}
+          columns={revenueOrderColumns}
+        />
       </div>
       <div className={cx('store')}>
         <h3>Doanh số theo cửa hàng trong ngày</h3>

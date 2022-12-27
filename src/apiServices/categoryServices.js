@@ -18,7 +18,7 @@ export const httpGetCategoryById = (id) => {
 
 export const httpPostCategory = (payload) => {
   try {
-    const res = request.post('/categories', payload);
+    const res = request.post('/categories/add', payload);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);
@@ -27,7 +27,7 @@ export const httpPostCategory = (payload) => {
 
 export const httpPutCategory = (id, payload) => {
   try {
-    const res = request.put(`/categories/${id}`, payload);
+    const res = request.put(`/categories/update/${id}`, payload);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);
@@ -36,7 +36,7 @@ export const httpPutCategory = (id, payload) => {
 
 export const httpDeleteCategory = (id) => {
   try {
-    const res = request.put(`/categories/category/${id}`);
+    const res = request.put(`/categories/update/category/${id}`);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);

@@ -1,37 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { httpDeleteEmployee, httpGetAllEmployee } from '../../apiServices/employeeServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
+import CustomDataTable from '../CustomDataTable';
 
 const cx = className.bind(styles);
 function Employee() {
+    const navigate = useNavigate();
     const [employee, setEmployee] = useState([]);
 
     useEffect(() => {
-        const getAllEmployee = async () => {
-            const response = await httpGetAllEmployee();
-            console.log(response);
-            setEmployee(response.data);
-        };
         getAllEmployee();
     }, []);
 
-    const navigate = useNavigate();
+    const getAllEmployee = async () => {
+        const response = await httpGetAllEmployee();
+        console.log(response);
+        setEmployee(response.data);
+    };
+
     const handleAdd = async () => {
         navigate("/admin/employees/add");
     };
 
-    const deleteData = async(id) => {
-        if (window.confirm("Bạn có muốn xóa không?")) 
-        {
+    const deleteData = async (id) => {
+        if (window.confirm("Bạn có muốn xóa không?")) {
             await httpDeleteEmployee(id)
                 .then(console.log("Deleted"))
                 .catch(err => console.log(err));
+            getAllEmployee();
         }
-        
     };
+
+    const columns = [
+        {
+            name: 'ID',
+            width: '15%',
+            selector: (row) => row.id,
+        },
+        {
+            name: 'Tên nhân viên',
+            width: '20%',
+            selector: (row) => row.name,
+        },
+        {
+            name: 'Cửa hàng',
+            width: '20%',
+            selector: (row) => row.store.storeName,
+        },
+        {
+            name: 'Địa chỉ',
+            width: '30%',
+            selector: (row) => row.store.address,
+        },
+        {
+            width: '5%',
+            selector: (row) =>
+                <Link to={`/admin/employees/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>,
+        },
+        {
+            width: '10%',
+            selector: (row) => <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />,
+        },
+    ];
     return (
         <div className={cx("container")}>
             <div className={cx("row")}>
@@ -44,33 +77,7 @@ function Employee() {
                             </div>
                         </div>
                         <div className={cx("table-content")}>
-                            <table className={cx("table table-striped")}>
-                                <thead>
-                                    <tr>
-                                        <th width="100px" scope="col">ID</th>
-                                        <th width="30%" scope="col">Tên</th>
-                                        <th width="20%" scope="col">Cửa hàng</th>
-                                        <th width="20%" scope="col">Địa chỉ</th>
-                                        <th width="20%" scope="col">Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {employee.map((employee, index) => {
-                                        return (
-                                            <tr className>
-                                                <td>{employee.id}</td>
-                                                <td>{employee.name}</td>
-                                                <td>{employee.store.storeName}</td>
-                                                <td>{employee.store.address}</td>
-                                                <td><Link to={`/admin/employees/${employee.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
-                                                    | <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(employee.id)} /></td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                            <div>
-                            </div>
+                            <CustomDataTable data={employee} columns={columns} />
                         </div>
                     </div>
                 </div>

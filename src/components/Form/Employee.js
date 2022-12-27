@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
 import className from 'classnames/bind';
 import styles from './Form.module.scss';
 import { httpGetAllStore } from '../../apiServices/storeServices';
@@ -54,9 +55,20 @@ function Employee() {
 
     const handleChange = (e) => {
         setEmployee((prev) => {
-          return { ...prev, [e.target.name]: e.target.value };
+            return { ...prev, [e.target.name]: e.target.value };
         });
-      };
+    };
+
+    const options = accounts.map(d => ({
+        label: d.username,
+        value: d.username
+    }));
+
+    const [selectedValue, setSelectedValue] = useState();
+    const handleChangeSelect = e => {
+        setSelectedValue(e.value);
+        setEmployee({ ...employee, account: e.value })
+    }
 
     const handleSubmit = async (e) => {
         try {
@@ -107,17 +119,9 @@ function Employee() {
                 </select>
 
                 <label>Tài khoản</label>
-                <select name="account"
-                    value={employee.account}
-                    onChange={(e) =>
-                        setEmployee({ ...employee, account: e.target.value })
-                    }>
-                    <option>--Chọn--</option>
-                    {accounts.map((account) => {
-                        return (
-                            <option value={account.username}>{account.username}</option>);
-                    })}
-                </select>
+                
+                <Select value={options.find(obj => obj.value === employee.account || obj.value === selectedValue)}
+                    onChange={handleChangeSelect} options={options} />
 
                 <input type="submit" className={cx("submitButton")} />
             </form>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { httpDeleteProduct, httpGetAllProduct } from '../../apiServices/productServices';
+import { httpDeleteProduct, httpGetAll} from '../../apiServices/productServices';
+import { formatPrice } from '~/utils/format';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
+import CustomDataTable from '../CustomDataTable';
 
 const cx = className.bind(styles);
 function Product() {
@@ -13,25 +15,70 @@ function Product() {
     }, []);
 
     const getAllProduct = async () => {
-        const response = await httpGetAllProduct();
-        console.log(response);
-        setProduct(response.data.content);
+        const response = await httpGetAll();
+        console.log(response.data);
+        setProduct(response.data);
     };
 
     const navigate = useNavigate();
     const handleAdd = async () => {
         navigate("/admin/products/add");
     };
-    const deleteData = async(id) => {
-        if (window.confirm("Bạn có muốn xóa không?")) 
-        {
+    const deleteData = async (id) => {
+        if (window.confirm("Bạn có muốn xóa không?")) {
             await httpDeleteProduct(id)
                 .then(console.log("Deleted"))
                 .catch(err => console.log(err));
-                getAllProduct();
+            getAllProduct();
         }
-        
+
     };
+
+    const columns = [
+        {
+            name: 'ID',
+            width: '5%',
+            selector: (row) => row.id,
+        },
+        {
+            name: 'Tên sản phẩm',
+            width: '20%',
+            selector: (row) => row.name,
+        }
+        ,
+        {
+            name: 'Giá',
+            width: '10%',
+            selector: (row) => formatPrice(row.price),
+        },
+        {
+            name: 'Mô tả',
+            width: '20%',
+            selector: (row) => row.description,
+            grow: 2,
+        },
+        {
+            name: 'Trạng thái',
+            width: '10%',
+            selector: (row) => row.status === true
+                ? ('Hoạt động')
+                : ('Ẩn'),
+        },
+        {
+            width: '5%',
+            selector: (row) =>
+                <Link to={`/admin/products/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+            ,
+        },
+        {
+            width: '5%',
+            selector: (row) =>
+                row.status === true
+                    ? (<Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />)
+                    : (<Icon icon='material-symbols:auto-delete-outline' />)
+            ,
+        },
+    ];
 
     return (
         <div className={cx("container")}>
@@ -45,43 +92,7 @@ function Product() {
                             </div>
                         </div>
                         <div className={cx("table-content")}>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th width="10%" scope="col">ID</th>
-                                        <th width="20%" scope="col">Tên sản phẩm</th>
-                                        <th width="15%" scope="col">Giá</th>
-                                        <th width="35%" scope="col">Mô tả</th>
-                                        <th width="10%" scope="col">Trạng thái</th>
-                                        <th width="10%" scope="col">Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {product.map((product, index) => {
-                                        return (
-                                            <tr className>
-                                                <td>{product.id}</td>
-                                                <td>{product.name}</td>
-                                                <td>{product.price}</td>
-                                                <td className={cx("col-justify")}>{product.description}</td>
-                                                {product.status === true
-                                                    ? (<td>Hoạt động</td>)
-                                                    : (<td>Ẩn</td>)
-                                                }
-                                                <td><Link to={`/admin/products/${product.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
-                                                    |   {product.status === true
-                                                            ? (<Icon icon='material-symbols:delete-outline' onClick={() => deleteData(product.id)}/>)
-                                                            : (<Icon icon='material-symbols:auto-delete-outline'/>)
-                                                        }
-                                                        
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                            <div>
-                            </div>
+                            <CustomDataTable data={product} columns={columns} />
                         </div>
                     </div>
                 </div>

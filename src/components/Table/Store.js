@@ -1,36 +1,67 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { httpDeleteStore, httpGetAllStore } from '../../apiServices/storeServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
+import CustomDataTable from '../CustomDataTable';
 
 const cx = className.bind(styles);
 function Store() {
+    const navigate = useNavigate();
     const [store, setStore] = useState([]);
 
     useEffect(() => {
-        const getAllStore = async () => {
-            const response = await httpGetAllStore();
-            console.log(response);
-            setStore(response.data);
-        };
         getAllStore();
     }, []);
 
-    const navigate = useNavigate();
+    const getAllStore = async () => {
+        const response = await httpGetAllStore();
+        console.log(response);
+        setStore(response.data);
+    };
+
     const handleAdd = async () => {
         navigate("/admin/stores/add");
     };
-    const deleteData = async(id) => {
-        if (window.confirm("Bạn có muốn xóa không?")) 
-        {
+    const deleteData = async (id) => {
+        if (window.confirm("Bạn có muốn xóa không?")) {
             await httpDeleteStore(id)
                 .then(console.log("Deleted"))
                 .catch(err => console.log(err));
+            getAllStore();
         }
-        
+
     };
+
+    const columns = [
+        {
+            name: 'ID',
+            width: '15%',
+            selector: (row) => row.id,
+        },
+        {
+            name: 'Tên cửa hàng',
+            width: '30%',
+            selector: (row) => row.storeName,
+        },
+        {
+            name: 'Địa chỉ',
+            width: '40%',
+            selector: (row) => row.address,
+        },
+        {
+            width: '5%',
+            selector: (row) =>
+                <Link to={`/admin/stores/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+            ,
+        },
+        {
+            width: '10%',
+            selector: (row) => <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />
+            ,
+        },
+    ];
     return (
         <div className={cx("container")}>
             <div className={cx("row")}>
@@ -43,31 +74,7 @@ function Store() {
                             </div>
                         </div>
                         <div className={cx("table-content")}>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th width="100px" scope="col">ID</th>
-                                        <th width="30%" scope="col">Tên</th>
-                                        <th width="40%" scope="col">Địa chỉ</th>
-                                        <th width="20%" scope="col">Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {store.map((store, index) => {
-                                        return (
-                                            <tr className>
-                                                <td>{store.id}</td>
-                                                <td>{store.storeName}</td>
-                                                <td className={cx("col-justify")}>{store.address}</td>
-                                                <td><Link to={`/admin/stores/${store.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
-                                                    | <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(store.id)} /></td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                            <div>
-                            </div>
+                            <CustomDataTable data={store} columns={columns} />
                         </div>
                     </div>
                 </div>

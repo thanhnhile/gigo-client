@@ -19,9 +19,9 @@ const ManageOrders = () => {
   const [status, setStatus] = useState('');
   const getOrderByStoreId = async () => {
     const res = await httpGetOrderByStoreId(auth?.employeeInfo?.storeId);
-    if (res.data.content) {
-      setData(res.data.content);
-      setDataRow(res.data.content);
+    if (res.data) {
+      setData(res.data);
+      setDataRow(res.data);
     }
   };
   const handleFilterByUserphone = async (e) => {

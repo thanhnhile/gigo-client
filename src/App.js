@@ -11,6 +11,8 @@ import RequireAuth from './components/RequireAuth';
 import { DefaultLayout, AdminLayout } from './layouts';
 import { ROLE, LOCAL_STORAGE_KEY } from '~/utils/enum';
 import Missing from './pages/Missing';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -63,6 +65,7 @@ function App() {
         {/* catch all */}
         <Route path='*' element={<Missing />} />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

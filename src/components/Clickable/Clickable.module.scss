@@ -35,9 +35,8 @@
       opacity: 0.8;
     }
   }
-  &.disable {
-    cursor: default;
-    background-color: #cccccc !important;
-    color: var(--white);
+  &:disabled {
+    visibility: hidden;
+    cursor: none;
   }
 }

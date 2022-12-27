@@ -5,6 +5,7 @@ import styles from './Register.module.scss';
 import Clickable from '../../components/Clickable';
 import { httpRegister } from '~/apiServices/authServices';
 import { phoneValidation } from '~/utils/validation';
+import { toast } from 'react-toastify';
 
 const cx = className.bind(styles);
 const initValue = { username: '', password: '' };
@@ -20,30 +21,41 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!phoneValidation(user.username)) {
-      setError('Số điện thoại không hợp lệ!');
+      toast.error('Số điện thoại không hợp lệ!', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
       return;
     }
     if (user.password !== user.confirmPassword) {
-      setError('Mật khẩu không trùng khớp!');
+      toast.error('Mật khẩu không trùng khớp!', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
       return;
     }
-    // if (!passwordValidation(user.password)) {
-    //   setError('Mật khẩu không hợp lệ');
-    //   return;
-    // }
     const newUser = {
       username: user.username,
       password: user.password,
     };
     const response = await httpRegister(newUser);
     if (response.errMsg) {
-      setError(response.errMsg);
+      toast.error(response.errMsg, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
       return;
     }
     setError('');
     setUser(initValue);
     console.log(response);
-    !response.errMsg && navigate('/auth');
+    toast.success('Tạo tài khoản thành công', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+    });
+    setTimeout(() => {
+      navigate('/auth');
+    }, 1000);
   };
   return (
     <div className={cx('container', 'wrapper')}>

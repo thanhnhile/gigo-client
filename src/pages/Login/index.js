@@ -7,6 +7,7 @@ import useAuth from '~/hooks/useAuth';
 import { httpAuth } from '../../apiServices/authServices';
 import { httpGetEmployeeAccountUsername } from '~/apiServices/employeeServices';
 import { ROLE } from '~/utils/enum';
+import { toast } from 'react-toastify';
 
 const cx = className.bind(styles);
 const initValue = { username: '', password: '' };
@@ -15,7 +16,6 @@ function Login() {
   const navigate = useNavigate();
   const { setAuth } = useAuth();
   const [user, setUser] = useState(initValue);
-  const [error, setError] = useState('');
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -24,7 +24,10 @@ function Login() {
     const response = await httpAuth(user);
     console.log(response);
     if (response.errMsg) {
-      setError(response.errMsg);
+      toast.error(response.errMsg, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
       return;
     }
     const username = response.data.username;
@@ -43,7 +46,6 @@ function Login() {
       setAuth({ username, accessToken, roles });
     }
     setUser(initValue);
-    setError('');
     navigate('/');
   };
   return (
@@ -53,7 +55,6 @@ function Login() {
         Chưa có tài khoản?
         <span onClick={() => navigate('/register')}>Đăng ký</span>
       </p>
-      {error && <p className={cx('error')}>{error}</p>}
       <form onSubmit={handleSubmit} className={cx('form')}>
         <input
           name='username'

@@ -12,7 +12,9 @@ import useOrder from '../../../hooks/useOrder';
 const cx = className.bind(styles);
 const cacl = (cart) => {
   return cart.reduce(
-    (result, current) => (result += Number.parseInt(current.price)),
+    (result, current) =>
+      (result +=
+        Number.parseInt(current.price) * Number.parseInt(current.quantity)),
     0
   );
 };

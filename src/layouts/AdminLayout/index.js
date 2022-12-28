@@ -15,44 +15,7 @@ const AdminLayout = ({ children }) => {
           {' '}
           <Header setOpen={setOpen}/>
           <div className={cx('announcement', { open: isOpen })}>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
-
-            <p>h1 nhi da mu gi do</p>
-            <p>h1 nhi da mu gi do</p>
+            <p>Nhi dặt đơn hàng mới</p>
           </div>
         </div>
         <main>{children}</main>

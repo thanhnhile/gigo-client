@@ -1,5 +1,4 @@
 import * as request from '~/utils/request';
-import { ORDER_STATUS } from '~/utils/enum';
 
 export const httpPostOrder = (payload) => {
   try {

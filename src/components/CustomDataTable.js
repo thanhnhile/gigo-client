@@ -16,7 +16,7 @@ const customStyles = {
     style: {
       paddingLeft: '8px', // override the cell padding for head cells
       paddingRight: '8px',
-      fontSize: '1.8rem',
+      fontSize: '1.6rem',
       fontWeight: '500',
     },
   },
@@ -24,7 +24,8 @@ const customStyles = {
     style: {
       paddingLeft: '8px', // override the cell padding for data cells
       paddingRight: '8px',
-      fontSize: '1.6rem',
+      fontSize: '1.5rem',
+      textTransform: 'capitalize',
     },
   },
 };

@@ -27,7 +27,7 @@ const ProductDetail = ({ product }) => {
       name: product.name,
       quantity: quantity,
       size: size,
-      price: (product.price + surCharge) * Number.parseInt(quantity),
+      price: product.price + surCharge,
     };
     addToCart(cartItem);
     setQuantity(1);

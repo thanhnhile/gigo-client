@@ -139,7 +139,7 @@ const Invoice = () => {
           onClick={() => handleClick(3)}
           text='Hủy'
           second
-          disable={order.status === ORDER_STATUS.SUCCESS.id}
+          disable={order.status !== ORDER_STATUS.IN_PROGRESS.id}
         />
       </div>
     </div>

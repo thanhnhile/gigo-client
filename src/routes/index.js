@@ -29,6 +29,7 @@ import CreateOrUpdateEmployee from '../pages/Admin/Form/Employee';
 /*store employee */
 import ManageOrders from '../pages/Employee/ManageOrders';
 import Invoice from '../pages/Employee/Invoice';
+import { default as EmployeeDashboard } from '../pages/Employee/Dashboard';
 
 export const publicRoutes = [
   {
@@ -137,7 +138,7 @@ export const adminRoutes = [
 export const employeeRoutes = [
   {
     path: '/employee',
-    component: Dashboard,
+    component: EmployeeDashboard,
   },
   {
     path: '/employee/orders',

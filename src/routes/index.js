@@ -17,14 +17,14 @@ import Personal from '../pages/Personal';
 
 /*admin */
 import Dashboard from '../pages/Admin/Dashboard';
-import Product from '../components/Table/Product';
-import Category from '../components/Table/Category';
-import Store from '../components/Table/Store';
-import Employee from '../components/Table/Employee';
-import CreateOrUpdateProduct from '../components/Form/Product';
-import CreateOrUpdateCategory from '../components/Form/Category';
-import CreateOrUpdateStore from '../components/Form/Store';
-import CreateOrUpdateEmployee from '../components/Form/Employee';
+import Product from '../pages/Admin/Table/Product';
+import Category from '../pages/Admin/Table/Category';
+import Store from '../pages/Admin/Table/Store';
+import Employee from '../pages/Admin/Table/Employee';
+import CreateOrUpdateProduct from '../pages/Admin/Form/Product';
+import CreateOrUpdateCategory from '../pages/Admin/Form/Category';
+import CreateOrUpdateStore from '../pages/Admin/Form/Store';
+import CreateOrUpdateEmployee from '../pages/Admin/Form/Employee';
 
 /*store employee */
 import ManageOrders from '../pages/Employee/ManageOrders';

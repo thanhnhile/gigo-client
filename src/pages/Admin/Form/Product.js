@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Form.module.scss';
 import { Icon } from '@iconify/react';
-import { httpGetAllCategories } from '../../apiServices/categoryServices';
+import { httpGetAllCategories } from '~/apiServices/categoryServices';
 import { httpPostProduct } from '~/apiServices/productServices';
 import uploadImage from '~/apiServices/uploadImage';
 import { STATUS } from '~/utils/enum';
 import { useNavigate, useParams } from 'react-router-dom';
-import { httpGetProductById, httpPutProduct } from '../../apiServices/productServices';
+import { httpGetProductById, httpPutProduct } from '~/apiServices/productServices';
 
 const cx = className.bind(styles);
 function Product() {

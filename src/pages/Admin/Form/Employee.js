@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import className from 'classnames/bind';
 import styles from './Form.module.scss';
-import { httpGetAllStore } from '../../apiServices/storeServices';
-import { httpGetAllAccount } from '../../apiServices/accountServices';
+import { httpGetAllStore } from '~/apiServices/storeServices';
+import { httpGetAllAccount } from '~/apiServices/accountServices';
 import { useNavigate, useParams } from 'react-router-dom';
-import { httpGetEmployeeById, httpPostEmployee, httpPutEmployee } from '../../apiServices/employeeServices';
+import { httpGetEmployeeById, httpPostEmployee, httpPutEmployee } from '~/apiServices/employeeServices';
 
 const cx = className.bind(styles);
 

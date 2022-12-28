@@ -1,7 +1,7 @@
 import className from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { httpGetCategoryById, httpPostCategory, httpPutCategory } from '../../apiServices/categoryServices';
+import { httpGetCategoryById, httpPostCategory, httpPutCategory } from '~/apiServices/categoryServices';
 import styles from './Form.module.scss';
 import { STATUS } from '~/utils/enum';
 

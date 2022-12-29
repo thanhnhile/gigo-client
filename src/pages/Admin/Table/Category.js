@@ -1,64 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { httpDeleteStore, httpGetAllStore } from '../../apiServices/storeServices';
+import { httpDeleteCategory, httpGetAllCategories } from '~/apiServices/categoryServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
-import CustomDataTable from '../CustomDataTable';
+import CustomDataTable from '~/components/CustomDataTable';
 
 const cx = className.bind(styles);
-function Store() {
+function Category() {
     const navigate = useNavigate();
-    const [store, setStore] = useState([]);
-
+    const [category, setCategory] = useState([]);
     useEffect(() => {
-        getAllStore();
-    }, []);
+        getAllCategories();
+    }, [])
 
-    const getAllStore = async () => {
-        const response = await httpGetAllStore();
-        console.log(response);
-        setStore(response.data);
+    const getAllCategories = async () => {
+        const response = await httpGetAllCategories();
+        console.log(response.data);
+        setCategory(response.data);
     };
 
     const handleAdd = async () => {
-        navigate("/admin/stores/add");
+        navigate("/admin/categories/add");
     };
+
     const deleteData = async (id) => {
         if (window.confirm("Bạn có muốn xóa không?")) {
-            await httpDeleteStore(id)
+            await httpDeleteCategory(id)
                 .then(console.log("Deleted"))
                 .catch(err => console.log(err));
-            getAllStore();
+            getAllCategories();
         }
-
     };
 
     const columns = [
         {
             name: 'ID',
-            width: '15%',
+            width: '20%',
             selector: (row) => row.id,
         },
         {
-            name: 'Tên cửa hàng',
+            name: 'Phân loại',
             width: '30%',
-            selector: (row) => row.storeName,
+            selector: (row) => row.name,
         },
         {
-            name: 'Địa chỉ',
-            width: '40%',
-            selector: (row) => row.address,
+            name: 'Trạng thái',
+            width: '20%',
+            selector: (row) => 
+                row.status === true
+                ? ('Hoạt động')
+                : ('Ẩn')
+            ,
         },
         {
             width: '5%',
-            selector: (row) =>
-                <Link to={`/admin/stores/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+            selector: (row) => 
+                <Link to={`/admin/categories/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
             ,
         },
         {
             width: '10%',
-            selector: (row) => <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />
+            selector: (row) => 
+                row.status === true
+                ? (<Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />)
+                : (<Icon icon='material-symbols:auto-delete-outline' />)
             ,
         },
     ];
@@ -68,13 +74,13 @@ function Store() {
                 <div className={cx("col-md-12")}>
                     <div className={cx("content")}>
                         <div className={cx("table-title")}>
-                            <h2>Danh sách cửa hàng</h2>
+                            <h2>Danh sách phân loại</h2>
                             <div className={cx("table-subtitle-right")}>
                                 <button className={cx("btn-add")} onClick={() => handleAdd()}>+ Thêm </button>
                             </div>
                         </div>
                         <div className={cx("table-content")}>
-                            <CustomDataTable data={store} columns={columns} />
+                            <CustomDataTable data={category} columns={columns} />
                         </div>
                     </div>
                 </div>
@@ -82,4 +88,4 @@ function Store() {
         </div>
     )
 }
-export default Store;
+export default Category;

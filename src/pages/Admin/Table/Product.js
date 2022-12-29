@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { httpDeleteProduct, httpGetAll} from '../../apiServices/productServices';
+import { httpDeleteProduct, httpGetAll} from '~/apiServices/productServices';
 import { formatPrice } from '~/utils/format';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
-import CustomDataTable from '../CustomDataTable';
+import CustomDataTable from '~/components/CustomDataTable';
 
 const cx = className.bind(styles);
 function Product() {

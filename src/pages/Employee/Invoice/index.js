@@ -133,7 +133,7 @@ const Invoice = () => {
           onClick={() => handleClick(2)}
           text='Giao hàng'
           outline
-          disable={order.status === ORDER_STATUS.IN_PROGRESS.id}
+          disable={order.status !== ORDER_STATUS.DELIVERING.id}
         />
         <Clickable
           onClick={() => handleClick(3)}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import className from 'classnames/bind';
-import SelectAddress from '../SelectAddress';
+import SelectAddress from '~/components/SelectAddress';
 import styles from './Form.module.scss';
 import {
   httpGetStoreById,
   httpPostStore,
   httpPutStore,
-} from '../../apiServices/storeServices';
+} from '~/apiServices/storeServices';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const cx = className.bind(styles);

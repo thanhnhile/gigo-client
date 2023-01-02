@@ -1,14 +1,21 @@
-import { createContext, useReducer } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { createContext, useEffect, useReducer } from 'react';
 import cartReducer, {
   initState,
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   REMOVE_ALL,
 } from '../stores/cartReducer';
+import { useLocalStorage } from '~/hooks';
+import { LOCAL_CART_KEY } from '~/utils/enum';
 
 export const CartContext = createContext();
 const CartProvider = ({ children }) => {
-  const [cartState, dispatch] = useReducer(cartReducer, initState);
+  const { storedValue, setValue } = useLocalStorage(LOCAL_CART_KEY, initState);
+  const [cartState, dispatch] = useReducer(cartReducer, storedValue);
+  useEffect(() => {
+    setValue(cartState);
+  }, [cartState]);
 
   const addToCart = (product) => {
     dispatch({

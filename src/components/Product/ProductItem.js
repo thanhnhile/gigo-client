@@ -19,21 +19,23 @@ const Product = (props) => {
     //         <a href="/cart" onClick={() => AddToCart(product)}> Mua Ngay</a>
     //     </div>
     // </div>
-    <div className={cx('product__product-wrapper')}>
-      <div className={cx('product__product')}>
-        <Link to={'/products/' + product.id}>
-          <img
-            className={cx('product__img')}
-            src={product.imgURL}
-            alt={product.name}
-          />
-          <span className={cx('product__name')}>{product.name}</span>
-          <span className={cx('product__price')}>
-            {formatPrice(product.price)}
-          </span>
-        </Link>
+    product.status && (
+      <div className={cx('product__product-wrapper')}>
+        <div className={cx('product__product')}>
+          <Link to={'/products/' + product.id}>
+            <img
+              className={cx('product__img')}
+              src={product.imgURL}
+              alt={product.name}
+            />
+            <span className={cx('product__name')}>{product.name}</span>
+            <span className={cx('product__price')}>
+              {formatPrice(product.price)}
+            </span>
+          </Link>
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

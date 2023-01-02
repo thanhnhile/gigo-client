@@ -27,7 +27,7 @@ const SelectAddress = ({ address, setAddress }) => {
       return {
         provinceId: data.code,
         provinceName: data.name,
-        districtId: 2001,
+        districtId: -1,
       };
     });
   };
@@ -51,7 +51,6 @@ const SelectAddress = ({ address, setAddress }) => {
           districts: province.districts,
         };
       });
-      console.log('ADDRESS ', address);
       if (address.provinceId && address.districtId) {
         const target = data.find((item) => item.code === address.provinceId);
         if (target) {
@@ -64,6 +63,12 @@ const SelectAddress = ({ address, setAddress }) => {
             label: disTarget.name,
           };
           setDistricts(target.districts);
+          setAddress({
+            provinceId: target.code,
+            provinceName: target.name,
+            districtId: disTarget.code,
+            districtName: disTarget.name,
+          });
         }
       }
       setProvinces(data);
@@ -74,7 +79,6 @@ const SelectAddress = ({ address, setAddress }) => {
   const districtOptions = getOptions(districts, 'Chọn quận/huyện');
   return (
     <div>
-      {console.log('CURRENt ', provinceValue.current, districtValue.current)}
       <Select
         value={provinceValue.current || provinceOptions[0]}
         options={provinceOptions}

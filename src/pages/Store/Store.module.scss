@@ -85,6 +85,9 @@ $largest-screen: 80rem;
             padding-right: 0.7rem;
           }
         }
+        p {
+          text-transform: capitalize;
+        }
       }
     }
   }

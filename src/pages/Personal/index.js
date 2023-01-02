@@ -13,6 +13,7 @@ import {
 } from '~/apiServices/customerServices';
 import { httpGetOrderByAccountUsername } from '~/apiServices/orderServices';
 import ListOrder from '~/components/Order/ListOrder/ListOrder';
+import { toast } from 'react-toastify';
 
 const cx = className.bind(styles);
 
@@ -36,7 +37,6 @@ const Personal = () => {
     };
   });
   const [toggleInput, setToggleInput] = useState(true);
-  const [error, setError] = useState('');
   const fullNameRef = useRef();
   const phoneRef = useRef();
   const addressRef = useRef();
@@ -67,11 +67,8 @@ const Personal = () => {
   };
   const handleSave = async () => {
     let fullAddress = customer.address;
-    if (address.provinceName) {
-      if (!address.districtName) {
-        setError('Vui lòng chọn quận/huyện');
-        return;
-      }
+    console.log('ADDRESS ', address);
+    if (address.districtId !== customer.districtId) {
       const index = fullAddress.includes('huyện')
         ? fullAddress.indexOf('huyện')
         : fullAddress.indexOf('quận');
@@ -96,7 +93,10 @@ const Personal = () => {
       updatedCustomer.provinceId === '' ||
       updatedCustomer.districtId === ''
     ) {
-      setError('Trường không hợp lệ');
+      toast.error('Các trường là bắt buộc', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+      });
       return;
     }
     try {
@@ -108,6 +108,10 @@ const Personal = () => {
         res = await httpPostCustomer(updatedCustomer);
         console.log(res.data);
       }
+      toast.success('Lưu thông tin thành công!', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
       setCustomer(res.data);
     } catch (error) {
       console.log(error);
@@ -127,7 +131,6 @@ const Personal = () => {
         <h1>Xin chào {auth.username} </h1>
         <div className={cx('wrapper')}>
           <div className={cx('user-infor')}>
-            {error && <p className={cx('error')}>{error}</p>}
             <h4>Thông tin cá nhân</h4>
             <div className={cx('form-control')}>
               <input

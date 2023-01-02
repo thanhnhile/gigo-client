@@ -21,10 +21,16 @@ function Login() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (user.username === '' || user.password === '') {
+      toast.error('Số điện thoại và mật khẩu là bắt buộc', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
+      return;
+    }
     const response = await httpAuth(user);
-    console.log(response);
     if (response.errMsg) {
-      toast.error(response.errMsg, {
+      toast.error('Sai tài khoản hoặc mật khẩu', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000,
       });

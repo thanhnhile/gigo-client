@@ -31,10 +31,6 @@ const columns = [
     selector: (row) => formatPrice(row.total),
   },
   {
-    name: 'Nhân viên',
-    selector: (row) => row.employee_name,
-  },
-  {
     name: 'Phương thức',
     selector: (row) => {
       return row.orderType === DELIVERY_METHOD[0].id ? (
@@ -75,6 +71,10 @@ const columns = [
       cursor: 'pointer',
       fontSize: '1.8rem',
     },
+  },
+  {
+    name: 'Nhân viên',
+    selector: (row) => row.employee_name,
   },
 ];
 const TableOrder = ({ data }) => {

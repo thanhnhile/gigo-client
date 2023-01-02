@@ -12,7 +12,6 @@ const cx = className.bind(styles);
 
 const ManageOrders = () => {
   const { auth } = useAuth();
-  console.log('AUTHL ', auth);
   const [data, setData] = useState([]);
   const [dataRow, setDataRow] = useState(data);
   const [userPhone, setUserPhone] = useState('');
@@ -51,9 +50,9 @@ const ManageOrders = () => {
         <div className={cx('filter-item', 'icon')}>
           <Icon
             onClick={() => {
-              //getOrderByStoreId();
-              console.log(data);
-              setDataRow(data);
+              getOrderByStoreId();
+              // console.log(data);
+              // setDataRow(data);
             }}
             icon='mdi:reload'
           />

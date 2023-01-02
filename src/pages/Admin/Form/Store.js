@@ -55,10 +55,7 @@ function Store() {
     try {
       e.preventDefault();
       let fullAddress = store.address;
-      if (address.provinceName) {
-        if (!address.districtName) {
-          return;
-        }
+      if (address.districtName) {
         const index = fullAddress.includes('huyện')
           ? fullAddress.indexOf('huyện')
           : fullAddress.indexOf('quận');
@@ -99,7 +96,7 @@ function Store() {
         <form onSubmit={handleSubmit}>
           <h1>Store</h1>
 
-          <label>Name</label>
+          <label>Tên cửa hàng</label>
           <input
             name='storeName'
             type='text'
@@ -108,7 +105,7 @@ function Store() {
             required
           />
 
-          <label>District</label>
+          <label>Địa chỉ</label>
           <SelectAddress
             address={{
               provinceId: store.provinceId,
@@ -117,7 +114,7 @@ function Store() {
             setAddress={setAddress}
           />
 
-          <label>Address</label>
+          <label>Địa chỉ chi tiết</label>
           <input
             name='address'
             type='text'

@@ -9,7 +9,7 @@ const cx = className.bind(styles);
 const EmployeeMenu = () => {
   const MENU_ITEM = [
     {
-      title: 'Thống kê',
+      title: 'Chờ xử lý',
       to: '/employee',
       icon: <Icon icon='ri:dashboard-3-line' />,
     },

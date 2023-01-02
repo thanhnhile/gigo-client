@@ -1,4 +1,5 @@
-export const LOCAL_STORAGE_KEY = 'GIGO_USER';
+export const LOCAL_STORAGE_KEY = 'GOGI_USER';
+export const LOCAL_CART_KEY = 'GOGI_CART';
 export const ROLE = {
   ADMIN: 'ADMIN',
   USER: 'USER',
@@ -41,12 +42,12 @@ export const ORDER_STATUS = {
 };
 export const STATUS = [
   {
-    id:0,
+    id: 0,
     value: true,
     name: 'Hoạt động',
   },
   {
-    id:1,
+    id: 1,
     value: false,
     name: 'Ẩn',
   },

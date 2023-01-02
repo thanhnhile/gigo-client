@@ -16,21 +16,21 @@ const countOrderColumns = [
   {
     name: 'Tên cửa hàng',
     selector: (row) => row.storeName,
-    grow: 2,
-  },
-  {
-    name: 'Địa chỉ',
-    selector: (row) => row.storeAddress,
-    grow: 2,
   },
   {
     name: 'Tổng số đơn',
+    width: '150px',
     selector: (row) => row.countOrders,
     style: {
       color: 'var(--primary-color)',
       cursor: 'pointer',
       fontSize: '1.8rem',
     },
+  },
+  {
+    name: 'Địa chỉ',
+    selector: (row) => row.storeAddress,
+    grow: 2,
   },
 ];
 const revenueOrderColumns = [

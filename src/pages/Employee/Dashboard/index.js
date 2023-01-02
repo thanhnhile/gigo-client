@@ -71,20 +71,40 @@ const Dashboard = () => {
   const { auth } = useAuth();
   const [data, setData] = useState([]);
   useEffect(() => {
-    const getOrderByStoreId = async () => {
-      const res = await httpGetOrderByStoreId(auth?.employeeInfo?.storeId);
-      if (res.data) {
-        const rowData = res.data.filter(
-          (item) => item.status === ORDER_STATUS.IN_PROGRESS.id
-        );
-        setData(rowData);
+    // const getOrderByStoreId = async () => {
+    //   const res = await httpGetOrderByStoreId(auth?.employeeInfo?.storeId);
+    //   if (res.data) {
+    //     const rowData = res.data.filter(
+    //       (item) => item.status === ORDER_STATUS.IN_PROGRESS.id
+    //     );
+    //     setData(rowData);
+    //   }
+
+    // };
+    // getOrderByStoreId();
+    const url = `http://localhost:8089/subscribe/${auth?.employeeInfo?.storeId}`;
+    const eventSource = new EventSource(url);
+    eventSource.addEventListener('newOrders', (event) => {
+      console.log(event);
+      const data = JSON.parse(event.data);
+      console.log(data);
+      setData(data);
+    });
+    eventSource.onopen = (e) => console.log('connection');
+    eventSource.onerror = (event) => {
+      if (event.target.readyState === EventSource.CLOSED) {
+        console.log('SSE closed (' + event.target.readyState + ')');
+        eventSource.close();
       }
     };
-    getOrderByStoreId();
+    return () => {
+      eventSource.close();
+      console.log('SSE is closed');
+    };
   }, []);
   return (
     <div>
-      <h1>Đơn hàng gần đây</h1>
+      <h1>Đơn hàng gần đây - {data?.length || 0}</h1>
       <div style={style.tableWrapper}>
         <CustomDataTable columns={columns} data={data} />
       </div>

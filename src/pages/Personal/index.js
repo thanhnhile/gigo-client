@@ -71,12 +71,12 @@ const Personal = () => {
     if (address.districtId !== customer.districtId) {
       const index = fullAddress.includes('huyện')
         ? fullAddress.indexOf('huyện')
-        : fullAddress.indexOf('quận');
+        : fullAddress.includes('quận')
+        ? fullAddress.indexOf('quận')
+        : fullAddress.indexOf('thành phố');
 
       const prefix =
-        fullAddress.includes('huyện') || fullAddress.includes('quận')
-          ? customer.address.slice(0, index - 2)
-          : customer.address;
+        index > 0 ? customer.address.slice(0, index - 2) : customer.address;
       fullAddress = `${prefix}, ${address.districtName}, ${address.provinceName}`;
     }
     const updatedCustomer = {

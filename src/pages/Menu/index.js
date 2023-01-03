@@ -65,16 +65,18 @@ const Menu = () => {
         </Link>
         <ul>
           {menu &&
-            menu.map((menuItem) => (
-              <li
-                className={cx('category', {
-                  active: location.pathname.includes(menuItem.id),
-                })}
-                key={menuItem.id}
-              >
-                <Link to={`/menu/${menuItem.id}`}>{menuItem.name}</Link>
-              </li>
-            ))}
+            menu
+              .filter((item) => item.status)
+              .map((menuItem) => (
+                <li
+                  className={cx('category', {
+                    active: location.pathname.includes(menuItem.id),
+                  })}
+                  key={menuItem.id}
+                >
+                  <Link to={`/menu/${menuItem.id}`}>{menuItem.name}</Link>
+                </li>
+              ))}
         </ul>
       </div>
       <div className={cx('col', 'product')}>

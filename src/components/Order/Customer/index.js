@@ -101,7 +101,7 @@ const Customer = () => {
             >
               {stores?.map((store) => (
                 <option key={store.id} value={Number.parseInt(store.id)}>
-                  {store.storeName}
+                  {store.storeName}, {store.address}
                 </option>
               ))}
             </select>

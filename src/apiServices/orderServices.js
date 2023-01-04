@@ -52,3 +52,12 @@ export const httpUpdateStatusOrder = (id, status) => {
     console.log(error.response.data);
   }
 };
+
+export const httpGetAllOrders = () => {
+  try {
+    const res = request.get('/orders/all');
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

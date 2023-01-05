@@ -55,15 +55,15 @@ function Store() {
     try {
       e.preventDefault();
       let fullAddress = store.address;
-      if (address.districtName) {
+      if (address.districtId !== store.districtId) {
         const index = fullAddress.includes('huyện')
           ? fullAddress.indexOf('huyện')
-          : fullAddress.indexOf('quận');
+          : fullAddress.includes('quận')
+          ? fullAddress.indexOf('quận')
+          : fullAddress.indexOf('thành phố');
 
         const prefix =
-          fullAddress.includes('huyện') || fullAddress.includes('quận')
-            ? store.address.slice(0, index - 2)
-            : store.address;
+          index > 0 ? store.address.slice(0, index - 2) : store.address;
         fullAddress = `${prefix}, ${address.districtName}, ${address.provinceName}`;
       }
       const newStore = {

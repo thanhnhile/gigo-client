@@ -39,7 +39,6 @@ const Customer = () => {
       );
       if (res.data?.length > 0) {
         setStores(res.data);
-
         setCustomer({
           ...customer,
           ...address,

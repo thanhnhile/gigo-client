@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '~/hooks';
@@ -42,7 +43,13 @@ const Personal = () => {
   const fullNameRef = useRef();
   const phoneRef = useRef();
   const addressRef = useRef();
+  const getHistoryOrders = async () => {
+    const res = await httpGetOrderByAccountUsername(auth.username);
 
+    if (res.data) {
+      orders.current = res.data;
+    }
+  };
   useEffect(() => {
     const getCustomerInfo = async () => {
       const res = await httpGetCustomerInfoByUsername(auth.username);
@@ -54,16 +61,12 @@ const Personal = () => {
         });
       } else setCustomer({ ...customer, provinceId: -1 });
     };
-    const getHistoryOrders = async () => {
-      const res = await httpGetOrderByAccountUsername(auth.username);
-
-      if (res.data) {
-        orders.current = res.data;
-      }
-    };
     getCustomerInfo();
     getHistoryOrders();
   }, []);
+  useEffect(() => {
+    getHistoryOrders();
+  }, [tab]);
   const handleChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
   };

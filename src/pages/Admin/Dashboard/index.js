@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Dashboard.module.scss';
@@ -9,8 +10,8 @@ import { httpGetAllOrders } from '../../../apiServices/orderServices';
 import { httpGetAllStore } from '~/apiServices/storeServices';
 import { ORDER_STATUS } from '~/utils/enum';
 import Clickable from '~/components/Clickable';
-import Status from '~/components/Status';
 import Select from 'react-select';
+import TableOrder from '~/components/TableOrder';
 
 const cx = className.bind(styles);
 const countOrderColumns = [
@@ -53,50 +54,6 @@ const revenueOrderColumns = [
     selector: (row) => row.countOrders,
   },
 ];
-
-const orderColumns = [
-  {
-    name: 'ID',
-    width: '50px',
-    selector: (row) => row.id,
-  },
-  {
-    name: 'Ngày',
-    selector: (row) =>
-      row.createdDate.slice(0, 10).split('-').reverse().join('/'),
-  },
-  {
-    name: 'Cửa hàng',
-    grow: 3,
-    selector: (row) => row.store.storeName,
-  },
-  {
-    name: 'Tổng đơn',
-    selector: (row) => formatPrice(row.total),
-  },
-  {
-    name: 'Trạng thái',
-    selector: (row) => {
-      switch (row.status) {
-        case 0:
-          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
-        case 1:
-          return <Status text={ORDER_STATUS.DELIVERING.name} delivering />;
-        case 2:
-          return <Status text={ORDER_STATUS.SUCCESS.name} success />;
-        case 3:
-          return <Status text={ORDER_STATUS.CANCELED.name} canceled />;
-        default:
-          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
-      }
-    },
-  },
-  {
-    name: 'Nhân viên',
-    selector: (row) => row.employee_name,
-  },
-];
-
 const Dashboard = () => {
   const [data, setData] = useState({});
   useEffect(() => {
@@ -112,8 +69,8 @@ const Dashboard = () => {
 
   const [orderData, setOrderData] = useState([]);
   const [dataRow, setDataRow] = useState(orderData);
-  const [store, setStore] = useState();
-  const [status, setStatus] = useState('');
+  const [store, setStore] = useState(-1);
+  const [status, setStatus] = useState(-1);
   const getAllOrders = async () => {
     const res = await httpGetAllOrders();
     if (res.data) {
@@ -131,22 +88,33 @@ const Dashboard = () => {
     getAllStore();
   }, []);
 
-  const options = stores.map(s => ({
-    label: s.storeName,
-    value: s.id
-}));
+  const getOptions = () => {
+    const options = stores.map((s) => ({
+      label: s.storeName,
+      value: s.id,
+    }));
+    options.unshift({ label: 'Tất cả', value: -1 });
+    return options;
+  };
   const handleFilterByStore = async (e) => {
     setStore(e.value);
-    const result = orderData.filter(
-        (item) => item?.store?.id === Number.parseInt(e.value)
-      );
-      setDataRow(result);
+    const result =
+      e.value === -1
+        ? orderData
+        : orderData.filter(
+            (item) => item?.store?.id === Number.parseInt(e.value)
+          );
+    setStatus(-1);
+    setDataRow(result);
   };
   const handleFilterByStatus = async (e) => {
     setStatus(e.target.value);
-    const result = orderData.filter(
-      (item) => item.status === Number.parseInt(e.target.value)
-    );
+    const status = Number.parseInt(e.target.value);
+    const result = orderData.filter((item) => {
+      if (item.status === status || status === -1) {
+        if (item.store?.id === store || store === -1) return item;
+      }
+    });
     console.log(result);
     setDataRow(result);
   };
@@ -223,8 +191,12 @@ const Dashboard = () => {
             />
           </div>
           <div className={cx('filter-item')}>
-            <Select className={cx('Select')} value={options.find(obj => obj.value === store)}
-                    onChange={(e) => handleFilterByStore(e)} options={options} />
+            <Select
+              className={cx('Select')}
+              value={getOptions().find((obj) => obj.value === store)}
+              onChange={(e) => handleFilterByStore(e)}
+              options={getOptions()}
+            />
           </div>
           <div className={cx('filter-item')}>
             <select
@@ -232,6 +204,9 @@ const Dashboard = () => {
               value={status}
               onChange={(e) => handleFilterByStatus(e)}
             >
+              <option key='all' value='-1'>
+                Tất cả
+              </option>
               {Object.values(ORDER_STATUS).map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
@@ -243,7 +218,7 @@ const Dashboard = () => {
             <Clickable primary text='Downloads' />
           </div>
         </div>
-        <CustomDataTable data={dataRow} columns={orderColumns} />
+        <TableOrder data={dataRow} />
       </div>
 
       <div className={cx('store')}>

@@ -3,7 +3,7 @@ import className from 'classnames/bind';
 import styles from './ManageOrders.module.scss';
 import { ORDER_STATUS } from '~/utils/enum';
 import Clickable from '~/components/Clickable';
-import TableOrder from './TableOrder';
+import TableOrder from '~/components/TableOrder';
 import { httpGetOrderByStoreId } from '~/apiServices/orderServices';
 import { Icon } from '@iconify/react';
 import { useAuth } from '~/hooks';
@@ -82,7 +82,7 @@ const ManageOrders = () => {
           <Clickable primary text='Downloads' />
         </div>
       </div>
-      <TableOrder data={dataRow} />
+      <TableOrder data={dataRow} detailButton />
     </div>
   );
 };

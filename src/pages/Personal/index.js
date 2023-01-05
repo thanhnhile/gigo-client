@@ -195,12 +195,14 @@ const Personal = () => {
                 </li>
               ))}
             </ul>
-            <ListOrder
-              orders={
-                orders.current.length > 0 &&
-                orders.current.filter((item) => item.status === tab)
-              }
-            />
+            <div className={cx('list-order')}>
+              <ListOrder
+                orders={
+                  orders.current.length > 0 &&
+                  orders.current.filter((item) => item.status === tab)
+                }
+              />
+            </div>
           </div>
         </div>
       </div>

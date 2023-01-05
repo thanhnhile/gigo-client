@@ -5,6 +5,12 @@ import { Icon } from '@iconify/react';
 import CustomDataTable from '~/components/CustomDataTable';
 import { formatPrice } from '~/utils/format';
 import { getAdminStatistics } from '~/apiServices/statisticsServices';
+import { httpGetAllOrders } from '../../../apiServices/orderServices';
+import { httpGetAllStore } from '~/apiServices/storeServices';
+import { ORDER_STATUS } from '~/utils/enum';
+import Clickable from '~/components/Clickable';
+import Status from '~/components/Status';
+import Select from 'react-select';
 
 const cx = className.bind(styles);
 const countOrderColumns = [
@@ -48,6 +54,49 @@ const revenueOrderColumns = [
   },
 ];
 
+const orderColumns = [
+  {
+    name: 'ID',
+    width: '50px',
+    selector: (row) => row.id,
+  },
+  {
+    name: 'Ngày',
+    selector: (row) =>
+      row.createdDate.slice(0, 10).split('-').reverse().join('/'),
+  },
+  {
+    name: 'Cửa hàng',
+    grow: 3,
+    selector: (row) => row.store.storeName,
+  },
+  {
+    name: 'Tổng đơn',
+    selector: (row) => formatPrice(row.total),
+  },
+  {
+    name: 'Trạng thái',
+    selector: (row) => {
+      switch (row.status) {
+        case 0:
+          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
+        case 1:
+          return <Status text={ORDER_STATUS.DELIVERING.name} delivering />;
+        case 2:
+          return <Status text={ORDER_STATUS.SUCCESS.name} success />;
+        case 3:
+          return <Status text={ORDER_STATUS.CANCELED.name} canceled />;
+        default:
+          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
+      }
+    },
+  },
+  {
+    name: 'Nhân viên',
+    selector: (row) => row.employee_name,
+  },
+];
+
 const Dashboard = () => {
   const [data, setData] = useState({});
   useEffect(() => {
@@ -59,6 +108,50 @@ const Dashboard = () => {
       }
     };
     getStatistics();
+  }, []);
+
+  const [orderData, setOrderData] = useState([]);
+  const [dataRow, setDataRow] = useState(orderData);
+  const [store, setStore] = useState();
+  const [status, setStatus] = useState('');
+  const getAllOrders = async () => {
+    const res = await httpGetAllOrders();
+    if (res.data) {
+      console.log('orders', res.data);
+      setOrderData(res.data);
+      setDataRow(res.data);
+    }
+  };
+  const [stores, setStores] = useState([]);
+  useEffect(() => {
+    const getAllStore = async () => {
+      const response = await httpGetAllStore();
+      setStores(response.data);
+    };
+    getAllStore();
+  }, []);
+
+  const options = stores.map(s => ({
+    label: s.storeName,
+    value: s.id
+}));
+  const handleFilterByStore = async (e) => {
+    setStore(e.value);
+    const result = orderData.filter(
+        (item) => item?.store?.id === Number.parseInt(e.value)
+      );
+      setDataRow(result);
+  };
+  const handleFilterByStatus = async (e) => {
+    setStatus(e.target.value);
+    const result = orderData.filter(
+      (item) => item.status === Number.parseInt(e.target.value)
+    );
+    console.log(result);
+    setDataRow(result);
+  };
+  useEffect(() => {
+    getAllOrders();
   }, []);
   return (
     <div className={cx('wrapper')}>
@@ -117,6 +210,42 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      <div className={cx('store')}>
+        <h3>Quản lý đơn hàng</h3>
+        <div className={cx('filter')}>
+          <div className={cx('filter-item', 'icon')}>
+            <Icon
+              onClick={() => {
+                getAllOrders();
+              }}
+              icon='mdi:reload'
+            />
+          </div>
+          <div className={cx('filter-item')}>
+            <Select className={cx('Select')} value={options.find(obj => obj.value === store)}
+                    onChange={(e) => handleFilterByStore(e)} options={options} />
+          </div>
+          <div className={cx('filter-item')}>
+            <select
+              name='order-status'
+              value={status}
+              onChange={(e) => handleFilterByStatus(e)}
+            >
+              {Object.values(ORDER_STATUS).map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={cx('filter-item')}>
+            <Clickable primary text='Downloads' />
+          </div>
+        </div>
+        <CustomDataTable data={dataRow} columns={orderColumns} />
+      </div>
+
       <div className={cx('store')}>
         <h3>Doanh thu theo ngày</h3>
         <CustomDataTable
@@ -124,6 +253,7 @@ const Dashboard = () => {
           columns={revenueOrderColumns}
         />
       </div>
+
       <div className={cx('store')}>
         <h3>Doanh số theo cửa hàng trong ngày</h3>
         <CustomDataTable data={data.stores} columns={countOrderColumns} />

@@ -21,23 +21,23 @@ export const DELIVERY_METHOD = [
 export const ORDER_STATUS = {
   IN_PROGRESS: {
     id: 0,
-    name: 'In Progress',
-    status: 'inProgress',
+    name: 'Chờ xử lý',
+    status: 'InProgress',
   },
   DELIVERING: {
     id: 1,
-    name: 'Delivering',
-    status: 'delivering',
+    name: 'Đang giao',
+    status: 'Delivering',
   },
   SUCCESS: {
     id: 2,
-    name: 'Success',
-    status: 'success',
+    name: 'Thành công',
+    status: 'Success',
   },
   CANCELED: {
     id: 3,
-    name: 'Canceled',
-    status: 'canceled',
+    name: 'Đã hủy',
+    status: 'Canceled',
   },
 };
 export const STATUS = [

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { DELIVERY_METHOD, ORDER_STATUS } from '~/utils/enum';
-import Status from '~/components/Status';
+import { DELIVERY_METHOD } from '~/utils/enum';
 import { formatPrice } from '~/utils/format';
 import CustomDataTable from '~/components/CustomDataTable';
+import getStatusComponent from '../../../components/Status';
 
 const columns = [
   {
@@ -42,20 +42,19 @@ const columns = [
   },
   {
     name: 'Trạng thái',
-    selector: (row) => {
-      switch (row.status) {
-        case 0:
-          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
-        case 1:
-          return <Status text={ORDER_STATUS.DELIVERING.name} delivering />;
-        case 2:
-          return <Status text={ORDER_STATUS.SUCCESS.name} success />;
-        case 3:
-          return <Status text={ORDER_STATUS.CANCELED.name} canceled />;
-        default:
-          return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
-      }
-    },
+    selector: (row) => getStatusComponent(row.status),
+    // switch (row.status) {
+    //   case 0:
+    //     return <Status text={ORDER_STATUS.IN_PROGRESS.status} inProgress />;
+    //   case 1:
+    //     return <Status text={ORDER_STATUS.DELIVERING.status} delivering />;
+    //   case 2:
+    //     return <Status text={ORDER_STATUS.SUCCESS.status} success />;
+    //   case 3:
+    //     return <Status text={ORDER_STATUS.CANCELED.status} canceled />;
+    //   default:
+    //     return <Status text={ORDER_STATUS.IN_PROGRESS.status} inProgress />;
+    // }
   },
   {
     name: 'Chi tiết',

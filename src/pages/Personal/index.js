@@ -14,6 +14,7 @@ import {
 import { httpGetOrderByAccountUsername } from '~/apiServices/orderServices';
 import ListOrder from '~/components/Order/ListOrder/ListOrder';
 import { toast } from 'react-toastify';
+import { ORDER_STATUS } from '~/utils/enum';
 
 const cx = className.bind(styles);
 
@@ -29,7 +30,8 @@ const Personal = () => {
     districtId: '',
     accountUsername: auth?.username ? auth.username : '',
   });
-  const [orders, setOrders] = useState([]);
+  const orders = useRef([]);
+  const [tab, setTab] = useState(0);
   const [address, setAddress] = useState(() => {
     return {
       provinceId: Number.parseInt(customer.provinceId),
@@ -56,7 +58,7 @@ const Personal = () => {
       const res = await httpGetOrderByAccountUsername(auth.username);
 
       if (res.data) {
-        setOrders(res.data);
+        orders.current = res.data;
       }
     };
     getCustomerInfo();
@@ -183,7 +185,22 @@ const Personal = () => {
           </div>
           <div className={cx('order-info')}>
             <h4>Lịch sử đơn hàng</h4>
-            <ListOrder orders={orders} />
+            <ul className={cx('tab')}>
+              {Object.values(ORDER_STATUS).map((item) => (
+                <li
+                  className={cx('tab-item', { active: item.id === tab })}
+                  onClick={() => setTab(item.id)}
+                >
+                  {item.name}
+                </li>
+              ))}
+            </ul>
+            <ListOrder
+              orders={
+                orders.current.length > 0 &&
+                orders.current.filter((item) => item.status === tab)
+              }
+            />
           </div>
         </div>
       </div>

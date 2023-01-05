@@ -44,7 +44,6 @@ const OrderItem = (props) => {
         </div>
         <div className={cx('total')}>
           <p className={cx('price')}>{formatPrice(order.total)}</p>
-          <p>{Object.values(ORDER_STATUS)[order.status].name}</p>
         </div>
       </div>
       <div className={cx('action')}>

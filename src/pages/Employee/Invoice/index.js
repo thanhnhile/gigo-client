@@ -6,26 +6,26 @@ import {
   httpGetOrderById,
   httpUpdateStatusOrder,
 } from '~/apiServices/orderServices';
-import Status from '~/components/Status';
+import getStatusComponent from '~/components/Status';
 import { formatPrice } from '~/utils/format';
 import Clickable from '../../../components/Clickable';
 import { DELIVERY_METHOD, ORDER_STATUS } from '~/utils/enum';
 
 const cx = className.bind(styles);
-const getStatusComponent = (status = 0) => {
-  switch (status) {
-    case 0:
-      return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
-    case 1:
-      return <Status text={ORDER_STATUS.DELIVERING.name} delivering />;
-    case 2:
-      return <Status text={ORDER_STATUS.SUCCESS.name} success />;
-    case 3:
-      return <Status text={ORDER_STATUS.CANCELED.name} canceled />;
-    default:
-      return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
-  }
-};
+// const getStatusComponent = (status = 0) => {
+//   switch (status) {
+//     case 0:
+//       return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
+//     case 1:
+//       return <Status text={ORDER_STATUS.DELIVERING.name} delivering />;
+//     case 2:
+//       return <Status text={ORDER_STATUS.SUCCESS.name} success />;
+//     case 3:
+//       return <Status text={ORDER_STATUS.CANCELED.name} canceled />;
+//     default:
+//       return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
+//   }
+// };
 
 const Invoice = () => {
   const { id } = useParams();

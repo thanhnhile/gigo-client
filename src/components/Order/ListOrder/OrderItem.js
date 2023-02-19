@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import className from 'classnames/bind';
+import Modal from '../../Modal';
+import ReviewProduct from '~/components/ReviewProduct';
 import styles from './ListOrder.module.scss';
 import { formatPrice } from '~/utils/format';
 import { ORDER_STATUS } from '~/utils/enum';
@@ -9,6 +11,7 @@ const cx = className.bind(styles);
 
 const OrderItem = (props) => {
   const [order, setOrder] = useState(props.order);
+  const [showModal, setShowModal] = useState(false);
   const handleCancel = async (id) => {
     const res = await httpUpdateStatusOrder(id, ORDER_STATUS.CANCELED.id);
     if (res.data) {
@@ -27,19 +30,38 @@ const OrderItem = (props) => {
       <div className={cx('content')}>
         <div className={cx('product')}>
           {order.details.map((item) => (
-            <div className={cx('product-item')}>
-              <img alt={item.productName} src={item.imgURL}></img>
-              <div className={cx('product-item-info')}>
-                <span>{item.productName}</span>
-                <br />
-                <span>Size: {item.size}</span>
-                <br />
-                <span>
-                  {item.quantity ?? 1} x{' '}
-                  <span className={cx('price')}>{formatPrice(item.price)}</span>
-                </span>
+            <>
+              <div className={cx('product-item')}>
+                <img alt={item.productName} src={item.imgURL}></img>
+                <div className={cx('product-item-info')}>
+                  <span>{item.productName}</span>
+                  <br />
+                  <span>Size: {item.size}</span>
+                  <br />
+                  <span>
+                    {item.quantity ?? 1} x{' '}
+                    <span className={cx('price')}>
+                      {formatPrice(item.price)}
+                    </span>
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowModal(true)}
+                  disabled={order.status !== ORDER_STATUS.SUCCESS.id}
+                >
+                  Đánh giá
+                </button>
               </div>
-            </div>
+              {showModal && (
+                <Modal
+                  title='Đánh giá sản phẩm'
+                  size='lg'
+                  handleCancel={() => setShowModal(false)}
+                >
+                  <ReviewProduct product={item} />
+                </Modal>
+              )}
+            </>
           ))}
         </div>
         <div className={cx('total')}>

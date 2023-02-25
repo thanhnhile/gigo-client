@@ -19,8 +19,10 @@
   font-weight: 600;
   cursor: pointer;
   border-radius: var(--button-border-radius);
-  border: 1px solid transparent;
+  border: 1px solid !important;
+  border-color: transparent;
   overflow: hidden;
+  text-decoration: none !important;
   &.primary {
     @include theme(var(--primary));
   }

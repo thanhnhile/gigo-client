@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import className from 'classnames/bind';
 import Modal from '../../Modal';
 import ReviewProduct from '~/components/ReviewProduct';
@@ -10,6 +10,7 @@ import { httpUpdateStatusOrder } from '~/apiServices/orderServices';
 const cx = className.bind(styles);
 
 const OrderItem = (props) => {
+  const targetItem = useRef();
   const [order, setOrder] = useState(props.order);
   const [showModal, setShowModal] = useState(false);
   const handleCancel = async (id) => {
@@ -17,6 +18,10 @@ const OrderItem = (props) => {
     if (res.data) {
       setOrder(res.data);
     }
+  };
+  const handleClick = (item) => {
+    setShowModal(true);
+    targetItem.current = item;
   };
   return (
     <div key={order.id} className={cx('order-item')}>
@@ -30,38 +35,34 @@ const OrderItem = (props) => {
       <div className={cx('content')}>
         <div className={cx('product')}>
           {order.details.map((item) => (
-            <>
-              <div className={cx('product-item')}>
-                <img alt={item.productName} src={item.imgURL}></img>
-                <div className={cx('product-item-info')}>
-                  <span>{item.productName}</span>
-                  <br />
-                  <span>Size: {item.size}</span>
-                  <br />
-                  <span>
-                    {item.quantity ?? 1} x{' '}
-                    <span className={cx('price')}>
-                      {formatPrice(item.price)}
-                    </span>
-                  </span>
-                </div>
-                <button
-                  onClick={() => setShowModal(true)}
-                  disabled={order.status !== ORDER_STATUS.SUCCESS.id}
-                >
-                  Đánh giá
-                </button>
-              </div>
+            <div className={cx('product-item')}>
               {showModal && (
                 <Modal
                   title='Đánh giá sản phẩm'
                   size='lg'
                   handleCancel={() => setShowModal(false)}
                 >
-                  <ReviewProduct product={item} />
+                  <ReviewProduct product={targetItem.current} />
                 </Modal>
               )}
-            </>
+              <img alt={item.productName} src={item.imgURL}></img>
+              <div className={cx('product-item-info')}>
+                <span>{item.productName}</span>
+                <br />
+                <span>Size: {item.size}</span>
+                <br />
+                <span>
+                  {item.quantity ?? 1} x{' '}
+                  <span className={cx('price')}>{formatPrice(item.price)}</span>
+                </span>
+              </div>
+              <button
+                onClick={() => handleClick(item)}
+                disabled={order.status !== ORDER_STATUS.SUCCESS.id}
+              >
+                Đánh giá
+              </button>
+            </div>
           ))}
         </div>
         <div className={cx('total')}>

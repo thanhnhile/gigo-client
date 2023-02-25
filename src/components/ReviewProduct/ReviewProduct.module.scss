@@ -2,17 +2,9 @@
   min-width: 40vw;
   .list-star {
     display: flex;
-    justify-content: center;
     padding: 1rem;
-    .star {
-      font-size: 4.5rem;
-      padding: 5px;
-      color: gray;
-      cursor: pointer;
-      &.active {
-        color: orange;
-      }
-    }
+    justify-content: center;
+    font-size: 4.5rem;
   }
   .product-info {
     display: flex;
@@ -35,6 +27,49 @@
       &:focus {
         border-color: #000;
       }
+    }
+  }
+}
+.star {
+  padding: 5px;
+  color: gray;
+  cursor: pointer;
+  &.active {
+    color: orange;
+  }
+}
+.list-rating {
+  padding: 15px 0;
+  .list-star {
+    display: flex;
+    font-size: 2rem;
+    padding: unset;
+    .star {
+      padding: unset;
+    }
+  }
+  .rating-item {
+    margin-top: 15px;
+    padding: 5px 0 15px;
+    &__user {
+      display: flex;
+      align-items: center;
+      line-height: unset;
+      h5 {
+        font-size: 1.4rem;
+      }
+      span {
+        margin-left: 15px;
+        font-weight: 400;
+        font-size: 1.2rem;
+        position: relative;
+        bottom: 1px;
+      }
+    }
+
+    p {
+      line-height: 24px;
+      padding: 10px 0 5px;
     }
   }
 }

@@ -53,6 +53,18 @@
               }
             }
           }
+          button {
+            font-size: 1.3rem;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            padding: 3px 12px;
+            background-color: transparent;
+            text-decoration: underline;
+            &:hover {
+              color: var(--primary);
+            }
+          }
         }
       }
       .total {
@@ -69,17 +81,17 @@
     .action {
       display: flex;
       justify-content: flex-end;
-    }
-    button {
-      border: 1px solid var(--primary);
-      border-radius: 5px;
-      outline: none;
-      cursor: pointer;
-      padding: 3px 12px;
-      background-color: transparent;
-      margin-bottom: 8px;
-      &:disabled {
-        display: none;
+      button {
+        border: 1px solid var(--primary);
+        border-radius: 5px;
+        outline: none;
+        cursor: pointer;
+        padding: 3px 12px;
+        background-color: transparent;
+        margin-bottom: 8px;
+        &:disabled {
+          display: none;
+        }
       }
     }
   }

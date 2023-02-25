@@ -84,37 +84,12 @@ const SelectAddress = ({ address, setAddress }) => {
         options={provinceOptions}
         onChange={handleProvinceChange}
       />
+      <div style={{ height: '15px' }}></div>
       <Select
         value={districtValue.current || districtOptions[0]}
         options={districtOptions}
         onChange={handleDistrictChange}
       />
-      {/* <select
-          onChange={handleProvinceChange}
-          name='province'
-          value={address?.province ?? 'default'}
-        >
-          <option value='default'>Chọn tỉnh</option>
-          {provinces.length &&
-            provinces.map((item) => (
-              <option value={item.code} key={item.id}>
-                {item.name}
-              </option>
-            ))}
-        </select>
-        <select
-          onChange={handleDistrictChange}
-          name='district'
-          value={address?.district ?? 'default'}
-        >
-          <option value='default'>Chọn quận/huyện</option>
-          {districts.length &&
-            districts.map((item) => (
-              <option value={item.code} key={item.id}>
-                {item.name}
-              </option>
-            ))}
-        </select> */}
     </div>
   );
 };

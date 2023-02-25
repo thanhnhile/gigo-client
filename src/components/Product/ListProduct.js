@@ -7,14 +7,12 @@ const cx = className.bind(styles);
 
 function ListProduct(props) {
   return (
-    <div className={cx('container')}>
-      <div className={cx('product product--flexbox')}>
-        {props.title && <h2>{props.title}</h2>}
-        <div className={cx('product__wrapper')}>
-          {props.product.map((product, index) => (
-            <ProductItem product={product} key={index}></ProductItem>
-          ))}
-        </div>
+    <div className={cx('wrapper', 'container')}>
+      {props.title && <h2>{props.title}</h2>}
+      <div className={cx('flex-box')}>
+        {props.product.map((product, index) => (
+          <ProductItem product={product} key={index}></ProductItem>
+        ))}
       </div>
     </div>
   );

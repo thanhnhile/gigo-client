@@ -8,6 +8,7 @@ const cx = classNames.bind(styles);
 
 const Modal = ({
   children,
+  footer,
   title,
   size,
   handleCancel,
@@ -28,7 +29,7 @@ const Modal = ({
         </div>
         <div className={cx('body')}>{children}</div>
         <div className={cx('footer')}>
-          <Clickable text='Đóng' outline onClick={handleCancel} />
+          {footer ?? <Clickable outline onClick={handleCancel} text='Đóng' />}
         </div>
       </div>
     </div>

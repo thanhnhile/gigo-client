@@ -10,7 +10,6 @@ const ReviewProduct = ({ product }) => {
   const [point, setPoint] = useState(0);
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('hello');
   };
   return (
     <div className={cx('wrapper')}>
@@ -20,7 +19,7 @@ const ReviewProduct = ({ product }) => {
       </div>
       <RatingCanChange point={point} setPoint={setPoint} />
       <form>
-        <textarea placeholder='Cảm nhận của bạn về sản phẩm...' />
+        <textarea placeholder='Cảm nhận của bạn về sản phẩm...' required />
         <Clickable text='Gửi đánh giá' primary onClick={handleSubmit} />
       </form>
     </div>

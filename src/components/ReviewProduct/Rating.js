@@ -4,7 +4,6 @@ import styles from './ReviewProduct.module.scss';
 import Star from './Star';
 const MAX_POINT = 5;
 
-
 const cx = classNames.bind(styles);
 
 export const RatingCanChange = ({ point, setPoint }) => {

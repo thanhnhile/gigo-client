@@ -79,9 +79,9 @@ const Invoice = () => {
           order.details.map((item) => {
             return (
               <div className={cx('product-item')}>
-                <img alt={item.productName} src={item.imgURL}></img>
+                <img alt={item.product_name} src={item.img_url}></img>
                 <div className={cx('product-item-info')}>
-                  <span>{item.productName}</span>
+                  <span>{item.product_name}</span>
                   <br />
                   <span>Size: {item.size}</span>
                   <br />

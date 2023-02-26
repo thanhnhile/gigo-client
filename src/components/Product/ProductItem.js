@@ -25,7 +25,7 @@ const Product = (props) => {
           <Link to={'/products/' + product.id}>
             <img
               className={cx('product__img')}
-              src={product.imgURL}
+              src={product.img_url}
               alt={product.name}
             />
             <span className={cx('product__name')}>{product.name}</span>

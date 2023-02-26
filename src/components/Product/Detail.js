@@ -24,7 +24,7 @@ const ProductDetail = ({ product }) => {
     const surCharge = size === 'S' ? 0 : size === 'M' ? 6000 : 10000;
     const cartItem = {
       id: product.id,
-      image: product.imgURL,
+      image: product.img_url,
       name: product.name,
       quantity: quantity,
       size: size,
@@ -37,7 +37,7 @@ const ProductDetail = ({ product }) => {
     <div className={cx('wrapper', 'container')}>
       <div className={cx('flex-box', 'product-detail')}>
         <div className={cx('left-column')}>
-          <img src={product.imgURL} alt='' />
+          <img src={product.img_url} alt='' />
         </div>
 
         <div className={cx('right-column')}>
@@ -108,7 +108,7 @@ const ProductDetail = ({ product }) => {
           <Clickable text='Đặt ngay' primary onClick={handleAddToCart} />
         </div>
       </div>
-      <ListRating list={[1, 2, 3, 4, 5]} />
+      <ListRating list={product.rates} />
     </div>
   );
 };

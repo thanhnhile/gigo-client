@@ -1,4 +1,5 @@
 import * as request from '~/utils/request';
+import { ORDER_STATUS } from '../utils/enum';
 
 export const httpPostOrder = (payload) => {
   try {
@@ -39,11 +40,11 @@ export const httpGetOrderById = (id) => {
 export const httpUpdateStatusOrder = (id, status) => {
   try {
     switch (status) {
-      case 1:
+      case ORDER_STATUS.DELIVERING.id:
         return request.put(`/orders/update/delivering/${id}`);
-      case 2:
+      case ORDER_STATUS.SUCCESS.id:
         return request.put(`/orders/update/success/${id}`);
-      case 3:
+      case ORDER_STATUS.CANCELED.id:
         return request.put(`/orders/update/cancel/${id}`);
       default:
         console.log('NOT SUPPORT');

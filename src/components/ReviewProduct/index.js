@@ -14,8 +14,8 @@ const ReviewProduct = ({ product }) => {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('product-info')}>
-        <img src={product.imgURL} alt={product.productName} />
-        <h3>{product.productName}</h3>
+        <img src={product.img_url} alt={product.product_name} />
+        <h3>{product.product_name}</h3>
       </div>
       <RatingCanChange point={point} setPoint={setPoint} />
       <form>

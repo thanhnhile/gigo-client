@@ -8,18 +8,18 @@ const cx = classNames.bind(styles);
 const ListRating = ({ list }) => {
   return (
     <div className={cx('list-rating')}>
-      <h3>Đánh giá ({list.length})</h3>
-      {list.length > 0 ? (
+      <h3>Đánh giá ({list?.length})</h3>
+      {list?.length > 0 ? (
         <ul>
-          {list.map((item, index) => (
+          {list.map((item) => (
             <li key={item.id} className={cx('rating-item')}>
               <div>
-                <RatingJustShow point={index + 1} />
+                <RatingJustShow point={item.point} />
                 <div className={cx('rating-item__user')}>
-                  <h5>0975802554</h5>
+                  <h5>{item.username}</h5>
                   <span>2 giờ trước</span>
                 </div>
-                <p>Món này rất ngon, vị thơm chua nhẹ!</p>
+                <p>{item.content}</p>
               </div>
             </li>
           ))}

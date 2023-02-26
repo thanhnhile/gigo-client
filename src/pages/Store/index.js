@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Store.module.scss';
 import { Icon } from '@iconify/react';

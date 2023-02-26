@@ -8,7 +8,10 @@ import { httpPostProduct } from '~/apiServices/productServices';
 import uploadImage from '~/apiServices/uploadImage';
 import { STATUS } from '~/utils/enum';
 import { useNavigate, useParams } from 'react-router-dom';
-import { httpGetProductById, httpPutProduct } from '~/apiServices/productServices';
+import {
+  httpGetProductById,
+  httpPutProduct,
+} from '~/apiServices/productServices';
 
 const cx = className.bind(styles);
 function Product() {
@@ -22,7 +25,7 @@ function Product() {
     },
     description: '',
     price: 0,
-    imgURL: '',
+    img_url: '',
     status: 1,
   });
   const [image, setImage] = useState({
@@ -43,7 +46,7 @@ function Product() {
     console.log(response.data);
     setProduct(response.data);
     setImage((prev) => {
-      return { ...prev, url: response.data.imgURL };
+      return { ...prev, url: response.data.img_url };
     });
   };
 
@@ -71,7 +74,7 @@ function Product() {
       e.preventDefault();
       if (image.file) {
         const url = await uploadImage(image.file);
-        const productToAdd = { ...product, imgURL: url };
+        const productToAdd = { ...product, img_url: url };
         if (id === 'add') {
           const res = await httpPostProduct(productToAdd);
           if (res.data) {

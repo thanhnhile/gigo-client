@@ -64,6 +64,9 @@
             &:hover {
               color: var(--primary);
             }
+            &:disabled {
+              display: none;
+            }
           }
         }
       }

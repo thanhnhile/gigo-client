@@ -5,6 +5,7 @@ import { DELIVERY_METHOD } from '~/utils/enum';
 import { formatPrice } from '~/utils/format';
 import CustomDataTable from './CustomDataTable';
 import getStatusComponent from './Status';
+import { formatDate } from '~/utils/dateFormat';
 
 const TableOrder = ({ data, detailButton }) => {
   const columns = [
@@ -15,8 +16,7 @@ const TableOrder = ({ data, detailButton }) => {
     },
     {
       name: 'Ngày',
-      selector: (row) =>
-        row.createdDate.slice(0, 10).split('-').reverse().join('/'),
+      selector: (row) => formatDate(row.createdDate),
     },
     {
       name: 'Địa chỉ',

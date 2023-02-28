@@ -16,6 +16,7 @@
     }
   }
   form {
+    position: relative;
     textarea {
       min-height: 200px;
       width: 100%;
@@ -27,6 +28,11 @@
       &:focus {
         border-color: #000;
       }
+    }
+    span {
+      position: absolute;
+      bottom: 0;
+      right: 0;
     }
   }
 }
@@ -40,6 +46,9 @@
 }
 .list-rating {
   padding: 15px 0;
+  h3 {
+    margin-bottom: 15px;
+  }
   .list-star {
     display: flex;
     font-size: 2rem;

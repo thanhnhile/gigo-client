@@ -4,6 +4,7 @@ import Modal from '../../Modal';
 import ReviewProduct from '~/components/ReviewProduct';
 import styles from './ListOrder.module.scss';
 import { formatPrice } from '~/utils/format';
+import { formatDate } from '~/utils/dateFormat';
 import { ORDER_STATUS } from '~/utils/enum';
 import { httpUpdateStatusOrder } from '~/apiServices/orderServices';
 
@@ -27,10 +28,7 @@ const OrderItem = (props) => {
     <div key={order.id} className={cx('order-item')}>
       <div className={cx('header')}>
         <span>Mã đơn hàng: {order.id}</span>
-        <span>
-          Ngày đặt:{' '}
-          {order.createdDate.slice(0, 10).split('-').reverse().join('/')}
-        </span>
+        <span>Ngày đặt: {formatDate(order.createdDate)}</span>
       </div>
       <div className={cx('content')}>
         <div className={cx('product')}>

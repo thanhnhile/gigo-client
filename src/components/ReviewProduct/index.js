@@ -1,15 +1,37 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import className from 'classnames/bind';
 import { RatingCanChange } from './Rating';
-import Clickable from '../Clickable';
+import Form from './Form';
 import styles from './ReviewProduct.module.scss';
+import { httpPostRating } from '~/apiServices/ratingServices';
+import { toast } from 'react-toastify';
 
 const cx = className.bind(styles);
 
 const ReviewProduct = ({ product }) => {
   const [point, setPoint] = useState(0);
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleSubmit = async (e, content) => {
     e.preventDefault();
+    const payload = {
+      product_id: product.product_id,
+      point,
+      content,
+    };
+    const response = await httpPostRating(payload);
+    if (response.data) {
+      navigate(`/products/${product.product_id}`, {
+        state: { from: location },
+      });
+    } else {
+      toast.error(response.errMsg, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
   };
   return (
     <div className={cx('wrapper')}>
@@ -18,10 +40,7 @@ const ReviewProduct = ({ product }) => {
         <h3>{product.product_name}</h3>
       </div>
       <RatingCanChange point={point} setPoint={setPoint} />
-      <form>
-        <textarea placeholder='Cảm nhận của bạn về sản phẩm...' required />
-        <Clickable text='Gửi đánh giá' primary onClick={handleSubmit} />
-      </form>
+      <Form handleSubmit={handleSubmit} />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import {
   httpPostCustomer,
 } from '~/apiServices/customerServices';
 import { httpGetOrderByAccountUsername } from '~/apiServices/orderServices';
+import { httpGetRatesByUsername } from '~/apiServices/ratingServices';
 import ListOrder from '~/components/Order/ListOrder/ListOrder';
 import { toast } from 'react-toastify';
 import { ORDER_STATUS } from '~/utils/enum';
@@ -32,6 +33,7 @@ const Personal = () => {
     accountUsername: auth?.username ? auth.username : '',
   });
   const orders = useRef([]);
+  const productRated = useRef([]);
   const [tab, setTab] = useState(0);
   const [address, setAddress] = useState(() => {
     return {
@@ -50,19 +52,31 @@ const Personal = () => {
       orders.current = res.data;
     }
   };
+  const getCustomerInfo = async () => {
+    const res = await httpGetCustomerInfoByUsername(auth.username);
+    if (res.data) {
+      setCustomer(res.data);
+      setAddress({
+        provinceId: res.data.provinceId,
+        districtId: res.data.districtId,
+      });
+    } else setCustomer({ ...customer, provinceId: -1 });
+  };
+  const getProductsRated = async () => {
+    const res = await httpGetRatesByUsername();
+    if (res.data) {
+      productRated.current = res.data;
+    }
+  };
   useEffect(() => {
-    const getCustomerInfo = async () => {
-      const res = await httpGetCustomerInfoByUsername(auth.username);
-      if (res.data) {
-        setCustomer(res.data);
-        setAddress({
-          provinceId: res.data.provinceId,
-          districtId: res.data.districtId,
-        });
-      } else setCustomer({ ...customer, provinceId: -1 });
+    const fetchData = async () => {
+      await Promise.all([
+        getCustomerInfo(),
+        getHistoryOrders(),
+        getProductsRated(),
+      ]);
     };
-    getCustomerInfo();
-    getHistoryOrders();
+    fetchData();
   }, []);
   useEffect(() => {
     getHistoryOrders();
@@ -199,6 +213,7 @@ const Personal = () => {
               ))}
             </ul>
             <div className={cx('list-order')}>
+              {console.log(productRated)}
               <ListOrder
                 orders={
                   orders.current.length > 0 &&

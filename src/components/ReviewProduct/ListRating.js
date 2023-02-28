@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './ReviewProduct.module.scss';
 import { RatingJustShow } from './Rating';
+import { getDiffFromNow } from '../../utils/dateFormat';
+import { get } from '../../utils/request';
 
 const cx = classNames.bind(styles);
 
@@ -17,7 +19,7 @@ const ListRating = ({ list }) => {
                 <RatingJustShow point={item.point} />
                 <div className={cx('rating-item__user')}>
                   <h5>{item.username}</h5>
-                  <span>2 giờ trước</span>
+                  <span>{getDiffFromNow(item.created_date)}</span>
                 </div>
                 <p>{item.content}</p>
               </div>

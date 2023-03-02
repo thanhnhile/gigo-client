@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { createContext, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '~/hooks';
 import Clickable from '~/components/Clickable';
 import className from 'classnames/bind';
@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 import { ORDER_STATUS } from '~/utils/enum';
 
 const cx = className.bind(styles);
+export const historyOrderContext = createContext();
 
 const Personal = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Personal = () => {
     accountUsername: auth?.username ? auth.username : '',
   });
   const orders = useRef([]);
-  const productRated = useRef([]);
+  const productsRated = useRef([]);
   const [tab, setTab] = useState(0);
   const [address, setAddress] = useState(() => {
     return {
@@ -65,7 +66,7 @@ const Personal = () => {
   const getProductsRated = async () => {
     const res = await httpGetRatesByUsername();
     if (res.data) {
-      productRated.current = res.data;
+      productsRated.current = res.data;
     }
   };
   useEffect(() => {
@@ -86,7 +87,6 @@ const Personal = () => {
   };
   const handleSave = async () => {
     let fullAddress = customer.address;
-    console.log('ADDRESS ', address);
     if (address.districtId !== customer.districtId) {
       const index = fullAddress.includes('huyện')
         ? fullAddress.indexOf('huyện')
@@ -213,13 +213,19 @@ const Personal = () => {
               ))}
             </ul>
             <div className={cx('list-order')}>
-              {console.log(productRated)}
-              <ListOrder
-                orders={
-                  orders.current.length > 0 &&
-                  orders.current.filter((item) => item.status === tab)
-                }
-              />
+              <historyOrderContext.Provider
+                value={{
+                  productsRated: productsRated.current,
+                  tab,
+                }}
+              >
+                <ListOrder
+                  orders={
+                    orders.current.length > 0 &&
+                    orders.current.filter((item) => item.status === tab)
+                  }
+                />
+              </historyOrderContext.Provider>
             </div>
           </div>
         </div>

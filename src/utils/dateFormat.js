@@ -20,5 +20,5 @@ export function getDiffFromNow(date) {
     return Math.floor(diff / PER_HOUR) + ' giờ trước';
   } else if (diff >= PER_MINUTE) {
     return Math.floor(diff / PER_MINUTE) + ' phút trước';
-  } else return diff + ' giấy trước';
+  } else return diff + ' giây trước';
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useMemo, useState, useContext } from 'react';
 import className from 'classnames/bind';
 import Modal from '../../Modal';
 import ReviewProduct from '~/components/ReviewProduct';
@@ -7,13 +7,25 @@ import { formatPrice } from '~/utils/format';
 import { formatDate } from '~/utils/dateFormat';
 import { ORDER_STATUS } from '~/utils/enum';
 import { httpUpdateStatusOrder } from '~/apiServices/orderServices';
-
+import { historyOrderContext } from '~/pages/Personal';
 const cx = className.bind(styles);
 
 const OrderItem = (props) => {
   const targetItem = useRef();
   const [order, setOrder] = useState(props.order);
   const [showModal, setShowModal] = useState(false);
+  const { tab, productsRated } = useContext(historyOrderContext);
+  console.log('TAB: ', tab);
+  console.log('RATED: ', productsRated);
+  const checkIsProductRatedByLoggedUser = (productId) => {
+    if (productsRated?.length <= 0) {
+      return false;
+    }
+    return productsRated.filter((item) => item === productId).length > 0
+      ? true
+      : false;
+  };
+
   const handleCancel = async (id) => {
     const res = await httpUpdateStatusOrder(id, ORDER_STATUS.CANCELED.id);
     if (res.data) {
@@ -56,7 +68,12 @@ const OrderItem = (props) => {
               </div>
               <button
                 onClick={() => handleClick(item)}
-                disabled={order.status !== ORDER_STATUS.SUCCESS.id}
+                disabled={
+                  tab !== ORDER_STATUS.SUCCESS.id ||
+                  checkIsProductRatedByLoggedUser(
+                    Number.parseInt(item.product_id)
+                  )
+                }
               >
                 Đánh giá
               </button>

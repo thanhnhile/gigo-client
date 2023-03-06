@@ -7,3 +7,7 @@ export const phoneValidation = (phone) =>
 */
 export const passwordValidation = (pwd) =>
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/.test(pwd);
+
+
+export const emailValidation = (email) =>
+/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);

@@ -7,3 +7,11 @@ export const httpGetAllAccount = () => {
         console.log(error.response.data);
     }
 };
+export const httpForgotPassword = (email) => {
+    const res = request.post(`/accounts/forgot_password/${email}`);
+    return res;
+}
+export const httpResetPassword = (token, payload) => {
+    const res = request.put(`/accounts/reset_password/${token}`, payload);
+    return res;
+}

@@ -1,6 +1,8 @@
 /*public */
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import ForgotPassword from '../pages/Password/ForgotPassword';
+import ResetPassword from '../pages/Password/ResetPassword';
 import Register from '../pages/Register';
 import ProductDetail from '../pages/ProductDetail';
 import Stores from '../pages/Store';
@@ -39,6 +41,14 @@ export const publicRoutes = [
   {
     path: '/auth',
     component: Login,
+  },
+  {
+    path: '/forgotPassword',
+    component:ForgotPassword,
+  },
+  {
+    path: '/resetPassword/:token',
+    component:ResetPassword,
   },
   {
     path: '/register',

@@ -20,12 +20,12 @@ const Product = (props) => {
     //     </div>
     // </div>
     product.status && (
-      <div className={cx('product__product-wrapper')}>
-        <div className={cx('product__product')}>
+      <div className={cx('product')}>
+        <div className={cx('product__item')}>
           <Link to={'/products/' + product.id}>
             <img
               className={cx('product__img')}
-              src={product.imgURL}
+              src={product.img_url}
               alt={product.name}
             />
             <span className={cx('product__name')}>{product.name}</span>

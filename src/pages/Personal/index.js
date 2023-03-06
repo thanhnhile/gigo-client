@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { createContext, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '~/hooks';
 import Clickable from '~/components/Clickable';
 import className from 'classnames/bind';
@@ -13,11 +13,13 @@ import {
   httpPostCustomer,
 } from '~/apiServices/customerServices';
 import { httpGetOrderByAccountUsername } from '~/apiServices/orderServices';
+import { httpGetRatesByUsername } from '~/apiServices/ratingServices';
 import ListOrder from '~/components/Order/ListOrder/ListOrder';
 import { toast } from 'react-toastify';
 import { ORDER_STATUS } from '~/utils/enum';
 
 const cx = className.bind(styles);
+export const historyOrderContext = createContext();
 
 const Personal = () => {
   const navigate = useNavigate();
@@ -32,6 +34,7 @@ const Personal = () => {
     accountUsername: auth?.username ? auth.username : '',
   });
   const orders = useRef([]);
+  const productsRated = useRef([]);
   const [tab, setTab] = useState(0);
   const [address, setAddress] = useState(() => {
     return {
@@ -50,19 +53,31 @@ const Personal = () => {
       orders.current = res.data;
     }
   };
+  const getCustomerInfo = async () => {
+    const res = await httpGetCustomerInfoByUsername(auth.username);
+    if (res.data) {
+      setCustomer(res.data);
+      setAddress({
+        provinceId: res.data.provinceId,
+        districtId: res.data.districtId,
+      });
+    } else setCustomer({ ...customer, provinceId: -1 });
+  };
+  const getProductsRated = async () => {
+    const res = await httpGetRatesByUsername();
+    if (res.data) {
+      productsRated.current = res.data;
+    }
+  };
   useEffect(() => {
-    const getCustomerInfo = async () => {
-      const res = await httpGetCustomerInfoByUsername(auth.username);
-      if (res.data) {
-        setCustomer(res.data);
-        setAddress({
-          provinceId: res.data.provinceId,
-          districtId: res.data.districtId,
-        });
-      } else setCustomer({ ...customer, provinceId: -1 });
+    const fetchData = async () => {
+      await Promise.all([
+        getCustomerInfo(),
+        getHistoryOrders(),
+        getProductsRated(),
+      ]);
     };
-    getCustomerInfo();
-    getHistoryOrders();
+    fetchData();
   }, []);
   useEffect(() => {
     getHistoryOrders();
@@ -72,7 +87,6 @@ const Personal = () => {
   };
   const handleSave = async () => {
     let fullAddress = customer.address;
-    console.log('ADDRESS ', address);
     if (address.districtId !== customer.districtId) {
       const index = fullAddress.includes('huyện')
         ? fullAddress.indexOf('huyện')
@@ -199,12 +213,19 @@ const Personal = () => {
               ))}
             </ul>
             <div className={cx('list-order')}>
-              <ListOrder
-                orders={
-                  orders.current.length > 0 &&
-                  orders.current.filter((item) => item.status === tab)
-                }
-              />
+              <historyOrderContext.Provider
+                value={{
+                  productsRated: productsRated.current,
+                  tab,
+                }}
+              >
+                <ListOrder
+                  orders={
+                    orders.current.length > 0 &&
+                    orders.current.filter((item) => item.status === tab)
+                  }
+                />
+              </historyOrderContext.Provider>
             </div>
           </div>
         </div>

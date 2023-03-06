@@ -28,7 +28,7 @@
         &-item {
           display: flex;
           row-gap: 1.5rem;
-          align-items: center;
+          align-items: flex-start;
           &:not(:last-child) {
             margin-bottom: 15px;
           }
@@ -51,6 +51,21 @@
                 font-size: 1.2rem;
                 color: var(--price-color);
               }
+            }
+          }
+          button {
+            font-size: 1.3rem;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            padding: 3px 12px;
+            background-color: transparent;
+            text-decoration: underline;
+            &:hover {
+              color: var(--primary);
+            }
+            &:disabled {
+              display: none;
             }
           }
         }

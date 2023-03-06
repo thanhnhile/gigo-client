@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '~/hooks/useAuth';
@@ -64,7 +65,6 @@ const OrderProvider = ({ children }) => {
   const handleCheckout = async () => {
     const res = await httpPostOrder(order);
     if (res.data) {
-      console.log(res.data);
       removeAll();
       toast.success('Đặt hàng thành công', {
         position: toast.POSITION.TOP_RIGHT,

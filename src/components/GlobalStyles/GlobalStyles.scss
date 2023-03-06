@@ -16,6 +16,7 @@
   --wrapper-width: 1200px;
   --min-wrapper-width: 980px;
   --color-border: rgb(124, 123, 123);
+  --light-gray:#e1e8ee;
   --font-heading: 2.5rem;
   --font-heading-sm: 2rem;
   --font-paragraph: 1.4rem;
@@ -52,8 +53,11 @@ p {
   word-spacing: 3px;
   font-size: var(--font-paragraph);
 }
-input {
+input,
+textarea {
+  font-family: inherit;
   font-size: 1.5rem;
+  padding: 9px 10px;
 }
 .container {
   max-width: var(--wrapper-width);

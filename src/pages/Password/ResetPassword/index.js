@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import className from 'classnames/bind';
-import styles from './Register.module.scss';
-import Clickable from '../../components/Clickable';
-import { httpRegister } from '~/apiServices/authServices';
-import { phoneValidation } from '~/utils/validation';
+import Clickable from '~/components/Clickable';
+import styles from '../Password.module.scss';
 import { toast } from 'react-toastify';
-import { emailValidation } from '../../utils/validation';
+import { httpResetPassword } from '../../../apiServices/accountServices';
 
 const cx = className.bind(styles);
-const initValue = { username: '', email: '', password: '' };
+const initValue = { password: '' };
 
-function Register() {
+function ResetPassword() {
+  const { token } = useParams();
+  console.log(token);
   const navigate = useNavigate();
   const [user, setUser] = useState(initValue);
   const [error, setError] = useState('');
@@ -21,20 +21,6 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!phoneValidation(user.username)) {
-      toast.error('Số điện thoại không hợp lệ!', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-      });
-      return;
-    }
-    if(!emailValidation(user.email)) {
-      toast.error('Email không hợp lệ!', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-      });
-      return;
-    }
     if (user.password !== user.confirmPassword) {
       toast.error('Mật khẩu không trùng khớp!', {
         position: toast.POSITION.TOP_CENTER,
@@ -43,11 +29,10 @@ function Register() {
       return;
     }
     const newUser = {
-      username: user.username,
-      email: user.email,
       password: user.password,
     };
-    const response = await httpRegister(newUser);
+    console.log(newUser);
+    const response = await httpResetPassword(token, newUser);
     if (response.errMsg) {
       toast.error(response.errMsg, {
         position: toast.POSITION.TOP_CENTER,
@@ -58,7 +43,7 @@ function Register() {
     setError('');
     setUser(initValue);
     console.log(response);
-    toast.success('Tạo tài khoản thành công', {
+    toast.success('Cập nhật thành công', {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000,
     });
@@ -68,24 +53,9 @@ function Register() {
   };
   return (
     <div className={cx('container', 'wrapper')}>
-      <h1>Đăng ký</h1>
-      <p>
-        Đã có tài khoản?<span onClick={() => navigate('/auth')}>Đăng nhập</span>
-      </p>
+      <h1>Đặt lại mật khẩu</h1>
       <p className={cx('error', { show: error })}>{error}</p>
       <form onSubmit={handleSubmit} className={cx('form')}>
-        <input
-          name='username'
-          onChange={handleChange}
-          type='phone'
-          placeholder='Số điện thoại'
-        />
-        <input
-          name='email'
-          onChange={handleChange}
-          type='email'
-          placeholder='Email'
-        />
         <input
           name='password'
           onChange={handleChange}
@@ -105,12 +75,12 @@ function Register() {
           }}
           href='/'
         >
-          Quay lai trang chủ
+          Quay lại trang chủ
         </a>
-        <Clickable text='Đăng ký' primary />
+        <Clickable text='Cập nhật' primary />
       </form>
     </div>
   );
 }
 
-export default Register;
+export default ResetPassword;

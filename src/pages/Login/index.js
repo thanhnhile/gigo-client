@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link} from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Login.module.scss';
 import Clickable from '../../components/Clickable';
@@ -74,7 +74,7 @@ function Login() {
           type='password'
           placeholder='Mật khẩu'
         />
-        <a href='reset'>Quên mật khẩu?</a>
+        <Link to='/forgotPassword'>Quên mật khẩu?</Link>
         <Clickable text='Đăng nhập' primary />
       </form>
     </div>

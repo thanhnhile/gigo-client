@@ -4,10 +4,11 @@ import { Icon } from '@iconify/react';
 import className from 'classnames/bind';
 import styles from './Customer.module.scss';
 import SelectAddress from '../../SelectAddress';
-import useOrder from '../../../hooks/useOrder';
-import { httpGetCustomerInfoByUsername } from '~/apiServices/userServices';
+import Modal from '~/components/Modal';
+import ListAddress from '~/components/Personal/CustomerListAddress';
+import useOrder from '~/hooks/useOrder';
 import { httpGetStoreByAddress } from '~/apiServices/storeServices';
-
+import { httpGetCustomerInfoDefault } from '~/apiServices/accountServices';
 const cx = className.bind(styles);
 
 const Customer = () => {
@@ -16,9 +17,10 @@ const Customer = () => {
     return { provinceId: customer.provinceId, districtId: customer.districtId };
   });
   const [stores, setStores] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     const getCustomerInfo = async () => {
-      const res = await httpGetCustomerInfoByUsername(accountUsername);
+      const res = await httpGetCustomerInfoDefault();
       console.log(res.data);
       if (res.data) {
         const customer = res.data;
@@ -33,10 +35,18 @@ const Customer = () => {
   }, []);
   useEffect(() => {
     const handleAddressChange = async () => {
-      const res = await httpGetStoreByAddress(
-        address.provinceId,
-        address.districtId
-      );
+      let res = [];
+      if (accountUsername) {
+        res = await httpGetStoreByAddress(
+          customer.provinceId,
+          customer.districtId
+        );
+      } else {
+        res = await httpGetStoreByAddress(
+          address.provinceId,
+          address.districtId
+        );
+      }
       if (res.data?.length > 0) {
         setStores(res.data);
         setCustomer({
@@ -51,7 +61,13 @@ const Customer = () => {
       }
     };
     handleAddressChange();
-  }, [address.provinceId, address.districtId, address]);
+  }, [
+    address.provinceId,
+    address.districtId,
+    address,
+    customer.districtId,
+    customer.provinceId,
+  ]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
@@ -64,6 +80,17 @@ const Customer = () => {
     return (
       customer?.provinceId && (
         <div className={cx('wrapper')}>
+          {/* Modal */}
+          {showModal && (
+            <Modal
+              title='Sổ địa chỉ'
+              size='lg'
+              handleCancel={() => setShowModal(false)}
+            >
+              <ListAddress />
+            </Modal>
+          )}
+          {/* Modal */}
           <h2>Thông tin khách hàng</h2>
           <div className={cx('line')}></div>
           <form className={cx('form-wrapper')} onSubmit={handleSubmitCheckout}>
@@ -93,14 +120,31 @@ const Customer = () => {
               />
             </div>
             <div className={cx('form-control')}>
-              <h4>Chọn địa chỉ</h4>
-              <SelectAddress
-                address={{
-                  provinceId: customer.provinceId,
-                  districtId: customer.districtId,
-                }}
-                setAddress={setAddress}
-              />
+              <h4>Địa chỉ </h4>
+              {!accountUsername ? (
+                <SelectAddress
+                  address={{
+                    provinceId: customer.provinceId,
+                    districtId: customer.districtId,
+                  }}
+                  setAddress={setAddress}
+                />
+              ) : (
+                <div className={cx('customer-info')}>
+                  <button
+                    type='button'
+                    onClick={() => setShowModal(true)}
+                    className={cx('list-customer')}
+                  >
+                    <Icon icon='mdi:address-marker-outline' />
+                  </button>
+                  <div className={cx('customer-info_first')}>
+                    <h4>{customer.name}</h4>
+                    <h5>{customer.phone}</h5>
+                  </div>
+                  <p className={cx('customer-info_last')}>{customer.address}</p>
+                </div>
+              )}
             </div>
             <div className={cx('form-control')}>
               <h4>Chọn quán gần nhất</h4>

@@ -1,22 +1,19 @@
-import React, { useRef, useMemo, useState, useContext } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import className from 'classnames/bind';
-import Modal from '../../Modal';
+import Modal from '~/components/Modal';
 import ReviewProduct from '~/components/ReviewProduct';
 import styles from './ListOrder.module.scss';
 import { formatPrice } from '~/utils/format';
 import { formatDate } from '~/utils/dateFormat';
 import { ORDER_STATUS } from '~/utils/enum';
 import { httpUpdateStatusOrder } from '~/apiServices/orderServices';
-import { historyOrderContext } from '~/pages/Personal';
+import { historyOrderContext } from '~/components/Personal/HistoryOrder';
 const cx = className.bind(styles);
 
-const OrderItem = (props) => {
+const OrderItem = ({ order }) => {
   const targetItem = useRef();
-  const [order, setOrder] = useState(props.order);
   const [showModal, setShowModal] = useState(false);
-  const { tab, productsRated } = useContext(historyOrderContext);
-  console.log('TAB: ', tab);
-  console.log('RATED: ', productsRated);
+  const { tab, setTab, productsRated } = useContext(historyOrderContext);
   const checkIsProductRatedByLoggedUser = (productId) => {
     if (productsRated?.length <= 0) {
       return false;
@@ -29,7 +26,8 @@ const OrderItem = (props) => {
   const handleCancel = async (id) => {
     const res = await httpUpdateStatusOrder(id, ORDER_STATUS.CANCELED.id);
     if (res.data) {
-      setOrder(res.data);
+      console.log(res.data);
+      setTab(res.data.status);
     }
   };
   const handleClick = (item) => {

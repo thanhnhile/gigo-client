@@ -1,0 +1,39 @@
+.user-infor {
+  width: 30%;
+  padding: 0 15px;
+  margin-bottom: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 40px 25px 80px;
+  position: relative;
+  h4 {
+    font-size: 1.6rem;
+    padding: 8px 0;
+    margin-bottom: 15px;
+  }
+  .form-control {
+    margin-bottom: 30px;
+    input {
+      width: 100%;
+      font-size: 1.4rem;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid var(--color-border);
+      padding: 5px 0 5px 8px;
+      text-transform: capitalize;
+    }
+  }
+  .icon {
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    right: 25px;
+    bottom: 20px;
+  }
+  .logout-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 25px;
+  }
+}

@@ -84,7 +84,7 @@ const Dashboard = () => {
     // getOrderByStoreId();
     const url = `http://localhost:8089/subscribe/${auth?.employeeInfo?.storeId}`;
     const eventSource = new EventSource(url);
-    eventSource.addEventListener('newOrders', (event) => {
+    eventSource.addEventListener('LIST_ORDERS_UPDATE', (event) => {
       console.log(event);
       const data = JSON.parse(event.data);
       console.log(data);

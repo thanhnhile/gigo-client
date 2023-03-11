@@ -64,6 +64,20 @@ $padding-vertical: 1.5rem;
     }
     .body {
       padding: $padding-vertical 0;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background: var(--second);
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: var(--primary);
+      }
     }
     .footer {
       padding: $padding-vertical 0;

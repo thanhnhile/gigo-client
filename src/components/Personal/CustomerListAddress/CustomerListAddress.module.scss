@@ -1,0 +1,107 @@
+$radio-size: 18px;
+
+.wrapper {
+  max-height: 60vh;
+  .address-item {
+    display: flex;
+    padding: 15px 0;
+    h4,
+    h5 {
+      padding: 0;
+      margin: 0;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid #ddd;
+    }
+    &:first-child {
+      padding-top: 0;
+    }
+    .radio-label {
+      margin-right: 15px;
+    }
+    .radio-button {
+      display: block;
+      width: $radio-size;
+      height: $radio-size;
+      border-radius: $radio-size;
+      border: 1px solid var(--color-border);
+      position: relative;
+      &::before {
+        content: '';
+        width: 50%;
+        height: 50%;
+        border-radius: $radio-size;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: transparent;
+      }
+    }
+    .customer-info {
+      flex: 1;
+      margin-right: 15px;
+      &_first {
+        display: flex;
+        align-items: center;
+        position: relative;
+        top: -6px;
+        h4,
+        h5 {
+          font-weight: 400;
+        }
+        h5 {
+          padding-left: 10px;
+        }
+        h4 {
+          padding-right: 10px;
+          position: relative;
+          &::after {
+            content: '';
+            display: block;
+            width: 1px;
+            background-color: var(--color-border);
+            height: 60%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0;
+          }
+        }
+      }
+      &_last {
+        font-size: 1.3rem;
+      }
+    }
+    .customer-action {
+      width: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      color: var(--primary);
+      button {
+        padding: 0 8px 5px;
+        border: none;
+        color: var(--primary);
+        font-size: 1.2rem;
+        background-color: transparent;
+        cursor: pointer;
+      }
+      .address--default {
+        padding: 3px 5px;
+        border: 1px solid var(--primary);
+        font-size: 1rem;
+        border-radius: 3px;
+      }
+    }
+    input:checked {
+      ~ .radio-button {
+        border-color: var(--primary);
+        &::before {
+          background-color: var(--primary);
+        }
+      }
+    }
+  }
+}

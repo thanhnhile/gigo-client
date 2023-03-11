@@ -16,6 +16,7 @@ import News from '../pages/News';
 
 /*user */
 import Personal from '../pages/Personal';
+import AddCustomerAddress from '../pages/AddCustomerAddress';
 
 /*admin */
 import Dashboard from '../pages/Admin/Dashboard';
@@ -44,11 +45,11 @@ export const publicRoutes = [
   },
   {
     path: '/forgotPassword',
-    component:ForgotPassword,
+    component: ForgotPassword,
   },
   {
     path: '/resetPassword/:token',
-    component:ResetPassword,
+    component: ResetPassword,
   },
   {
     path: '/register',
@@ -101,6 +102,10 @@ export const userRoutes = [
   {
     path: '/personal',
     component: Personal,
+  },
+  {
+    path: '/customer-info/:id',
+    component: AddCustomerAddress,
   },
 ];
 export const adminRoutes = [

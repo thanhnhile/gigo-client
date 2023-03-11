@@ -1,236 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { createContext, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '~/hooks';
-import Clickable from '~/components/Clickable';
+import React, { useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Personal.module.scss';
-import { Icon } from '@iconify/react';
-import SelectAddress from '~/components/SelectAddress';
-import { httpGetCustomerInfoByUsername } from '~/apiServices/userServices';
-import {
-  httpEditCustomer,
-  httpPostCustomer,
-} from '~/apiServices/customerServices';
-import { httpGetOrderByAccountUsername } from '~/apiServices/orderServices';
-import { httpGetRatesByUsername } from '~/apiServices/ratingServices';
-import ListOrder from '~/components/Order/ListOrder/ListOrder';
-import { toast } from 'react-toastify';
-import { ORDER_STATUS } from '~/utils/enum';
+import { useAuth } from '~/hooks';
+import HistoryOrder from '../../components/Personal/HistoryOrder';
+import AccountSetting from '../../components/Personal/AccountSetting';
 
 const cx = className.bind(styles);
-export const historyOrderContext = createContext();
 
 const Personal = () => {
-  const navigate = useNavigate();
-  const { auth, setAuth } = useAuth();
-  const [customer, setCustomer] = useState({
-    id: '',
-    name: '',
-    phone: '',
-    address: '',
-    provinceId: '',
-    districtId: '',
-    accountUsername: auth?.username ? auth.username : '',
-  });
-  const orders = useRef([]);
-  const productsRated = useRef([]);
-  const [tab, setTab] = useState(0);
-  const [address, setAddress] = useState(() => {
-    return {
-      provinceId: Number.parseInt(customer.provinceId),
-      districtId: Number.parseInt(customer.districtId),
-    };
-  });
-  const [toggleInput, setToggleInput] = useState(true);
-  const fullNameRef = useRef();
-  const phoneRef = useRef();
-  const addressRef = useRef();
-  const getHistoryOrders = async () => {
-    const res = await httpGetOrderByAccountUsername(auth.username);
-
-    if (res.data) {
-      orders.current = res.data;
-    }
-  };
-  const getCustomerInfo = async () => {
-    const res = await httpGetCustomerInfoByUsername(auth.username);
-    if (res.data) {
-      setCustomer(res.data);
-      setAddress({
-        provinceId: res.data.provinceId,
-        districtId: res.data.districtId,
-      });
-    } else setCustomer({ ...customer, provinceId: -1 });
-  };
-  const getProductsRated = async () => {
-    const res = await httpGetRatesByUsername();
-    if (res.data) {
-      productsRated.current = res.data;
-    }
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      await Promise.all([
-        getCustomerInfo(),
-        getHistoryOrders(),
-        getProductsRated(),
-      ]);
-    };
-    fetchData();
-  }, []);
-  useEffect(() => {
-    getHistoryOrders();
-  }, [tab]);
-  const handleChange = (e) => {
-    setCustomer({ ...customer, [e.target.name]: e.target.value });
-  };
-  const handleSave = async () => {
-    let fullAddress = customer.address;
-    if (address.districtId !== customer.districtId) {
-      const index = fullAddress.includes('huyện')
-        ? fullAddress.indexOf('huyện')
-        : fullAddress.includes('quận')
-        ? fullAddress.indexOf('quận')
-        : fullAddress.indexOf('thành phố');
-
-      const prefix =
-        index > 0 ? customer.address.slice(0, index - 2) : customer.address;
-      fullAddress = `${prefix}, ${address.districtName}, ${address.provinceName}`;
-    }
-    const updatedCustomer = {
-      ...customer,
-      districtId: address.districtId,
-      provinceId: address.provinceId,
-      address: fullAddress.toLowerCase(),
-    };
-    console.log(updatedCustomer);
-    if (
-      updatedCustomer.name === '' ||
-      updatedCustomer.phoneNumber === '' ||
-      updatedCustomer.address === '' ||
-      updatedCustomer.provinceId === '' ||
-      updatedCustomer.districtId === ''
-    ) {
-      toast.error('Các trường là bắt buộc', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 1000,
-      });
-      return;
-    }
-    try {
-      let res = {};
-      if (customer.id) {
-        res = await httpEditCustomer(updatedCustomer.id, updatedCustomer);
-        console.log(res.data);
-      } else {
-        res = await httpPostCustomer(updatedCustomer);
-        console.log(res.data);
-      }
-      toast.success('Lưu thông tin thành công!', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-      setCustomer(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleLogout = () => {
-    setAuth({});
-    navigate('/');
-  };
-  const toggle = () => {
-    setToggleInput(!toggleInput);
-    fullNameRef.current.focus();
-  };
+  const [isLoading, setLoading] = useState(false);
+  const { auth } = useAuth();
+  if (isLoading) return 'Loading....';
   return (
-    customer?.provinceId && (
-      <div className={cx('container')}>
-        <h1>Xin chào {auth.username} </h1>
-        <div className={cx('wrapper')}>
-          <div className={cx('user-infor')}>
-            <h4>Thông tin cá nhân</h4>
-            <div className={cx('form-control')}>
-              <input
-                ref={fullNameRef}
-                value={customer.name}
-                onChange={handleChange}
-                name='name'
-                type='text'
-                placeholder='Họ và tên'
-                readOnly={toggleInput}
-              />
-            </div>
-            <div className={cx('form-control')}>
-              <input
-                ref={phoneRef}
-                name='phone'
-                onChange={handleChange}
-                value={customer.phone}
-                type='phone'
-                placeholder='Số điện thoại'
-                readOnly={toggleInput}
-              />
-            </div>
-            <div className={cx('form-control')}>
-              <h4>Địa chỉ</h4>
-              <SelectAddress
-                address={{
-                  provinceId: customer.provinceId,
-                  districtId: customer.districtId,
-                }}
-                setAddress={setAddress}
-              />
-            </div>
-            <div className={cx('form-control')}>
-              <input
-                ref={addressRef}
-                name='address'
-                onChange={handleChange}
-                value={customer.address}
-                type='text'
-                placeholder='Địa chỉ chi tiết'
-                readOnly={toggleInput}
-              />
-            </div>
-            <Clickable outline text='Lưu' onClick={handleSave} />
-            <Icon onClick={toggle} className={cx('icon')} icon='mdi:pencil' />
-            <div className={cx('logout-btn')}>
-              <Clickable text='Đăng xuất' primary onClick={handleLogout} />
-            </div>
+    <div className={cx('container')}>
+      {isLoading ? (
+        <h1>Đang tải....</h1>
+      ) : (
+        <>
+          <h1>Xin chào {auth.username} </h1>
+          <div className={cx('wrapper')}>
+            {/* Account setting*/}
+            <AccountSetting />
+            {/* Account Setting*/}
+            {/*History order */}
+            <HistoryOrder />
+            {/*History order */}
           </div>
-          <div className={cx('order-info')}>
-            <h4>Lịch sử đơn hàng</h4>
-            <ul className={cx('tab')}>
-              {Object.values(ORDER_STATUS).map((item) => (
-                <li
-                  className={cx('tab-item', { active: item.id === tab })}
-                  onClick={() => setTab(item.id)}
-                >
-                  {item.name}
-                </li>
-              ))}
-            </ul>
-            <div className={cx('list-order')}>
-              <historyOrderContext.Provider
-                value={{
-                  productsRated: productsRated.current,
-                  tab,
-                }}
-              >
-                <ListOrder
-                  orders={
-                    orders.current.length > 0 &&
-                    orders.current.filter((item) => item.status === tab)
-                  }
-                />
-              </historyOrderContext.Provider>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+        </>
+      )}
+    </div>
   );
 };
 

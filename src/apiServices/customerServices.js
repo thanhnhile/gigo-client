@@ -24,3 +24,12 @@ export const httpPostCustomer = (payload) => {
     console.log(error.response.data);
   }
 };
+
+export const httpDeleteCustomer = (id) => {
+  try {
+    const res = request.deleteRequest(`/customers/${id}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

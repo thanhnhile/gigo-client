@@ -5,6 +5,7 @@ import className from 'classnames/bind';
 import styles from './AccountSetting.module.scss';
 import Clickable from '~/components/Clickable';
 import { useAuth } from '~/hooks';
+import { FORM_ACTION } from '~/utils/enum';
 
 const cx = className.bind(styles);
 
@@ -13,11 +14,11 @@ const AccountSetting = () => {
   const navigate = useNavigate();
   const [toggleInput, setToggleInput] = useState(true);
   const [input, setInput] = useState({});
-  const fullNameRef = useRef();
-  const phoneRef = useRef();
+  const passWordRef = useRef();
+  const confirmPassRef = useRef();
   const handleToggle = () => {
     setToggleInput(!toggleInput);
-    fullNameRef.current.focus();
+    passWordRef.current.focus();
   };
   const handleLogout = () => {
     setAuth({});
@@ -26,33 +27,60 @@ const AccountSetting = () => {
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+  const handleAddCustomerInfo = () => {
+    navigate(`/customer-info`, {
+      state: { action: FORM_ACTION.ADD },
+    });
+  };
+  const handleViewListCustomerInfo = () => {
+    navigate(`/customer-info`, {
+      state: { action: FORM_ACTION.VIEW },
+    });
+  };
   const handleSave = (e) => {};
   return (
     <div className={cx('user-infor')}>
       <h4>Thông tin tài khoản</h4>
       <div className={cx('form-control')}>
         <input
-          ref={fullNameRef}
-          value={input.name}
+          ref={passWordRef}
+          value={input.password}
           onChange={handleChange}
-          name='name'
-          type='text'
-          placeholder='Họ và tên'
+          name='password'
+          type='password'
+          placeholder='Mật khẩu'
           readOnly={toggleInput}
         />
       </div>
       <div className={cx('form-control')}>
         <input
-          ref={phoneRef}
-          name='phone'
+          ref={confirmPassRef}
+          name='confirmPass'
           onChange={handleChange}
-          value={input.phone}
-          type='phone'
-          placeholder='Số điện thoại'
+          value={input.confirmPass}
+          type='password'
+          placeholder='Xác nhận mật khẩu'
           readOnly={toggleInput}
         />
       </div>
       <Clickable outline text='Lưu' onClick={handleSave} />
+      <h4>Sổ địa chỉ</h4>
+      <div className={cx('form-control')}>
+        <Icon
+          onClick={handleAddCustomerInfo}
+          className={cx('action-btn')}
+          icon='material-symbols:add-circle-outline'
+        />
+        Thêm mới
+      </div>
+      <div className={cx('form-control')}>
+        <Icon
+          onClick={handleViewListCustomerInfo}
+          className={cx('action-btn')}
+          icon='material-symbols:list-alt-outline-rounded'
+        />
+        Xem tất cả
+      </div>
       <Icon onClick={handleToggle} className={cx('icon')} icon='mdi:pencil' />
       <div className={cx('logout-btn')}>
         <Clickable text='Đăng xuất' primary onClick={handleLogout} />

@@ -1,0 +1,13 @@
+.wrapper {
+  margin-bottom: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 40px 25px 80px;
+  .action {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+  }
+}

@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '~/hooks';
 import { toast } from 'react-toastify';
-import { Icon } from '@iconify/react';
 import className from 'classnames/bind';
 import styles from './CustomerInfo.module.scss';
 import Clickable from '~/components/Clickable';
 import SelectAddress from '~/components/SelectAddress';
+import { FORM_ACTION } from '~/utils/enum';
 import {
   httpGetCustomerById,
   httpEditCustomer,
@@ -34,7 +34,7 @@ const getSplitAddress = (fullAddress) => {
   return { streetName, districtName, provinceName };
 };
 
-const Customerinfo = ({ customerId }) => {
+const Customerinfo = ({ customerId, action }) => {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
   const [customer, setCustomer] = useState({
@@ -53,30 +53,28 @@ const Customerinfo = ({ customerId }) => {
       districtId: Number.parseInt(customer.districtId),
     };
   });
-  const [toggleInput, setToggleInput] = useState(true);
-  const fullNameRef = useRef();
-  const phoneRef = useRef();
-  const addressRef = useRef();
 
   useEffect(() => {
     const getCustomerInfo = async () => {
-      const res = await httpGetCustomerById(customerId);
-      if (res.data) {
-        setCustomer(res.data);
-        setInput({
-          ...res.data,
-          address: getSplitAddress(res.data.address).streetName,
-        });
-        setAddress({
-          provinceId: res.data.provinceId,
-          districtId: res.data.districtId,
-        });
+      if (action === FORM_ACTION.EDIT) {
+        const res = await httpGetCustomerById(customerId);
+        if (res.data) {
+          setCustomer(res.data);
+          setInput({
+            ...res.data,
+            address: getSplitAddress(res.data.address).streetName,
+          });
+          setAddress({
+            provinceId: res.data.provinceId,
+            districtId: res.data.districtId,
+          });
+        }
       } else setCustomer({ ...customer, provinceId: -1 });
     };
     getCustomerInfo();
   }, []);
   const handleChange = (e) => {
-    setInput({ ...customer, [e.target.name]: e.target.value });
+    setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleSave = async () => {
     console.log(input);
@@ -95,7 +93,7 @@ const Customerinfo = ({ customerId }) => {
       ...input,
       districtId: address.districtId,
       provinceId: address.provinceId,
-      address: fullAddress,
+      address: fullAddress.toLowerCase(),
     };
     console.log(updatedCustomer);
     if (
@@ -113,7 +111,7 @@ const Customerinfo = ({ customerId }) => {
     }
     try {
       let res = {};
-      if (customer.id) {
+      if (action === FORM_ACTION.EDIT) {
         res = await httpEditCustomer(customer.id, updatedCustomer);
         console.log(res.data);
       } else {
@@ -137,10 +135,6 @@ const Customerinfo = ({ customerId }) => {
     setAuth({});
     navigate('/');
   };
-  const toggle = () => {
-    setToggleInput(!toggleInput);
-    fullNameRef.current.focus();
-  };
 
   return (
     customer?.provinceId && (
@@ -148,24 +142,20 @@ const Customerinfo = ({ customerId }) => {
         <h4>Người nhận</h4>
         <div className={cx('form-control')}>
           <input
-            ref={fullNameRef}
             value={input.name}
             onChange={handleChange}
             name='name'
             type='text'
             placeholder='Họ và tên'
-            readOnly={toggleInput}
           />
         </div>
         <div className={cx('form-control')}>
           <input
-            ref={phoneRef}
             name='phone'
             onChange={handleChange}
             value={input.phone}
             type='phone'
             placeholder='Số điện thoại'
-            readOnly={toggleInput}
           />
         </div>
         <div className={cx('form-control')}>
@@ -180,13 +170,11 @@ const Customerinfo = ({ customerId }) => {
         </div>
         <div className={cx('form-control')}>
           <input
-            ref={addressRef}
             name='address'
             onChange={handleChange}
             value={input.address}
             type='text'
             placeholder='Số nhà/Tên đường'
-            readOnly={toggleInput}
           />
         </div>
         <div className={cx('form-control')}>
@@ -199,10 +187,6 @@ const Customerinfo = ({ customerId }) => {
           />
         </div>
         <Clickable outline text='Lưu' onClick={handleSave} />
-        <Icon onClick={toggle} className={cx('icon')} icon='mdi:pencil' />
-        <div className={cx('logout-btn')}>
-          <Clickable text='Đăng xuất' primary onClick={handleLogout} />
-        </div>
       </div>
     )
   );

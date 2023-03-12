@@ -5,6 +5,11 @@ export const ROLE = {
   USER: 'USER',
   EMPLOYEE: 'EMPLOYEE',
 };
+export const FORM_ACTION = {
+  EDIT: 'EDIT',
+  ADD: 'ADD',
+  VIEW: 'VIEW',
+};
 export const DELIVERY_METHOD = [
   {
     id: 0,

@@ -33,3 +33,12 @@ export const httpGetCustomerInfoDefault = () => {
     console.log(error.response.data);
   }
 };
+
+export const httpPutSetCustomerInfoDefault = (id) => {
+  try {
+    const res = request.put(`/accounts/customers/default/${id}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

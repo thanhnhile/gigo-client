@@ -16,7 +16,7 @@ import News from '../pages/News';
 
 /*user */
 import Personal from '../pages/Personal';
-import AddCustomerAddress from '../pages/AddCustomerAddress';
+import ListCustomerInfo from '../pages/ListCustomerInfo';
 
 /*admin */
 import Dashboard from '../pages/Admin/Dashboard';
@@ -104,8 +104,8 @@ export const userRoutes = [
     component: Personal,
   },
   {
-    path: '/customer-info/:id',
-    component: AddCustomerAddress,
+    path: '/customer-info',
+    component: ListCustomerInfo,
   },
 ];
 export const adminRoutes = [

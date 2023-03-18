@@ -31,18 +31,6 @@
     margin: 25px auto;
     background-color: var(--white);
     padding: 20px 0;
-    input {
-      flex: 1;
-      width: 100%;
-      border: 1px solid var(--color-border);
-      outline: none;
-      padding: 9px 10px;
-      margin-bottom: 25px;
-      color: var(--text-color);
-      &:focus {
-        border-color: #000;
-      }
-    }
     a {
       font-size: 1.4rem;
       align-self: flex-end;

@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Register.module.scss';
 import Clickable from '../../components/Clickable';
+import FormInput from '~/components/Form/FormInput';
 import { httpRegister } from '~/apiServices/authServices';
 import { phoneValidation } from '~/utils/validation';
 import { toast } from 'react-toastify';
-import { emailValidation } from '../../utils/validation';
+import ValidationRegex from '~/utils/validationRegex';
 
 const cx = className.bind(styles);
 const initValue = { username: '', email: '', password: '' };
@@ -14,32 +15,52 @@ const initValue = { username: '', email: '', password: '' };
 function Register() {
   const navigate = useNavigate();
   const [user, setUser] = useState(initValue);
-  const [error, setError] = useState('');
+  const [validated, setValidated] = useState(false);
+  const formInputs = [
+    {
+      id: 1,
+      type: 'phone',
+      name: 'username',
+      placeholder: 'Số điện thoại',
+      required: true,
+      pattern: ValidationRegex.phone.pattern,
+      message: ValidationRegex.phone.message,
+    },
+    {
+      id: 2,
+      type: 'email',
+      name: 'email',
+      placeholder: 'Email',
+      required: true,
+      pattern: ValidationRegex.email.pattern,
+      message: ValidationRegex.email.message,
+    },
+    {
+      id: 3,
+      type: 'password',
+      name: 'password',
+      placeholder: 'Mật khẩu',
+      required: true,
+      pattern: ValidationRegex.password.pattern,
+      message: ValidationRegex.password.message,
+    },
+    {
+      id: 4,
+      type: 'password',
+      name: 'confirmPassword',
+      placeholder: 'Nhập lại mật khẩu',
+      required: true,
+      pattern: (value) => value === user.password,
+      message: 'Mật khẩu không trùng khớp',
+    },
+  ];
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!phoneValidation(user.username)) {
-      toast.error('Số điện thoại không hợp lệ!', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-      });
-      return;
-    }
-    if(!emailValidation(user.email)) {
-      toast.error('Email không hợp lệ!', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-      });
-      return;
-    }
-    if (user.password !== user.confirmPassword) {
-      toast.error('Mật khẩu không trùng khớp!', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-      });
+    if (!validated) {
       return;
     }
     const newUser = {
@@ -55,9 +76,7 @@ function Register() {
       });
       return;
     }
-    setError('');
     setUser(initValue);
-    console.log(response);
     toast.success('Tạo tài khoản thành công', {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000,
@@ -72,32 +91,16 @@ function Register() {
       <p>
         Đã có tài khoản?<span onClick={() => navigate('/auth')}>Đăng nhập</span>
       </p>
-      <p className={cx('error', { show: error })}>{error}</p>
       <form onSubmit={handleSubmit} className={cx('form')}>
-        <input
-          name='username'
-          onChange={handleChange}
-          type='phone'
-          placeholder='Số điện thoại'
-        />
-        <input
-          name='email'
-          onChange={handleChange}
-          type='email'
-          placeholder='Email'
-        />
-        <input
-          name='password'
-          onChange={handleChange}
-          type='password'
-          placeholder='Mật khẩu'
-        />
-        <input
-          name='confirmPassword'
-          onChange={handleChange}
-          type='password'
-          placeholder='Nhập lại mật khẩu'
-        />
+        {formInputs.map((formInput) => (
+          <FormInput
+            key={formInput.id}
+            value={user[formInput.name]}
+            onChange={handleChange}
+            setValidated={setValidated}
+            {...formInput}
+          />
+        ))}
         <a
           onClick={(e) => {
             e.preventDefault();

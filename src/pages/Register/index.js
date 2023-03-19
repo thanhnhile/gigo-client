@@ -59,7 +59,6 @@ function Register() {
 
   const handleSubmit = async (e, formValidated) => {
     e.preventDefault();
-    alert(formValidated);
     if (!formValidated) {
       return;
     }
@@ -92,7 +91,7 @@ function Register() {
         Đã có tài khoản?<span onClick={() => navigate('/auth')}>Đăng nhập</span>
       </p>
       <FormValidation>
-        {(formValidated, setValidated) => (
+        {({ formValidated, setValidated }) => (
           <form
             onSubmit={(e) => handleSubmit(e, formValidated)}
             className={cx('form')}

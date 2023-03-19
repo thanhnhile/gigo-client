@@ -10,7 +10,7 @@ const FormValidation = ({ children }) => {
     setFormValidated(formValidated);
   }, [validated]);
   return typeof children === 'function'
-    ? children(formValidated, setValidated)
+    ? children({ formValidated, setValidated })
     : children;
 };
 

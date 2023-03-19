@@ -81,7 +81,7 @@ function Login() {
         <span onClick={() => navigate('/register')}>Đăng ký</span>
       </p>
       <FormValidation>
-        {(formValidated, setValidated) => (
+        {({ formValidated, setValidated }) => (
           <form
             onSubmit={(e) => handleSubmit(e, formValidated)}
             className={cx('form')}
@@ -103,6 +103,5 @@ function Login() {
     </div>
   );
 }
-
 
 export default Login;

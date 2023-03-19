@@ -11,9 +11,9 @@ import { FORM_ACTION } from '~/utils/enum';
 
 const cx = className.bind(styles);
 
-const ListCustomerAddress = () => {
+const ListCustomerAddress = ({ selected, setSelected }) => {
   const [listAddress, setListAddress] = useState([]);
-  const [selected, setSelected] = useState([]);
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     const getListCustomerInfoOfAccount = async () => {
       const res = await httpGetAllCustomerInfo();
@@ -24,14 +24,14 @@ const ListCustomerAddress = () => {
       }
     };
     getListCustomerInfoOfAccount();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload]);
   const handleSetCustomerDefault = async () => {
     console.log(selected.id);
     const res = await httpPutSetCustomerInfoDefault(selected.id);
     if (res.data) {
-      console.log(res.data);
       setSelected(res.data);
-      toast.success('Lưu thông tin thành công!', {
+      toast.success('Lưu địa chỉ mặc định thành công!', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
@@ -44,7 +44,8 @@ const ListCustomerAddress = () => {
   const handleDeleteCustomerInfo = async () => {
     const res = await httpDeleteCustomer(selected.id);
     if (res.data) {
-      toast.success('Xóa thành công', {
+      setReload(!reload);
+      toast.success('Xóa địa chỉ thành công', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });

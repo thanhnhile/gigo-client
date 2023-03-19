@@ -90,7 +90,10 @@ const Customer = () => {
               size='lg'
               handleCancel={() => setShowModal(false)}
             >
-              <ListCustomerAddress />
+              <ListCustomerAddress
+                selected={customer}
+                setSelected={setCustomer}
+              />
             </Modal>
           )}
           {/* Modal */}
@@ -115,7 +118,7 @@ const Customer = () => {
                         <h5>{customer.phone || ''}</h5>
                       </>
                     ) : (
-                      <p>Không có thông tin nào được lưu</p>
+                      <p>Không có địa chỉ nào được lưu</p>
                     )}
                   </div>
                   <p className={cx('customer-info_last')}>{customer.address}</p>

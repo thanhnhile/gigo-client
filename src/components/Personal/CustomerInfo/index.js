@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '~/hooks';
 import { toast } from 'react-toastify';
 import className from 'classnames/bind';
 import styles from './CustomerInfo.module.scss';
+import { useAuth } from '~/hooks';
 import Clickable from '~/components/Clickable';
 import SelectAddress from '~/components/SelectAddress';
 import { FORM_ACTION } from '~/utils/enum';
@@ -35,8 +34,7 @@ const getSplitAddress = (fullAddress) => {
 };
 
 const Customerinfo = ({ customerId, action }) => {
-  const navigate = useNavigate();
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
   const [customer, setCustomer] = useState({
     id: '',
     name: '',

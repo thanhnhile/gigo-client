@@ -5,10 +5,13 @@ import className from 'classnames/bind';
 import styles from './Customer.module.scss';
 import SelectAddress from '../../SelectAddress';
 import Modal from '~/components/Modal';
-import ListAddress from '~/components/Personal/CustomerListAddress';
+import ListCustomerAddress from '../../Personal/ListCustomerAddress';
+import FormInput from '~/components/Form/FormInput';
 import useOrder from '~/hooks/useOrder';
 import { httpGetStoreByAddress } from '~/apiServices/storeServices';
 import { httpGetCustomerInfoDefault } from '~/apiServices/accountServices';
+import ValidationRegex from '~/utils/validationRegex';
+
 const cx = className.bind(styles);
 
 const Customer = () => {
@@ -87,7 +90,7 @@ const Customer = () => {
               size='lg'
               handleCancel={() => setShowModal(false)}
             >
-              <ListAddress selected={customer} setSelected={setCustomer} />
+              <ListCustomerAddress />
             </Modal>
           )}
           {/* Modal */}
@@ -121,28 +124,31 @@ const Customer = () => {
             ) : (
               <>
                 <div className={cx('form-control')}>
-                  <input
+                  <FormInput
                     value={customer.name}
                     name='name'
                     type='text'
                     placeholder='Họ và tên'
                     onChange={handleChange}
+                    required={true}
                   />
-                  <input
+                  <FormInput
                     value={customer.phone}
                     name='phone'
                     type='phone'
                     placeholder='Số điện thoại'
                     onChange={handleChange}
+                    pattern={ValidationRegex.phone.pattern}
+                    message={ValidationRegex.phone.message}
+                    required={true}
                   />
-                </div>
-                <div className={cx('form-control')}>
-                  <input
+                  <FormInput
                     value={customer.address}
                     name='address'
                     type='text'
                     placeholder='Địa chỉ chi tiết'
                     onChange={handleChange}
+                    required={true}
                   />
                 </div>
                 <div className={cx('form-control')}>

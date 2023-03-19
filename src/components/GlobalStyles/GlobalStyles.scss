@@ -16,7 +16,7 @@
   --wrapper-width: 1200px;
   --min-wrapper-width: 980px;
   --color-border: rgb(124, 123, 123);
-  --light-gray:#e1e8ee;
+  --light-gray: #e1e8ee;
   --font-heading: 2.5rem;
   --font-heading-sm: 2rem;
   --font-paragraph: 1.4rem;
@@ -59,6 +59,16 @@ textarea {
   font-size: 1.5rem;
   padding: 9px 10px;
 }
+// select option {
+//   padding: 3px 0;
+//   &:hover {
+//     background-color: red;
+//   }
+//   &:checked {
+//     background-color: var(--primary);
+//     color: var(--white);
+//   }
+// }
 .container {
   max-width: var(--wrapper-width);
   margin: 0 auto;
@@ -69,12 +79,6 @@ textarea {
 .min-container {
   max-width: var(--min-wrapper-width);
   margin: 0 auto;
-}
-.error {
-  margin-top: 15px;
-  padding: 8px 0;
-  color: var(--err-color) !important;
-  text-align: center;
 }
 
 /*Grid*/

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Register.module.scss';
-import Clickable from '../../components/Clickable';
+import Clickable from '~/components/Clickable';
+import FormValidation from '~/components/Form/FormValidation';
 import FormInput from '~/components/Form/FormInput';
 import { httpRegister } from '~/apiServices/authServices';
-import { phoneValidation } from '~/utils/validation';
 import { toast } from 'react-toastify';
 import ValidationRegex from '~/utils/validationRegex';
 
@@ -15,7 +15,6 @@ const initValue = { username: '', email: '', password: '' };
 function Register() {
   const navigate = useNavigate();
   const [user, setUser] = useState(initValue);
-  const [validated, setValidated] = useState(false);
   const formInputs = [
     {
       id: 1,
@@ -58,9 +57,10 @@ function Register() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, formValidated) => {
     e.preventDefault();
-    if (!validated) {
+    alert(formValidated);
+    if (!formValidated) {
       return;
     }
     const newUser = {
@@ -91,27 +91,34 @@ function Register() {
       <p>
         Đã có tài khoản?<span onClick={() => navigate('/auth')}>Đăng nhập</span>
       </p>
-      <form onSubmit={handleSubmit} className={cx('form')}>
-        {formInputs.map((formInput) => (
-          <FormInput
-            key={formInput.id}
-            value={user[formInput.name]}
-            onChange={handleChange}
-            setValidated={setValidated}
-            {...formInput}
-          />
-        ))}
-        <a
-          onClick={(e) => {
-            e.preventDefault();
-            navigate('/');
-          }}
-          href='/'
-        >
-          Quay lai trang chủ
-        </a>
-        <Clickable text='Đăng ký' primary />
-      </form>
+      <FormValidation>
+        {(formValidated, setValidated) => (
+          <form
+            onSubmit={(e) => handleSubmit(e, formValidated)}
+            className={cx('form')}
+          >
+            {formInputs.map((formInput) => (
+              <FormInput
+                key={formInput.id}
+                value={user[formInput.name]}
+                onChange={handleChange}
+                setValidated={setValidated}
+                {...formInput}
+              />
+            ))}
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/');
+              }}
+              href='/'
+            >
+              Quay lai trang chủ
+            </a>
+            <Clickable text='Đăng ký' primary />
+          </form>
+        )}
+      </FormValidation>
     </div>
   );
 }

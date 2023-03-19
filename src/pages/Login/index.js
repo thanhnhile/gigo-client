@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Login.module.scss';
+import FormValidation from '~/components/Form/FormValidation';
 import FormInput from '~/components/Form/FormInput';
 import Clickable from '../../components/Clickable';
 import useAuth from '~/hooks/useAuth';
@@ -18,13 +19,12 @@ function Login() {
   const navigate = useNavigate();
   const { setAuth } = useAuth();
   const [user, setUser] = useState(initValue);
-  const [validated, setValidated] = useState(false);
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, formValidated) => {
     e.preventDefault();
-    if (!validated) {
+    if (!formValidated) {
       return;
     }
     const response = await httpAuth(user);
@@ -65,12 +65,12 @@ function Login() {
     },
     {
       id: 2,
-      type: 'passwrord',
+      type: 'password',
       name: 'password',
       placeholder: 'Mật khẩu',
       required: true,
-      // pattern: ValidationRegex.password.pattern,
-      // message: ValidationRegex.password.message,
+      pattern: ValidationRegex.password.pattern,
+      message: ValidationRegex.password.message,
     },
   ];
   return (
@@ -80,36 +80,29 @@ function Login() {
         Chưa có tài khoản?
         <span onClick={() => navigate('/register')}>Đăng ký</span>
       </p>
-      <form onSubmit={handleSubmit} className={cx('form')}>
-        {formInputs.map((formInput) => (
-          <FormInput
-            key={formInput.id}
-            value={user[formInput.name]}
-            onChange={handleChange}
-            setValidated={setValidated}
-            {...formInput}
-          />
-        ))}
-        <Link to='/forgotPassword'>Quên mật khẩu?</Link>
-        <Clickable text='Đăng nhập' primary />
-      </form>
+      <FormValidation>
+        {(formValidated, setValidated) => (
+          <form
+            onSubmit={(e) => handleSubmit(e, formValidated)}
+            className={cx('form')}
+          >
+            {formInputs.map((formInput) => (
+              <FormInput
+                key={formInput.id}
+                value={user[formInput.name]}
+                onChange={handleChange}
+                setValidated={setValidated}
+                {...formInput}
+              />
+            ))}
+            <Link to='/forgotPassword'>Quên mật khẩu?</Link>
+            <Clickable text='Đăng nhập' primary />
+          </form>
+        )}
+      </FormValidation>
     </div>
   );
 }
 
-{
-  /* <input
-          name='username'
-          onChange={handleChange}
-          type='text'
-          placeholder='Số điện thoại'
-        />
-        <input
-          name='password'
-          onChange={handleChange}
-          type='password'
-          placeholder='Mật khẩu'
-        /> */
-}
 
 export default Login;

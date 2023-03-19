@@ -131,10 +131,6 @@ const Customerinfo = ({ customerId, action }) => {
       console.log(error);
     }
   };
-  const handleLogout = () => {
-    setAuth({});
-    navigate('/');
-  };
 
   return (
     customer?.provinceId && (

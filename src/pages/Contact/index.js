@@ -18,7 +18,7 @@ const Contact = () => {
                 <label htmlFor='first_name'>Tên</label>
                 <input type='text' name='first_name' placeholder='John' />
               </p>
-              <p className={cx('pull-right')}>
+              <p className={cx('left')}>
                 <label htmlFor='last_name'>Họ</label>
                 <input type='text' name='last_name' placeholder='Smith' />
               </p>

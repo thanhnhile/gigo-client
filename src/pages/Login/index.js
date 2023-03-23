@@ -65,7 +65,7 @@ function Login() {
     },
     {
       id: 2,
-      type: 'passwrord',
+      type: 'password',
       name: 'password',
       placeholder: 'Mật khẩu',
       required: true,

@@ -30,6 +30,7 @@ function ForgotPassword() {
     const newEmail = email;
     console.log(newEmail);
     const response = await httpForgotPassword(newEmail);
+    console.log(response);
     if (response.errMsg) {
       toast.error(response.errMsg, {
         position: toast.POSITION.TOP_CENTER,

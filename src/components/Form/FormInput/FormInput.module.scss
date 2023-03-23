@@ -17,6 +17,7 @@
     padding: 3px 0;
     color: var(--err-color);
     visibility: hidden;
+    transition: 0.3s all;
     &.on-error {
       visibility: visible;
     }

@@ -1,20 +1,36 @@
 import React, { useState } from 'react';
 import className from 'classnames/bind';
+import { toast } from 'react-toastify';
 import styles from './Contact.module.scss';
 import Clickable from '~/components/Clickable';
 import FormValidation from '~/components/Form/FormValidation';
 import FormInput from '~/components/Form/FormInput';
 import ValidationRegex from '~/utils/validationRegex';
+import { httpSendFeedback } from '~/apiServices/sendFeedbackServices';
 
+const initValue = {
+  fullName: '',
+  email: '',
+  content: '',
+};
 const cx = className.bind(styles);
 const Contact = () => {
-  const [feedback, setFeedBack] = useState({
-    fullName: '',
-    email: '',
-    content: '',
-  });
-  const handleSubmit = (e, formValidated) => {
+  const [feedback, setFeedBack] = useState(initValue);
+  const handleSubmit = async (e, formValidated) => {
     e.preventDefault();
+    console.log(formValidated);
+    if (!formValidated) {
+      return;
+    }
+    const res = await httpSendFeedback(feedback);
+    console.log(res);
+    if (res.errCode === 200) {
+      toast.success('Cảm ơn bạn đã gửi feedback!', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      setFeedBack(initValue);
+    }
   };
   const handleChange = (e) => {
     setFeedBack((prev) => ({ ...prev, [e.target.name]: e.target.value }));

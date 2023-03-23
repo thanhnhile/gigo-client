@@ -59,16 +59,6 @@ textarea {
   font-size: 1.5rem;
   padding: 9px 10px;
 }
-// select option {
-//   padding: 3px 0;
-//   &:hover {
-//     background-color: red;
-//   }
-//   &:checked {
-//     background-color: var(--primary);
-//     color: var(--white);
-//   }
-// }
 .container {
   max-width: var(--wrapper-width);
   margin: 0 auto;
@@ -80,25 +70,30 @@ textarea {
   max-width: var(--min-wrapper-width);
   margin: 0 auto;
 }
-
-/*Grid*/
-// $grid-width: 100%;
-// $gutter-vertical: 4rem;
-// $gutter-horizontal: 4rem;
-// .row {
-//   max-width: $grid-width;
-//   margin: 0 auto;
-//   &::after {
-//     content: '';
-//     display: table;
-//     clear: both;
-//   }
-//   [class^='col-'] {
-//     float: left;
-//     background-color: orange;
-//     padding: 1rem;
-//     &:not(:last-child) {
-//       margin-right: $gutter-horizontal;
-//     }
-//   }
-// }
+/*Circle loader*/
+.loader {
+  margin: 40px 0;
+  border: 14px solid var(--light-gray);
+  border-radius: 50%;
+  border-top: 14px solid var(--primary);
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

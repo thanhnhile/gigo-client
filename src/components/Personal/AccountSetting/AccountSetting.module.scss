@@ -29,13 +29,15 @@
       margin-right: 10px;
       padding: 3px;
       cursor: pointer;
+      position: relative;
+      top: -1px;
       &:hover {
         color: var(--primary);
       }
     }
   }
   .icon {
-    font-size: 3rem;
+    font-size: 3.2rem;
     cursor: pointer;
     padding: 5px;
     position: absolute;

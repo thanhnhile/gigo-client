@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import className from 'classnames/bind';
 import Clickable from '~/components/Clickable';
+import FormInput from '~/components/Form/FormInput';
 import styles from '../Password.module.scss';
-import {emailValidation} from '~/utils/validation';
+import ValidationRegex from '~/utils/validationRegex';
 import { toast } from 'react-toastify';
 import { httpForgotPassword } from '../../../apiServices/accountServices';
 
@@ -48,16 +49,19 @@ function ForgotPassword() {
       navigate('/auth');
     }, 1000);
   };
-    return (
+  return (
     <div className={cx('container', 'wrapper')}>
       <h1>Quên mật khẩu</h1>
       <p className={cx('error', { show: error })}>{error}</p>
       <form onSubmit={handleSubmit} className={cx('form')}>
-        <input
+        <FormInput
           name='email'
           onChange={handleChange}
           type='email'
           placeholder='Email'
+          required={true}
+          pattern={ValidationRegex.email.pattern}
+          message={ValidationRegex.email.message}
         />
         <a
           onClick={(e) => {

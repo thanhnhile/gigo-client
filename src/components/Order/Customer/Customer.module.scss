@@ -4,19 +4,8 @@
   .form-control {
     margin-bottom: 25px;
     input {
-      font-size: 1.4rem;
-      width: 50%;
-      border: 1px solid var(--color-border);
-      outline: none;
-      padding: 9px 10px;
-      margin-bottom: 15px;
-      color: var(--text-color);
-      margin-right: 15px;
       &:nth-child(2) {
         width: 40%;
-      }
-      &:focus {
-        border-color: #000;
       }
     }
     h4 {
@@ -58,7 +47,8 @@
         }
       }
       &_last {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
+        text-transform: capitalize;
       }
       .list-customer {
         font-weight: 400;

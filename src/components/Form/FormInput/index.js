@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './FormInput.module.scss';
 
@@ -23,14 +23,20 @@ const FormInput = ({
         setOnError(!pattern(e.target.value));
       } else setOnError(!pattern.test(e.target.value));
     }
-    setValidated(!onError);
   };
+  const handleOnBlur = (e) => {
+    setValidated((prev) => ({ ...prev, [e.target.name]: !onError }));
+  };
+  useEffect(() => {
+    setValidated((prev) => ({ ...prev, [inputProps.name]: false }));
+  }, []);
   return (
     <div className={cx('form-control')}>
       <input
         {...inputProps}
         onChange={onChange}
         onInput={handleFocus}
+        onBlur={handleOnBlur}
         placeholder={required ? `${placeholder}*` : `${placeholder}`}
       />
       <span className={cx('error-message', { 'on-error': onError })}>

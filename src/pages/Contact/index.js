@@ -1,59 +1,88 @@
-import React from 'react';
+import React, { useState } from 'react';
 import className from 'classnames/bind';
+import { toast } from 'react-toastify';
 import styles from './Contact.module.scss';
+import Clickable from '~/components/Clickable';
+import FormValidation from '~/components/Form/FormValidation';
+import FormInput from '~/components/Form/FormInput';
+import ValidationRegex from '~/utils/validationRegex';
+import { httpSendFeedback } from '~/apiServices/sendFeedbackServices';
 
+const initValue = {
+  fullName: '',
+  email: '',
+  content: '',
+};
 const cx = className.bind(styles);
 const Contact = () => {
+  const [feedback, setFeedBack] = useState(initValue);
+  const handleSubmit = async (e, formValidated) => {
+    e.preventDefault();
+    console.log(formValidated);
+    if (!formValidated) {
+      return;
+    }
+    const res = await httpSendFeedback(feedback);
+    console.log(res);
+    if (res.errCode === 200) {
+      toast.success('Cảm ơn bạn đã gửi feedback!', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      setFeedBack(initValue);
+    }
+  };
+  const handleChange = (e) => {
+    setFeedBack((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const formInputs = [
+    {
+      id: 1,
+      name: 'fullname',
+      type: 'text',
+      placeholder: 'Tên của bạn',
+      required: true,
+    },
+    {
+      id: 2,
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email',
+      required: true,
+      pattern: ValidationRegex.email.pattern,
+      message: ValidationRegex.email.message,
+    },
+  ];
   return (
-    <div className={cx('wrapper')}>
-      <div className={cx('row header')}>
-        <h1>LIÊN HỆ CHÚNG TÔI &nbsp;</h1>
-        <h3>Điền vào mẫu dưới đây để tìm hiểu thêm!</h3>
+    <div className={cx('min-container', 'wrapper')}>
+      <div className={cx('header')}>
+        <h2>LIÊN HỆ CHÚNG TÔI &nbsp;</h2>
       </div>
-      <div className={cx('row body')}>
-        <form action='#'>
-          <ul>
-            <li>
-              <p className={cx('left')}>
-                <label htmlFor='first_name'>Tên</label>
-                <input type='text' name='first_name' placeholder='John' />
-              </p>
-              <p className={cx('left')}>
-                <label htmlFor='last_name'>Họ</label>
-                <input type='text' name='last_name' placeholder='Smith' />
-              </p>
-            </li>
-            <li>
-              <p>
-                <label htmlFor='email'>
-                  Email <span className='req'>*</span>
-                </label>
-                <input
-                  type='email'
-                  name='email'
-                  placeholder='john.smith@gmail.com'
+      <div className={cx('line')}></div>
+      <div className={cx('body')}>
+        <FormValidation>
+          {({ setValidated, formValidated }) => (
+            <form
+              onSubmit={(e) => handleSubmit(e, formValidated)}
+              className={cx('form')}
+            >
+              {formInputs.map((formInput) => (
+                <FormInput
+                  key={formInput.id}
+                  value={feedback[formInput.name]}
+                  onChange={handleChange}
+                  setValidated={setValidated}
+                  {...formInput}
                 />
-              </p>
-            </li>
-            <li>
-              <div className={cx('divider')} />
-            </li>
-            <li>
-              <label htmlFor='comments'>Nhận xét</label>
-              <textarea cols={46} rows={3} name='comments' defaultValue={''} />
-            </li>
-            <li>
-              <input
-                className={cx('btn btn-submit')}
-                type='submit'
-                defaultValue='Submit'
+              ))}
+              <textarea
+                placeholder='Hãy gửi feedback cho chúng tôi*'
+                required
               />
-              <small>
-                or press <strong>enter</strong>
-              </small>
-            </li>
-          </ul>
-        </form>
+              <Clickable text='Gửi' primary />
+            </form>
+          )}
+        </FormValidation>
       </div>
     </div>
   );

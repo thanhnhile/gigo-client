@@ -38,6 +38,7 @@ const FormInput = ({
         onInput={handleFocus}
         onBlur={handleOnBlur}
         placeholder={required ? `${placeholder}*` : `${placeholder}`}
+        autocomplete='off'
       />
       <span className={cx('error-message', { 'on-error': onError })}>
         {message ?? (required && 'Trường này là bắt buộc')}

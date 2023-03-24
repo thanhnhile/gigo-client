@@ -6,6 +6,7 @@ import styles from './Customer.module.scss';
 import SelectAddress from '../../SelectAddress';
 import Modal from '~/components/Modal';
 import ListCustomerAddress from '../../Personal/ListCustomerAddress';
+import FormValidation from '~/components/Form/FormValidation';
 import FormInput from '~/components/Form/FormInput';
 import useOrder from '~/hooks/useOrder';
 import { httpGetStoreByAddress } from '~/apiServices/storeServices';
@@ -75,10 +76,31 @@ const Customer = () => {
   const handleChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
   };
-  const handleSubmitCheckout = (e) => {
-    e.preventDefault();
-    handleCheckout();
-  };
+  const formInputs = [
+    {
+      id: 1,
+      type: 'text',
+      name: 'name',
+      placeholder: 'Họ và tên',
+      required: true,
+    },
+    {
+      id: 2,
+      type: 'phone',
+      name: 'phone',
+      placeholder: 'Số điện thoại',
+      required: true,
+      pattern: ValidationRegex.phone.pattern,
+      message: ValidationRegex.phone.message,
+    },
+    {
+      id: 3,
+      type: 'text',
+      name: 'address',
+      placeholder: 'Địa chỉ chi tiết',
+      required: true,
+    },
+  ];
   return useMemo(() => {
     return (
       customer?.provinceId && (
@@ -99,93 +121,94 @@ const Customer = () => {
           {/* Modal */}
           <h2>Thông tin khách hàng</h2>
           <div className={cx('line')}></div>
-          <form className={cx('form-wrapper')} onSubmit={handleSubmitCheckout}>
-            {accountUsername ? (
-              <div className={cx('form-control')}>
-                <h4>Địa chỉ nhận hàng</h4>
-                <div className={cx('customer-info')}>
-                  <button
-                    type='button'
-                    onClick={() => setShowModal(true)}
-                    className={cx('list-customer')}
-                  >
-                    <Icon icon='mdi:address-marker-outline' />
-                  </button>
-                  <div className={cx('customer-info_first')}>
-                    {customer.name ? (
-                      <>
-                        <h4>{customer.name}</h4>
-                        <h5>{customer.phone || ''}</h5>
-                      </>
-                    ) : (
-                      <p>Không có địa chỉ nào được lưu</p>
-                    )}
+          <FormValidation>
+            {({ formValidated, setValidated, setSubmitting }) => {
+               const handleSubmitCheckout = (e) => {
+                e.preventDefault();
+                formValidated && handleCheckout(setSubmitting);
+              };
+              return (
+                <form
+                  className={cx('form-wrapper')}
+                  onSubmit={handleSubmitCheckout}
+                >
+                  {accountUsername ? (
+                    <div className={cx('form-control')}>
+                      <h4>Địa chỉ nhận hàng</h4>
+                      <div className={cx('customer-info')}>
+                        <button
+                          type='button'
+                          onClick={() => setShowModal(true)}
+                          className={cx('list-customer')}
+                        >
+                          <Icon icon='mdi:address-marker-outline' />
+                        </button>
+                        <div className={cx('customer-info_first')}>
+                          {customer.name ? (
+                            <>
+                              <h4>{customer.name}</h4>
+                              <h5>{customer.phone || ''}</h5>
+                            </>
+                          ) : (
+                            <p>Không có địa chỉ nào được lưu</p>
+                          )}
+                        </div>
+                        <p className={cx('customer-info_last')}>
+                          {customer.address}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className={cx('form-control')}>
+                        {formInputs.map((formInput) => (
+                          <FormInput
+                            key={formInput.id}
+                            value={customer[formInput.name]}
+                            onChange={handleChange}
+                            setValidated={setValidated}
+                            {...formInput}
+                          />
+                        ))}
+                      </div>
+                      <div className={cx('form-control')}>
+                        <h4>Địa chỉ </h4>
+                        <SelectAddress
+                          address={{
+                            provinceId: customer.provinceId,
+                            districtId: customer.districtId,
+                          }}
+                          setAddress={setAddress}
+                        />
+                      </div>
+                    </>
+                  )}
+                  <div className={cx('form-control')}>
+                    <h4>Chọn quán gần nhất</h4>
+                    <select
+                      className={cx('select-store')}
+                      name='store_id'
+                      value={customer.store_id}
+                      onChange={handleChange}
+                    >
+                      {stores?.map((store) => (
+                        <option
+                          key={store.id}
+                          value={Number.parseInt(store.id)}
+                        >
+                          {store.storeName}, {store.address}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <p className={cx('customer-info_last')}>{customer.address}</p>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className={cx('form-control')}>
-                  <FormInput
-                    value={customer.name}
-                    name='name'
-                    type='text'
-                    placeholder='Họ và tên'
-                    onChange={handleChange}
-                    required={true}
-                  />
-                  <FormInput
-                    value={customer.phone}
-                    name='phone'
-                    type='phone'
-                    placeholder='Số điện thoại'
-                    onChange={handleChange}
-                    pattern={ValidationRegex.phone.pattern}
-                    message={ValidationRegex.phone.message}
-                    required={true}
-                  />
-                  <FormInput
-                    value={customer.address}
-                    name='address'
-                    type='text'
-                    placeholder='Địa chỉ chi tiết'
-                    onChange={handleChange}
-                    required={true}
-                  />
-                </div>
-                <div className={cx('form-control')}>
-                  <h4>Địa chỉ </h4>
-                  <SelectAddress
-                    address={{
-                      provinceId: customer.provinceId,
-                      districtId: customer.districtId,
-                    }}
-                    setAddress={setAddress}
-                  />
-                </div>
-              </>
-            )}
-            <div className={cx('form-control')}>
-              <h4>Chọn quán gần nhất</h4>
-              <select
-                className={cx('select-store')}
-                name='store_id'
-                value={customer.store_id}
-                onChange={handleChange}
-              >
-                {stores?.map((store) => (
-                  <option key={store.id} value={Number.parseInt(store.id)}>
-                    {store.storeName}, {store.address}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button className={cx('pay-btn')}>
-              <Icon icon='carbon:wireless-checkout' />
-              Thanh toán
-            </button>
-          </form>
+                  <button className={cx('pay-btn')}>
+                    <Icon icon='carbon:wireless-checkout' />
+                    Thanh toán
+                  </button>
+                </form>
+              );
+            }}
+          </FormValidation>
         </div>
       )
     );

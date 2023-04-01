@@ -63,6 +63,7 @@ function Login() {
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 2000,
               });
+              setSubmitting(false);
               return;
             }
             const username = response.data.username;

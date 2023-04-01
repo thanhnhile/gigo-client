@@ -9,7 +9,7 @@ import ValidationRegex from '~/utils/validationRegex';
 import { httpSendFeedback } from '~/apiServices/sendFeedbackServices';
 
 const initValue = {
-  fullName: '',
+  fullname: '',
   email: '',
   content: '',
 };
@@ -22,15 +22,21 @@ const Contact = () => {
     if (!formValidated) {
       return;
     }
+    console.log(feedback);
     const res = await httpSendFeedback(feedback);
     console.log(res);
-    if (res.errCode === 200) {
-      toast.success('Cảm ơn bạn đã gửi feedback!', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-      setFeedBack(initValue);
-    }
+    // if (res.errCode === 200) {
+    //   toast.success('Cảm ơn bạn đã gửi feedback!', {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //     autoClose: 2000,
+    //   });
+    //   setFeedBack(initValue);
+    // }
+    toast.success('Cảm ơn bạn đã gửi feedback!', {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+    setFeedBack(initValue);
   };
   const handleChange = (e) => {
     setFeedBack((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -52,6 +58,7 @@ const Contact = () => {
       pattern: ValidationRegex.email.pattern,
       message: ValidationRegex.email.message,
     },
+
   ];
   return (
     <div className={cx('min-container', 'wrapper')}>
@@ -76,7 +83,10 @@ const Contact = () => {
                 />
               ))}
               <textarea
+                name='content'
+                value={feedback.content}
                 placeholder='Hãy gửi feedback cho chúng tôi*'
+                onChange={handleChange}
                 required
               />
               <Clickable text='Gửi' primary />

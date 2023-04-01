@@ -12,22 +12,29 @@ const cx = className.bind(styles);
 
 function ForgotPassword() {
   const navigate = useNavigate();
-  const [error, setError] = useState('');
   const [email, setEmail] = useState('');
-
+  const [validated, setValidated] = useState(false);
+  
+  const formInputs = [
+    {
+      id: 1,
+      type: 'email',
+      name: 'email',
+      placeholder: 'Email',
+      required: true,
+      pattern: ValidationRegex.email.pattern,
+      message: ValidationRegex.email.message,
+    },
+  ];
   const handleChange = (e) => {
     setEmail(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!emailValidation(email)) {
-    //   toast.error('Email không hợp lệ!', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //     autoClose: 2000,
-    //   });
-    //   return;
-    // }
+    if (!validated) {
+      return;
+    }
     const newEmail = email;
     console.log(newEmail);
     const response = await httpForgotPassword(newEmail);
@@ -39,8 +46,7 @@ function ForgotPassword() {
       });
       return;
     }
-    setError('');
-    console.log(response);
+    setEmail('');
     toast.success('Gửi thành công', {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000,
@@ -52,28 +58,27 @@ function ForgotPassword() {
   return (
     <div className={cx('container', 'wrapper')}>
       <h1>Quên mật khẩu</h1>
-      <p className={cx('error', { show: error })}>{error}</p>
-      <form onSubmit={handleSubmit} className={cx('form')}>
-        <FormInput
-          name='email'
-          onChange={handleChange}
-          type='email'
-          placeholder='Email'
-          required={true}
-          pattern={ValidationRegex.email.pattern}
-          message={ValidationRegex.email.message}
-        />
-        <a
-          onClick={(e) => {
-            e.preventDefault();
-            navigate('/');
-          }}
-          href='/'
-        >
-          Quay lai trang chủ
-        </a>
-        <Clickable text='Gửi' primary />
-      </form>
+      <form  onSubmit={handleSubmit} className={cx('form')}>
+            {formInputs.map((formInput) => (
+              <FormInput
+                key={formInput.id}
+                value={email[formInput.name]}
+                onChange={handleChange}
+                setValidated={setValidated}
+                {...formInput}
+              />
+            ))}
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/');
+              }}
+              href='/'
+            >
+              Quay lai trang chủ
+            </a>
+            <Clickable text='Gửi' primary />
+          </form>
     </div>
   );
 }

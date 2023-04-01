@@ -34,7 +34,7 @@ const ProductDetail = ({ product }) => {
     setQuantity(1);
   };
   return (
-    <div className={cx('wrapper', 'container')}>
+    <div className={cx('wrapper', 'min-container')}>
       <div className={cx('flex-box', 'product-detail')}>
         <div className={cx('left-column')}>
           <img src={product.img_url} alt='' />

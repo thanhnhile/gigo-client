@@ -118,10 +118,10 @@ function Product() {
         </select>
 
         <label>Tên sản phẩm</label>
-        <input name='name' value={product.name} onChange={handleChange} />
+        <input name='name' value={product.name} onChange={handleChange} required />
 
         <label>Giá</label>
-        <input name='price' value={product.price} onChange={handleChange} />
+        <input name='price' value={product.price} onChange={handleChange} required />
 
         <label>Mô tả</label>
         <textarea
@@ -147,8 +147,7 @@ function Product() {
               name='image'
               id='image'
               type='file'
-              onChange={handleChangeImage}
-            />
+              onChange={handleChangeImage}/>
           )}
         </div>
 

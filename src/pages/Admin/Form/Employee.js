@@ -106,7 +106,9 @@ function Employee() {
                     required />
 
                 <label>Cửa hàng</label>
-                <select name="store"
+                <select 
+                    required
+                    name="store"
                     value={employee.store.id}
                     onChange={(e) =>
                         setEmployee({ ...employee, store: { id: e.target.value } })

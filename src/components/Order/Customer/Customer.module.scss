@@ -3,14 +3,32 @@
   padding: 25px 0;
   .form-control {
     margin-bottom: 25px;
-    input {
-      &:nth-child(2) {
-        width: 40%;
-      }
-    }
     h4 {
       margin-bottom: 15px;
       font-size: 1.6rem;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 3px;
+      background-color: transparent;
+      color: var(--text-color);
+      font-weight: 400;
+      &:hover {
+        color: var(--primary);
+      }
+    }
+    .customer-address {
+      display: flex;
+      align-items: center;
+      h4 {
+        margin-right: 15px;
+      }
+      button {
+        font-size: 1.9rem;
+        position: relative;
+        top: -4px;
+      }
     }
     .customer-info {
       min-height: 50px;
@@ -18,6 +36,12 @@
       border: 1px solid var(--color-border);
       border-radius: 10px;
       position: relative;
+      button {
+        font-size: 2.5rem;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+      }
       &_first {
         display: flex;
         align-items: center;
@@ -50,28 +74,14 @@
         font-size: 1.4rem;
         text-transform: capitalize;
       }
-      .list-customer {
-        font-weight: 400;
-        text-decoration: underline;
-        cursor: pointer;
-        border: none;
-        background-color: transparent;
-        font-size: 2.5rem;
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        color: var(--text-color);
-        font-weight: 400;
-        &:hover {
-          color: var(--primary);
-        }
-      }
     }
   }
   .select-store {
-    width: 50%;
-    padding: 5px 0;
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
     font-size: 1.4rem;
+    text-transform: capitalize;
   }
 }
 

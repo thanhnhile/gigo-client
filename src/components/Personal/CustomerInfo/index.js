@@ -3,10 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import className from 'classnames/bind';
 import styles from './CustomerInfo.module.scss';
-import { useAuth } from '~/hooks';
 import Clickable from '~/components/Clickable';
 import SelectAddress from '~/components/SelectAddress';
+import FormValidation from '~/components/Form/FormValidation';
+import FormInput from '~/components/Form/FormInput';
+import { useAuth } from '~/hooks';
 import { FORM_ACTION } from '~/utils/enum';
+import ValidationRegex from '~/utils/validationRegex';
 import {
   httpGetCustomerById,
   httpEditCustomer,
@@ -40,8 +43,8 @@ const Customerinfo = ({ customerId, action }) => {
     name: '',
     phone: '',
     address: '',
-    provinceId: '',
-    districtId: '',
+    provinceId: null,
+    districtId: null,
     accountUsername: auth?.username ? auth.username : '',
   });
   const [input, setInput] = useState(customer);
@@ -75,7 +78,6 @@ const Customerinfo = ({ customerId, action }) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleSave = async () => {
-    console.log(input);
     let fullAddress = customer.address;
 
     const splitAddress = getSplitAddress(customer.address);
@@ -93,7 +95,6 @@ const Customerinfo = ({ customerId, action }) => {
       provinceId: address.provinceId,
       address: fullAddress.toLowerCase(),
     };
-    console.log(updatedCustomer);
     if (
       updatedCustomer.name === '' ||
       updatedCustomer.phoneNumber === '' ||
@@ -129,58 +130,75 @@ const Customerinfo = ({ customerId, action }) => {
       console.log(error);
     }
   };
+  const formInputs = [
+    {
+      id: 1,
+      type: 'text',
+      name: 'name',
+      placeholder: 'Họ và tên',
+      required: true,
+    },
+    {
+      id: 2,
+      type: 'phone',
+      name: 'phone',
+      placeholder: 'Số điện thoại',
+      required: true,
+      pattern: ValidationRegex.phone.pattern,
+      message: ValidationRegex.phone.message,
+    },
+  ];
 
   return (
     customer?.provinceId && (
       <div className={cx('user-infor')}>
         <h4>Người nhận</h4>
-        <div className={cx('form-control')}>
-          <input
-            value={input.name}
-            onChange={handleChange}
-            name='name'
-            type='text'
-            placeholder='Họ và tên'
-          />
-        </div>
-        <div className={cx('form-control')}>
-          <input
-            name='phone'
-            onChange={handleChange}
-            value={input.phone}
-            type='phone'
-            placeholder='Số điện thoại'
-          />
-        </div>
-        <div className={cx('form-control')}>
-          <h4>Huyện/Tỉnh (TP) </h4>
-          <SelectAddress
-            address={{
-              provinceId: input.provinceId,
-              districtId: input.districtId,
-            }}
-            setAddress={setAddress}
-          />
-        </div>
-        <div className={cx('form-control')}>
-          <input
-            name='address'
-            onChange={handleChange}
-            value={input.address}
-            type='text'
-            placeholder='Số nhà/Tên đường'
-          />
-        </div>
-        <div className={cx('form-control')}>
-          <input
-            name='fullAddress'
-            value={customer.address}
-            type='text'
-            placeholder='Địa chỉ chi tiết'
-            readOnly={true}
-          />
-        </div>
-        <Clickable outline text='Lưu' onClick={handleSave} />
+        <FormValidation>
+          {({ formValidated, setValidated, setSubmitting }) => {
+            return (
+              <form>
+                {formInputs.map((formInput) => (
+                  <FormInput
+                    key={formInput.id}
+                    value={input[formInput.name]}
+                    onChange={handleChange}
+                    setValidated={setValidated}
+                    {...formInput}
+                  />
+                ))}
+                <div className={cx('form-control')}>
+                  <h4>Huyện/Tỉnh (TP) </h4>
+                  <SelectAddress
+                    address={{
+                      provinceId: customer?.provinceId || '',
+                      districtId: customer?.districtId || '',
+                    }}
+                    setAddress={setAddress}
+                  />
+                </div>
+                <FormInput
+                  key='3'
+                  value={input.address}
+                  onChange={handleChange}
+                  setValidated={setValidated}
+                  type='text'
+                  placeholder='Số nhà/Tên đường'
+                  required={true}
+                />
+                <div className={cx('form-control')}>
+                  <input
+                    name='fullAddress'
+                    value={customer.address}
+                    type='text'
+                    placeholder='Địa chỉ chi tiết'
+                    readOnly={true}
+                  />
+                </div>
+                <Clickable outline text='Lưu' onClick={handleSave} />
+              </form>
+            );
+          }}
+        </FormValidation>
       </div>
     )
   );

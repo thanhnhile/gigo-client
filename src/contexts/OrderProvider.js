@@ -63,8 +63,8 @@ const OrderProvider = ({ children }) => {
     });
   }, [orderDetail, customer]);
   const handleCheckout = async (setSubmitting) => {
-    console.log(order);
     setSubmitting(true);
+    console.log(order);
     const res = await httpPostOrder(order);
     console.log(res.data);
     if (res.data) {

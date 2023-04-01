@@ -25,13 +25,15 @@ const Contact = () => {
     console.log(feedback);
     const res = await httpSendFeedback(feedback);
     console.log(res);
-    // if (res.errCode === 200) {
-    //   toast.success('Cảm ơn bạn đã gửi feedback!', {
-    //     position: toast.POSITION.TOP_RIGHT,
-    //     autoClose: 2000,
-    //   });
-    //   setFeedBack(initValue);
-    // }
+  
+    if (res.errMsg) {
+      toast.error(res.errMsg, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
+      return;
+    }
+
     toast.success('Cảm ơn bạn đã gửi feedback!', {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,

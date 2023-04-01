@@ -62,13 +62,14 @@ const OrderProvider = ({ children }) => {
       store_id: customer.store_id,
     });
   }, [orderDetail, customer]);
-  const handleCheckout = async () => {
+  const handleCheckout = async (setSubmitting) => {
     console.log(order);
-    /*
+    setSubmitting(true);
     const res = await httpPostOrder(order);
     console.log(res.data);
     if (res.data) {
       removeAll();
+      setSubmitting(false);
       toast.success('Đặt hàng thành công', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
@@ -81,7 +82,6 @@ const OrderProvider = ({ children }) => {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
-      */
   };
   return (
     <OrderContext.Provider

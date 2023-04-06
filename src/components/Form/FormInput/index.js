@@ -33,7 +33,7 @@ const FormInput = ({
     setValidated((prev) => ({ ...prev, [e.target.name]: !onError }));
   };
   useEffect(() => {
-    setValidated((prev) => ({ ...prev, [inputProps.name]: false }));
+    setValidated((prev) => ({ ...prev, [inputProps.name]: true }));
   }, []);
   return (
     <div className={cx('form-control')}>

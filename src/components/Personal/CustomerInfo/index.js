@@ -77,11 +77,13 @@ const Customerinfo = ({ customerId, action }) => {
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  const handleSave = async () => {
+  const handleSave = async (e, formValidated, setSubmitting) => {
+    e.preventDefault();
+    if (!formValidated) {
+      return;
+    }
     let fullAddress = customer.address;
-
     const splitAddress = getSplitAddress(customer.address);
-    console.log('SPIT ', splitAddress);
     if (address.districtId !== customer.districtId) {
       fullAddress = `${input.address}, ${address.districtName}, ${address.provinceName}`;
     } else {
@@ -95,36 +97,24 @@ const Customerinfo = ({ customerId, action }) => {
       provinceId: address.provinceId,
       address: fullAddress.toLowerCase(),
     };
-    if (
-      updatedCustomer.name === '' ||
-      updatedCustomer.phoneNumber === '' ||
-      updatedCustomer.address === '' ||
-      updatedCustomer.provinceId === '' ||
-      updatedCustomer.districtId === ''
-    ) {
-      toast.error('Các trường là bắt buộc', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 1000,
-      });
-      return;
-    }
     try {
       let res = {};
+      setSubmitting(true);
       if (action === FORM_ACTION.EDIT) {
         res = await httpEditCustomer(customer.id, updatedCustomer);
-        console.log(res.data);
       } else {
         res = await httpPostCustomer(updatedCustomer);
-        console.log(res.data);
       }
+      setSubmitting(false);
       toast.success('Lưu thông tin thành công!', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
       setCustomer(res.data);
+      console.log(getSplitAddress(res.data.address)?.streetName);
       setInput({
         ...res.data,
-        address: splitAddress(res.data.address).streetName,
+        address: getSplitAddress(res.data.address).streetName,
       });
     } catch (error) {
       console.log(error);
@@ -170,14 +160,17 @@ const Customerinfo = ({ customerId, action }) => {
                   <h4>Huyện/Tỉnh (TP) </h4>
                   <SelectAddress
                     address={{
-                      provinceId: customer?.provinceId || '',
-                      districtId: customer?.districtId || '',
+                      provinceId:
+                        customer?.provinceId || input?.provinceId || '',
+                      districtId:
+                        customer?.districtId || input?.districtId || '',
                     }}
                     setAddress={setAddress}
                   />
                 </div>
                 <FormInput
                   key='3'
+                  name='address'
                   value={input.address}
                   onChange={handleChange}
                   setValidated={setValidated}
@@ -194,7 +187,11 @@ const Customerinfo = ({ customerId, action }) => {
                     readOnly={true}
                   />
                 </div>
-                <Clickable outline text='Lưu' onClick={handleSave} />
+                <Clickable
+                  outline
+                  text='Lưu'
+                  onClick={(e) => handleSave(e, formValidated, setSubmitting)}
+                />
               </form>
             );
           }}

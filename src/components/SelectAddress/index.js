@@ -80,12 +80,14 @@ const SelectAddress = ({ address, setAddress }) => {
   return (
     <div>
       <Select
+        required
         value={provinceValue.current || provinceOptions[0]}
         options={provinceOptions}
         onChange={handleProvinceChange}
       />
       <div style={{ height: '15px' }}></div>
       <Select
+        required
         value={districtValue.current || districtOptions[0]}
         options={districtOptions}
         onChange={handleDistrictChange}

@@ -24,8 +24,6 @@ const Contact = () => {
     }
     console.log(feedback);
     const res = await httpSendFeedback(feedback);
-    console.log(res);
-  
     if (res.errMsg) {
       toast.error(res.errMsg, {
         position: toast.POSITION.TOP_CENTER,

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 const ListRating = ({ list }) => {
   return (
     <div className={cx('list-rating')}>
-      <h3>Đánh giá ({list?.length})</h3>
+      <h2>Đánh giá ({list?.length})</h2>
       {list?.length > 0 ? (
         <ul>
           {list.map((item) => (

@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import styles from './FormInput.module.scss';
 
 const cx = classNames.bind(styles);
-
 const FormInput = ({
   placeholder,
   onChange,
@@ -16,29 +15,37 @@ const FormInput = ({
   const [onError, setOnError] = useState(false);
   const handleFocus = (e) => {
     if (required) {
-      setOnError(e.target.value === '');
+      setOnError(!e.target.value.trim().length);
+    }
+  };
+  const handleInput = (e) => {
+    const value = e.target.value;
+    if (required) {
+      setOnError(!value.trim().length);
     }
     if (pattern) {
       if (typeof pattern === 'function') {
-        setOnError(!pattern(e.target.value));
-      } else setOnError(!pattern.test(e.target.value));
+        setOnError(!pattern(value));
+      } else setOnError(!pattern.test(value));
     }
   };
   const handleOnBlur = (e) => {
     setValidated((prev) => ({ ...prev, [e.target.name]: !onError }));
   };
   useEffect(() => {
-    setValidated((prev) => ({ ...prev, [inputProps.name]: false }));
+    setValidated((prev) => ({ ...prev, [inputProps.name]: true }));
   }, []);
   return (
     <div className={cx('form-control')}>
       <input
         {...inputProps}
         onChange={onChange}
-        onInput={handleFocus}
+        onInput={handleInput}
+        onFocus={handleFocus}
         onBlur={handleOnBlur}
         placeholder={required ? `${placeholder}*` : `${placeholder}`}
-        autocomplete='off'
+        autoComplete='new-password'
+        required={required}
       />
       <span className={cx('error-message', { 'on-error': onError })}>
         {message ?? (required && 'Trường này là bắt buộc')}

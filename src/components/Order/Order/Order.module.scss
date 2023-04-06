@@ -36,7 +36,7 @@
     background-color: var(--white);
     cursor: pointer;
     text-decoration: underline;
-    font-size: 1.5rem;
+    font-size: var(--font-title);
     text-align: right;
     line-height: 1.7;
     padding: 5px 8px;
@@ -73,13 +73,13 @@
 
 .total {
   margin-top: 25px;
-  font-size: 20px;
+  font-size: var(--font-title);
   display: flex;
   justify-content: space-between;
   align-items: center;
   select {
     margin-left: 15px;
-    font-size: 1.6rem;
+    font-size: var(--font-title);
     border: 1px solid var(--primary);
     outline: none;
     padding: 0 15px;
@@ -91,8 +91,7 @@
 
 .dense {
   line-height: 1.2em;
-  font-size: 16px;
-  font-size: 1rem;
+  font-size: var(--font-normal);
 }
 
 @media (max-width: 600px) {

@@ -58,7 +58,7 @@ const Product = (props) => {
           <Link to={'/products/' + product.id}>
             <div className={cx('point-rating')}>
               <div className={cx('ribbon-head')}>
-                <h1>4.5</h1>
+                <h3>4.5</h3>
               </div>
               <div className={cx('ribbon-tail')}>
                 <div className={cx('left')}></div>

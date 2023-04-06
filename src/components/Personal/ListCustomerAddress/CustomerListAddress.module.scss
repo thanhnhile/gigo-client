@@ -22,9 +22,6 @@ $radio-size: 18px;
     &:not(:last-child) {
       border-bottom: 1px solid #ddd;
     }
-    &:first-child {
-      padding-top: 0;
-    }
     .radio-label {
       margin-right: 15px;
     }
@@ -62,10 +59,12 @@ $radio-size: 18px;
         }
         h5 {
           padding-left: 10px;
+          font-size: var(--font-sm);
         }
         h4 {
           padding-right: 10px;
           position: relative;
+          font-size: var(--font-normal);
           &::after {
             content: '';
             display: block;
@@ -80,7 +79,7 @@ $radio-size: 18px;
         }
       }
       &_last {
-        font-size: 1.3rem;
+        font-size: var(--font-normal);
       }
     }
     .customer-action {
@@ -94,7 +93,7 @@ $radio-size: 18px;
         padding: 0 8px 5px;
         border: none;
         color: var(--primary);
-        font-size: 1.2rem;
+        font-size: var(--font-normal);
         background-color: transparent;
         cursor: pointer;
       }

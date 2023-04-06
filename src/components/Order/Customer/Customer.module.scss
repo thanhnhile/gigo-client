@@ -5,7 +5,7 @@
     margin-bottom: 25px;
     h4 {
       margin-bottom: 15px;
-      font-size: 1.6rem;
+      font-size: var(--font-title);
     }
     button {
       border: none;
@@ -53,10 +53,12 @@
           padding-left: 15px;
           position: relative;
           top: -7px;
+          font-size: var(--font-sm);
         }
         h4 {
           padding-right: 15px;
           position: relative;
+          font-size: var(--font-normal);
           &::after {
             content: '';
             display: block;
@@ -71,7 +73,7 @@
         }
       }
       &_last {
-        font-size: 1.4rem;
+        font-size: var(--font-normal);
         text-transform: capitalize;
       }
     }
@@ -80,7 +82,7 @@
     display: block;
     width: 100%;
     padding: 10px 5px;
-    font-size: 1.4rem;
+    font-size: var(--font-normal);
     text-transform: capitalize;
   }
 }

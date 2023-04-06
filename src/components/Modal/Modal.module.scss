@@ -52,7 +52,7 @@ $padding-vertical: 1.5rem;
     .header {
       padding: $padding-vertical 0;
       border-bottom: 1px solid var(--color-border);
-      font-size: 1.6rem;
+      font-size: var(--font-title);
       font-weight: 500;
       display: flex;
       justify-content: space-between;

@@ -23,14 +23,6 @@
   .content {
     text-align: left;
     flex: 1;
-    h3 {
-      font-size: var(--font-heading);
-      padding: 0 8px;
-      text-transform: capitalize;
-      @include mobile {
-        font-size: var(--font-heading-sm);
-      }
-    }
     p {
       font-weight: 400;
       text-align: justify;

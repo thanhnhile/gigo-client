@@ -9,7 +9,7 @@ import ValidationRegex from '~/utils/validationRegex';
 import { httpSendFeedback } from '~/apiServices/sendFeedbackServices';
 
 const initValue = {
-  fullName: '',
+  fullname: '',
   email: '',
   content: '',
 };
@@ -22,6 +22,7 @@ const Contact = () => {
     if (!formValidated) {
       return;
     }
+    console.log(feedback);
     const res = await httpSendFeedback(feedback);
     if (res.errMsg) {
       toast.error(res.errMsg, {
@@ -30,6 +31,7 @@ const Contact = () => {
       });
       return;
     }
+
     toast.success('Cảm ơn bạn đã gửi feedback!', {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
@@ -56,6 +58,7 @@ const Contact = () => {
       pattern: ValidationRegex.email.pattern,
       message: ValidationRegex.email.message,
     },
+
   ];
   return (
     <div className={cx('min-container', 'wrapper')}>
@@ -80,7 +83,10 @@ const Contact = () => {
                 />
               ))}
               <textarea
+                name='content'
+                value={feedback.content}
                 placeholder='Hãy gửi feedback cho chúng tôi*'
+                onChange={handleChange}
                 required
               />
               <Clickable text='Gửi' primary />

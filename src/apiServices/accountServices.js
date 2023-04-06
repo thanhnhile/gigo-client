@@ -42,3 +42,12 @@ export const httpPutSetCustomerInfoDefault = (id) => {
     console.log(error.response.data);
   }
 };
+
+export const httpGetProductLiked = () => {
+  try {
+    const res = request.get('/accounts/productsLiked');
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

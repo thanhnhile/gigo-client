@@ -8,18 +8,12 @@ import ValidationRegex from '~/utils/validationRegex';
 const cx = className.bind(styles);
 
 const UnAuthenticated = ({
+  setAddress,
+  address,
   customer,
-  setCustomer,
   handleChange,
   setValidated,
 }) => {
-  const [address, setAddress] = useState(() => {
-    const { provinceId, districtId } = customer;
-    return { provinceId, districtId };
-  });
-  useEffect(() => {
-    setCustomer((prev) => ({ ...prev, ...address }));
-  }, [address, setCustomer]);
   const formInputs = [
     {
       id: 1,

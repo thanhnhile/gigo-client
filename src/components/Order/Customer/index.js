@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import className from 'classnames/bind';
 import styles from './Customer.module.scss';

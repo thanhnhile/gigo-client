@@ -3,6 +3,9 @@ export const formatPrice = (price) => {
     style: 'currency',
     currency: 'VND',
   });
+  if (isNaN(price)) {
+    return formatter.format(0);
+  }
   return formatter.format(price);
 };
 

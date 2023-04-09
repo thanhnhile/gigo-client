@@ -41,4 +41,7 @@
     visibility: hidden;
     cursor: none;
   }
+  &.noMargin {
+    margin: 0;
+  }
 }

@@ -1,4 +1,4 @@
-import * as request from '../utils/request';
+import * as request from '~/utils/request';
 export const httpGetAllAccount = () => {
   try {
     const res = request.get(`/accounts/`);

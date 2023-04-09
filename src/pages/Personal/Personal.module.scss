@@ -13,36 +13,4 @@ h1 {
     padding: 8px 0;
     margin-bottom: 15px;
   }
-  .order-info {
-    padding: 0 15px;
-    margin-bottom: 40px;
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-    padding: 40px 25px 80px;
-  }
-  .order-info {
-    width: 68%;
-    .tab {
-      display: flex;
-      margin-bottom: 50px;
-      border: 1px solid var(--second);
-      overflow: hidden;
-      border-radius: 15px;
-
-      &-item {
-        padding: 5px 20px;
-        cursor: pointer;
-        font-size: var(--font-title);
-        &:hover,
-        &.active {
-          background-color: var(--primary);
-          color: var(--white);
-        }
-      }
-    }
-    .list-order {
-      height: 50vh;
-      overflow-y: scroll;
-    }
-  }
 }

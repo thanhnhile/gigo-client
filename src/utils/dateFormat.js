@@ -1,3 +1,5 @@
+import { func } from 'prop-types';
+
 const PER_DAY = 60 * 60 * 24;
 const PER_HOUR = 60 * 60;
 const PER_MINUTE = 60;
@@ -9,9 +11,25 @@ export function formatDate(dateTime) {
 export function getTimestamp(date) {
   return Math.ceil(new Date(date) / 1000);
 }
-export function getDiffFromNow(date) {
+export function compareWithNow(date) {
   const now = getTimestamp(new Date());
-  let diff = now - getTimestamp(date);
+  return getTimestamp(date) - now;
+}
+export function getDistanceFromNowToDate(date) {
+  let diff = Math.abs(compareWithNow(date));
+  if (diff >= 3 * PER_DAY) {
+    return `HSD: ${formatDate(date)}`;
+  } else if (diff > PER_DAY) {
+    return `Còn ${Math.floor(diff / PER_DAY)} ngày`;
+  } else if (diff >= PER_HOUR) {
+    return `Còn ${Math.floor(diff / PER_HOUR)} giờ`;
+  } else if (diff >= PER_MINUTE) {
+    return `Còn ${Math.floor(diff / PER_MINUTE)} phút`;
+  }
+}
+
+export function getDiffFromNow(date) {
+  let diff = Math.abs(compareWithNow(date));
   if (diff > PER_WEEK) {
     return formatDate(date);
   } else if (diff >= PER_DAY) {

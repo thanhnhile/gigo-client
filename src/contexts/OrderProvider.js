@@ -43,15 +43,8 @@ const OrderProvider = ({ children }) => {
     });
   }, [orderDetail]);
   const handleCheckout = async (customer, setSubmitting) => {
-    const {
-      id,
-      name,
-      phone,
-      address,
-      provinceId,
-      districtId,
-      store_id,
-    } = customer;
+    const { id, name, phone, address, provinceId, districtId, store_id } =
+      customer;
     const orderPayload = {
       ...order,
       customer: {
@@ -63,6 +56,7 @@ const OrderProvider = ({ children }) => {
         districtId,
       },
       store_id,
+      account_username: auth?.username ? auth.username : null,
     };
     console.log(orderPayload);
     setSubmitting(true);

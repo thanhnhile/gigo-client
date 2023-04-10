@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
+import { toast } from 'react-toastify';
 import styles from './Voucher.module.scss';
 import Clickable from '../../Clickable';
 import { formatPrice } from '~/utils/format';
-import { formatDate } from '~/utils/dateFormat';
+import { getDistanceFromNowToDate, compareWithNow } from '~/utils/dateFormat';
 
 import {
   getVoucherByAccount,
@@ -11,48 +12,13 @@ import {
 } from '~/apiServices/voucherService';
 
 const cx = classNames.bind(styles);
-// const vouchers = [
-//   {
-//     id: 1,
-//     name: 'Khach hang moi',
-//     value: 0.15,
-//     startDate: '2023-04-08T00:00:00.000+00:00',
-//     endDate: '2023-05-08T00:00:00.000+00:00',
-//     code: 'KHACHHANGMOI',
-//     minimumOrderValue: 0.0,
-//     maximumDiscountAmount: 20000.0,
-//   },
-//   {
-//     id: 2,
-//     name: 'Khach hang moi',
-//     value: 1,
-//     startDate: '2023-04-01T00:00:00.000+00:00',
-//     endDate: '2023-05-05T00:00:00.000+00:00',
-//     code: 'KHACHHANGMOI',
-//     minimumOrderValue: 0.0,
-//     maximumDiscountAmount: 20000.0,
-//   },
-//   {
-//     id: 3,
-//     name: 'Mien phi van chuyen',
-//     value: 1,
-//     startDate: '2023-04-01T00:00:00.000+00:00',
-//     endDate: '2023-05-05T00:00:00.000+00:00',
-//     code: 'KHACHHANGMOI',
-//     minimumOrderValue: 0.0,
-//     maximumDiscountAmount: 20000.0,
-//   },
-//   {
-//     id: 4,
-//     name: 'Khach hang moi',
-//     value: 0.15,
-//     startDate: '2023-04-01T00:00:00.000+00:00',
-//     endDate: '2023-05-05T00:00:00.000+00:00',
-//     code: 'KHACHHANGMOI',
-//     minimumOrderValue: 0.0,
-//     maximumDiscountAmount: 20000.0,
-//   },
-// ];
+
+const mapVoucherData = (data) => {
+  return data.map((item) => ({
+    ...item,
+    disabled: compareWithNow(item.startDate) > 0,
+  }));
+};
 const ListVoucher = ({ seleted, setSelected }) => {
   const voucherCodeRef = useRef();
   const [vouchers, setVouchers] = useState([]);
@@ -60,7 +26,7 @@ const ListVoucher = ({ seleted, setSelected }) => {
     const getVoucherForAccount = async () => {
       const res = await getVoucherByAccount();
       if (res?.data) {
-        setVouchers(res.data);
+        setVouchers(mapVoucherData(res.data));
       }
     };
     getVoucherForAccount();
@@ -69,9 +35,22 @@ const ListVoucher = ({ seleted, setSelected }) => {
     e.preventDefault();
     const code = voucherCodeRef.current.value;
     if (code) {
-      const res = await getVoucherByCode(code);
-      if (res?.data) {
-        setVouchers((prev) => [res.data, ...prev]);
+      let result = vouchers.find(
+        (item) => item.code.toUpperCase() === code.toUpperCase()
+      );
+      if (result) {
+        setSelected(result);
+      } else {
+        const res = await getVoucherByCode(code);
+        if (res?.data) {
+          setVouchers((prev) => [res.data, ...prev]);
+          setSelected(res.data);
+        } else {
+          toast.info('Voucher có mã ' + code + ' không tồn tại', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+          });
+        }
       }
     }
   };
@@ -84,45 +63,43 @@ const ListVoucher = ({ seleted, setSelected }) => {
       <div className={cx('radio-group-wrapper')}>
         <h3>Mã giảm giá dành cho bạn</h3>
         <p>Có thể chọn 1 Voucher</p>
-        <RadioGroupVoucher
-          listVoucher={vouchers}
-          seleted={seleted}
-          setSelected={setSelected}
-        />
+        <form className={cx('group-voucher')}>
+          {vouchers?.length > 0
+            ? vouchers.map((item) => (
+                <li className={cx('voucher-item')} key={item.id}>
+                  {item.disabled && (
+                    <div className={cx('voucher-item-cover')}>
+                      
+                    </div>
+                  )}
+                  <label className={cx('radio-label')} for={item.id}>
+                    <input
+                      id={item.id}
+                      type='radio'
+                      name='voucher'
+                      checked={item.id === seleted.id}
+                      onChange={() => setSelected(item)}
+                      hidden
+                      disabled={item.disabled}
+                    />
+                    <div className={cx('radio-button')}></div>
+                  </label>
+                  <VoucherLabel voucher={item} />
+                  <div className={cx('voucher-info')}>
+                    <h4>{item?.name}</h4>
+                    <p>Đơn tối thiểu {formatPrice(item?.minimumOrderValue)}</p>
+                    <p>Tối đa {formatPrice(item?.maximumDiscountAmount)}</p>
+                    <h5>{getDistanceFromNowToDate(item?.endDate)}</h5>
+                  </div>
+                </li>
+              ))
+            : 'Không có'}
+        </form>
       </div>
     </div>
   );
 };
-const RadioGroupVoucher = ({ listVoucher, seleted, setSelected }) => {
-  return (
-    <form className={cx('group-voucher')}>
-      {listVoucher?.length > 0
-        ? listVoucher.map((item) => (
-            <li className={cx('voucher-item')} key={item.id}>
-              <label className={cx('radio-label')} for={item.id}>
-                <input
-                  id={item.id}
-                  type='radio'
-                  name='voucher'
-                  checked={item.id === seleted.id}
-                  onChange={() => setSelected(item)}
-                  hidden
-                />
-                <div className={cx('radio-button')}></div>
-              </label>
-              <VoucherLabel voucher={item} />
-              <div className={cx('voucher-info')}>
-                <h4>{item?.name}</h4>
-                <p>Đơn tối thiểu {formatPrice(item?.minimumOrderValue)}</p>
-                <p>Tối đa {formatPrice(item?.maximumDiscountAmount)}</p>
-                <h5>HSD: {formatDate(item?.endDate)}</h5>
-              </div>
-            </li>
-          ))
-        : 'Không có'}
-    </form>
-  );
-};
+
 const VoucherLabel = ({ voucher }) => {
   const { value, maximumDiscountAmount } = voucher;
   const valueLabel =

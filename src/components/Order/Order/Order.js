@@ -20,7 +20,7 @@ const cacl = (cart) => {
     0
   );
 };
-function Order(props) {
+function Order() {
   const { cart, removeAll } = useCart();
   const { orderDetail, setOrderDetail, accountUsername } = useOrder();
   const [shipMethod, setShipMethod] = useState(
@@ -57,10 +57,11 @@ function Order(props) {
         ...prev,
         details: newDetails,
         orderType: shipMethod,
-        total: cacl(cart) + getShipPrice(),
+        total: cacl(cart) + getShipPrice() - getDiscount(),
+        voucher_id: voucher?.id,
       };
     });
-  }, [cart, shipMethod]);
+  }, [cart, shipMethod, voucher]);
   const getShipPrice = () => {
     return DELIVERY_METHOD.find((item) => item.id === shipMethod).price;
   };

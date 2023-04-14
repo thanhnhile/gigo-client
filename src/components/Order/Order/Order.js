@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import className from 'classnames/bind';
 import styles from './Order.module.scss';
 import CartItem from '../CartItem';
@@ -8,21 +9,14 @@ import { Icon } from '@iconify/react';
 import useCart from '../../../hooks/useCart';
 import { formatPrice } from '~/utils/format';
 import { DELIVERY_METHOD } from '../../../utils/enum';
-import useOrder from '../../../hooks/useOrder';
+import useOrder from '~/hooks/useOrder';
 
 const cx = className.bind(styles);
 
-const caclTotalCart = (cart) => {
-  return cart.reduce(
-    (result, current) =>
-      (result +=
-        Number.parseInt(current.price) * Number.parseInt(current.quantity)),
-    0
-  );
-};
 function Order() {
   const { cart, removeAll } = useCart();
-  const { orderDetail, setOrderDetail, accountUsername } = useOrder();
+  const { orderDetail, setOrderDetail, accountUsername, caclTotalCart } =
+    useOrder();
   const [shipMethod, setShipMethod] = useState(
     orderDetail.orderType || DELIVERY_METHOD[0].id
   );
@@ -35,7 +29,7 @@ function Order() {
     const { value, minimumOrderValue, maximumDiscountAmount } = voucher || {};
     let discount = 0;
     if (sumPrice < minimumOrderValue) {
-      return 0;
+      return;
     }
     discount = sumPrice * value;
     discount =
@@ -46,7 +40,8 @@ function Order() {
     return discount;
   };
   useEffect(() => {
-    setSumPrice(caclTotalCart(cart));
+    const sumPrice = caclTotalCart(cart);
+    setSumPrice(sumPrice);
     setOrderDetail((prev) => {
       const newDetails = cart.map((item) => {
         return {
@@ -56,7 +51,7 @@ function Order() {
           size: item.size,
         };
       });
-      const total = caclTotalCart(cart) + getShipPrice() - getDiscount();
+      const total = sumPrice + getShipPrice() - getDiscount();
       return {
         ...prev,
         details: newDetails,
@@ -89,7 +84,7 @@ function Order() {
             )}
           </div>
         </div>
-        {accountUsername && (
+        {accountUsername && cart?.length > 0 && (
           <>
             <div className={cx('line')}></div>{' '}
             <Voucher seleted={voucher} setSelected={setVoucher} />

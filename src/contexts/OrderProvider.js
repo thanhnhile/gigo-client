@@ -42,6 +42,14 @@ const OrderProvider = ({ children }) => {
       ...orderDetail,
     });
   }, [orderDetail]);
+  const caclTotalCart = (cart) => {
+    return cart.reduce(
+      (result, current) =>
+        (result +=
+          Number.parseInt(current.price) * Number.parseInt(current.quantity)),
+      0
+    );
+  };
   const handleCheckout = async (customer, setSubmitting) => {
     const { id, name, phone, address, provinceId, districtId, store_id } =
       customer;
@@ -58,7 +66,6 @@ const OrderProvider = ({ children }) => {
       store_id,
       account_username: auth?.username ? auth.username : null,
     };
-    console.log(orderPayload);
     setSubmitting(true);
     const res = await httpPostOrder(orderPayload);
     console.log(res.data);
@@ -88,6 +95,7 @@ const OrderProvider = ({ children }) => {
         customer,
         handleCheckout,
         accountUsername: auth?.username ? auth.username : null,
+        caclTotalCart,
       }}
     >
       {children}

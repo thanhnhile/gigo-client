@@ -8,6 +8,7 @@ import { httpPostProduct } from '~/apiServices/productServices';
 import uploadImage from '~/apiServices/uploadImage';
 import { STATUS } from '~/utils/enum';
 import { useNavigate, useParams } from 'react-router-dom';
+import Clickable from '~/components/Clickable';
 import {
   httpGetProductById,
   httpPutProduct,
@@ -151,7 +152,7 @@ function Product() {
           )}
         </div>
 
-        <input type='submit' className={cx('submitButton')} />
+        <Clickable text='Lưu' primary />
       </form>
     </div>
   );

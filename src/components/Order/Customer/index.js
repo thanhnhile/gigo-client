@@ -121,7 +121,7 @@ const Customer = () => {
                       name='store_id'
                       value={customer.store_id}
                       onChange={handleChange}
-                      required
+                      required='true'
                     >
                       {stores?.map((store) => (
                         <option

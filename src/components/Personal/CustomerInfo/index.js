@@ -178,6 +178,7 @@ const Customerinfo = ({ customerId, action }) => {
                 </div>
                 <FormInput
                   key='3'
+                  name='address'
                   value={input.address}
                   onChange={handleChange}
                   setValidated={setValidated}

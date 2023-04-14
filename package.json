@@ -12,6 +12,8 @@
     "clsx": "^1.1.1",
     "cors": "^2.8.5",
     "firebase": "^9.15.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",

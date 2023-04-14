@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CustomDataTable from '~/components/CustomDataTable';
-import { httpGetOrderByStoreId } from '~/apiServices/orderServices';
+//import { httpGetOrderByStoreId } from '~/apiServices/orderServices';
 import { useAuth } from '~/hooks';
-import { ORDER_STATUS } from '~/utils/enum';
 import { formatPrice } from '~/utils/format';
 import { DELIVERY_METHOD } from '~/utils/enum';
 import { Icon } from '@iconify/react';
@@ -82,7 +81,7 @@ const Dashboard = () => {
 
     // };
     // getOrderByStoreId();
-    const url = `http://localhost:8089/subscribe/${auth?.employeeInfo?.storeId}`;
+    const url = `http://localhost:8089/subscribe/stores/${auth?.employeeInfo?.storeId}/employees/${auth?.employeeInfo?.employeeId}`;
     const eventSource = new EventSource(url);
     eventSource.addEventListener('LIST_ORDERS_UPDATE', (event) => {
       console.log(event);

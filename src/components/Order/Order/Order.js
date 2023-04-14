@@ -12,7 +12,7 @@ import useOrder from '../../../hooks/useOrder';
 
 const cx = className.bind(styles);
 
-const cacl = (cart) => {
+const caclTotalCart = (cart) => {
   return cart.reduce(
     (result, current) =>
       (result +=
@@ -26,9 +26,12 @@ function Order() {
   const [shipMethod, setShipMethod] = useState(
     orderDetail.orderType || DELIVERY_METHOD[0].id
   );
-  const [sumPrice, setSumPrice] = useState(() => cacl(cart));
+  const [sumPrice, setSumPrice] = useState(() => caclTotalCart(cart));
   const [voucher, setVoucher] = useState({});
   const getDiscount = () => {
+    if (!voucher?.id) {
+      return 0;
+    }
     const { value, minimumOrderValue, maximumDiscountAmount } = voucher || {};
     let discount = 0;
     if (sumPrice < minimumOrderValue) {
@@ -43,7 +46,7 @@ function Order() {
     return discount;
   };
   useEffect(() => {
-    setSumPrice(cacl(cart));
+    setSumPrice(caclTotalCart(cart));
     setOrderDetail((prev) => {
       const newDetails = cart.map((item) => {
         return {
@@ -53,12 +56,13 @@ function Order() {
           size: item.size,
         };
       });
+      const total = caclTotalCart(cart) + getShipPrice() - getDiscount();
       return {
         ...prev,
         details: newDetails,
         orderType: shipMethod,
-        total: cacl(cart) + getShipPrice() - getDiscount(),
-        voucher_id: voucher?.id,
+        total,
+        voucher_id: voucher?.id ?? null,
       };
     });
   }, [cart, shipMethod, voucher]);
@@ -133,7 +137,7 @@ function Order() {
               </div>
               <div className={cx('thin dense')}>
                 <span className={cx('after-discount')}>
-                  {formatPrice(sumPrice + getShipPrice() - getDiscount())}
+                  {formatPrice(orderDetail.total)}
                 </span>
               </div>
             </span>

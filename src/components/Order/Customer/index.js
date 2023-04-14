@@ -112,6 +112,56 @@ const Customer = () => {
                   };
                   handleCheckout(customerInfo, setSubmitting);
                 }
+<<<<<<< HEAD
+              };
+              return (
+                <form
+                  className={cx('form-wrapper')}
+                  onSubmit={handleSubmitCheckout}
+                >
+                  {accountUsername ? (
+                    <Authenticated
+                      setShowModal={setShowModal}
+                      customer={customer}
+                    />
+                  ) : (
+                    <UnAuthenticated
+                      customer={customer}
+                      setCustomer={setCustomer}
+                      handleChange={handleChange}
+                      setValidated={setValidated}
+                    />
+                  )}
+                  <div className={cx('form-control')}>
+                    <h4>Chọn quán gần nhất</h4>
+                    <select
+                      className={cx('select-store')}
+                      name='store_id'
+                      value={customer.store_id}
+                      onChange={handleChange}
+                      required='true'
+                    >
+                      {stores?.map((store) => (
+                        <option
+                          key={store.id}
+                          value={Number.parseInt(store.id)}
+                        >
+                          {store.storeName}, {store.address}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <button className={cx('pay-btn')}>
+                    <Icon icon='carbon:wireless-checkout' />
+                    Thanh toán
+                  </button>
+                </form>
+              );
+            }}
+          </FormValidation>
+        </div>
+      )
+=======
               }
             };
             return (
@@ -158,6 +208,7 @@ const Customer = () => {
           }}
         </FormValidation>
       </div>
+>>>>>>> 6278a91e5e58520d782bff8d32e3acccc1d189c7
     );
   }, [customer.address, customer.name, customer.phone, handleChange]);
 };

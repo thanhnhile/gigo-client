@@ -6,6 +6,7 @@ import { httpGetAllStore } from '~/apiServices/storeServices';
 import { httpGetAllAccount } from '~/apiServices/accountServices';
 import { useNavigate, useParams } from 'react-router-dom';
 import { httpGetEmployeeById, httpPostEmployee, httpPutEmployee } from '~/apiServices/employeeServices';
+import Clickable from '~/components/Clickable';
 
 const cx = className.bind(styles);
 
@@ -106,7 +107,7 @@ function Employee() {
                     required />
 
                 <label>Cửa hàng</label>
-                <select 
+                <select
                     required
                     name="store"
                     value={employee.store.id}
@@ -121,11 +122,11 @@ function Employee() {
                 </select>
 
                 <label>Tài khoản</label>
-                
+
                 <Select value={options.find(obj => obj.value === employee.account || obj.value === selectedValue)}
                     onChange={handleChangeSelect} options={options} />
 
-                <input type="submit" className={cx("submitButton")} />
+                <Clickable text='Lưu' primary />
             </form>
         </div>
 

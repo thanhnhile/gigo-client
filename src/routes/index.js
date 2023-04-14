@@ -24,10 +24,12 @@ import Product from '../pages/Admin/Table/Product';
 import Category from '../pages/Admin/Table/Category';
 import Store from '../pages/Admin/Table/Store';
 import Employee from '../pages/Admin/Table/Employee';
+import Voucher from '../pages/Admin/Table/Voucher';
 import CreateOrUpdateProduct from '../pages/Admin/Form/Product';
 import CreateOrUpdateCategory from '../pages/Admin/Form/Category';
 import CreateOrUpdateStore from '../pages/Admin/Form/Store';
 import CreateOrUpdateEmployee from '../pages/Admin/Form/Employee';
+import CreateOreUpdateVoucher from '../pages/Admin/Form/Voucher';
 
 /*store employee */
 import ManageOrders from '../pages/Employee/ManageOrders';
@@ -149,6 +151,15 @@ export const adminRoutes = [
     path: '/admin/employees/:id',
     component: CreateOrUpdateEmployee,
   },
+
+  {
+    path: '/admin/vouchers',
+    component: Voucher,
+  },
+  {
+    path: '/admin/vouchers/:id',
+    component: CreateOreUpdateVoucher,
+  }
 ];
 export const employeeRoutes = [
   {

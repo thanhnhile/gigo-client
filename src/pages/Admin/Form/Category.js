@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { httpGetCategoryById, httpPostCategory, httpPutCategory } from '~/apiServices/categoryServices';
 import styles from './Form.module.scss';
 import { STATUS } from '~/utils/enum';
+import Clickable from '~/components/Clickable';
 
 const cx = className.bind(styles);
 
@@ -84,7 +85,7 @@ function Category() {
           ))}
         </select>
 
-        <input type="submit" className={cx("submitButton")} />
+        <Clickable text='Lưu' primary />
       </form>
     </div>
 

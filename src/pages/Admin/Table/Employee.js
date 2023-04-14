@@ -5,6 +5,8 @@ import { httpDeleteEmployee, httpGetAllEmployee } from '~/apiServices/employeeSe
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
 import CustomDataTable from '~/components/CustomDataTable';
+import Clickable from '~/components/Clickable';
+
 
 const cx = className.bind(styles);
 function Employee() {
@@ -37,7 +39,7 @@ function Employee() {
     const columns = [
         {
             name: 'ID',
-            width: '15%',
+            width: '5%',
             selector: (row) => row.id,
         },
         {
@@ -52,7 +54,7 @@ function Employee() {
         },
         {
             name: 'Địa chỉ',
-            width: '30%',
+            width: '40%',
             selector: (row) => row.store.address,
         },
         {
@@ -66,14 +68,14 @@ function Employee() {
         },
     ];
     return (
-        <div className={cx("container")}>
+        <div className={cx("min-container")}>
             <div className={cx("row")}>
                 <div className={cx("col-md-12")}>
                     <div className={cx("content")}>
                         <div className={cx("table-title")}>
                             <h2>Danh sách nhân viên</h2>
                             <div className={cx("table-subtitle-right")}>
-                                <button className={cx("btn-add")} onClick={() => handleAdd()}>+ Thêm </button>
+                                <Clickable text='Thêm' primary onClick={handleAdd} />   
                             </div>
                         </div>
                         <div className={cx("table-content")}>

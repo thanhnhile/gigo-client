@@ -8,6 +8,7 @@ import {
   httpPutStore,
 } from '~/apiServices/storeServices';
 import { useNavigate, useParams } from 'react-router-dom';
+import Clickable from '~/components/Clickable';
 
 const cx = className.bind(styles);
 
@@ -59,8 +60,8 @@ function Store() {
         const index = fullAddress.includes('huyện')
           ? fullAddress.indexOf('huyện')
           : fullAddress.includes('quận')
-          ? fullAddress.indexOf('quận')
-          : fullAddress.indexOf('thành phố');
+            ? fullAddress.indexOf('quận')
+            : fullAddress.indexOf('thành phố');
 
         const prefix =
           index > 0 ? store.address.slice(0, index - 2) : store.address;
@@ -123,7 +124,7 @@ function Store() {
             required
           />
 
-          <input type='submit' className={cx('submitButton')} />
+          <Clickable text='Lưu' primary />
         </form>
       </div>
     )

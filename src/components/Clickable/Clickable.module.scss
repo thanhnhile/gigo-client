@@ -15,7 +15,7 @@
   height: var(--buton-height);
   display: block;
   margin: 8px 0;
-  // padding: 8px 20px;
+  font-size: var(--font-normal);
   font-weight: 600;
   cursor: pointer;
   border-radius: var(--button-border-radius);
@@ -40,5 +40,8 @@
   &:disabled {
     visibility: hidden;
     cursor: none;
+  }
+  &.noMargin {
+    margin: 0;
   }
 }

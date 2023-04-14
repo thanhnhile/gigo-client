@@ -6,7 +6,10 @@ import styles from './Product.module.scss';
 
 import { formatPrice } from '~/utils/format';
 import { httpGetProductLiked } from '../../apiServices/accountServices';
-import { httpLikeProduct, httpUnlikeProduct } from '../../apiServices/likeServices';
+import {
+  httpLikeProduct,
+  httpUnlikeProduct,
+} from '../../apiServices/likeServices';
 const cx = className.bind(styles);
 const Product = (props) => {
   const { product } = props;
@@ -14,7 +17,6 @@ const Product = (props) => {
   const getProductLiked = async () => {
     const response = await httpGetProductLiked();
     setProductLiked(response.data);
-    console.log(response.data);
   };
 
   useEffect(() => {
@@ -30,27 +32,25 @@ const Product = (props) => {
       }
     }
     return new_array;
-  }
+  };
   const handleLike = async (id) => {
     try {
       await httpLikeProduct(id);
       getProductLiked();
-      console.log("like");
-    }
-    catch (error) {
+      console.log('like');
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
   const handleUnlike = async (id) => {
     try {
       await httpUnlikeProduct(id);
       getProductLiked();
-      console.log("unlike");
-    }
-    catch (error) {
+      console.log('unlike');
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
   return (
     product.status && (
       <div className={cx('product')}>
@@ -58,7 +58,7 @@ const Product = (props) => {
           <Link to={'/products/' + product.id}>
             <div className={cx('point-rating')}>
               <div className={cx('ribbon-head')}>
-                <h1>4.5</h1>
+                <h3>4.5</h3>
               </div>
               <div className={cx('ribbon-tail')}>
                 <div className={cx('left')}></div>
@@ -77,7 +77,7 @@ const Product = (props) => {
                     <div className={cx('voucher-text')}>
                       <h5>PrintingLab.MY</h5>
                       <p style={{ lineHeight: 1 }}>
-                        <strong style={{ fontSize: "1.25rem" }}>RM 10</strong>
+                        <strong style={{ fontSize: '1.25rem' }}>RM 10</strong>
                         <br />
                         Voucher
                       </p>
@@ -92,7 +92,9 @@ const Product = (props) => {
                       </div>
                       <div className={cx('details-text')}>
                         <div className={cx('text-title')}>Valid till</div>
-                        <div className={cx('text-description')}>12 Jun 2019</div>
+                        <div className={cx('text-description')}>
+                          12 Jun 2019
+                        </div>
                       </div>
                     </div>
                     <div className={cx('voucher-details')}>
@@ -108,7 +110,6 @@ const Product = (props) => {
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
             <span className={cx('product__name')}>{product.name}</span>
@@ -117,13 +118,22 @@ const Product = (props) => {
             </span>
           </Link>
           <span className={cx('heart')}>
-            {search(product.id, productLiked).length <= 0 || productLiked == null ?
-              (<Icon icon={cx('ph:heart-duotone')} onClick={() => handleLike(product.id)} />) :
-              (<Icon className={cx('liked')} icon={cx('ph:heart-fill')} onClick={() => handleUnlike(product.id)} />)
-            }
+            {search(product.id, productLiked).length <= 0 ||
+            productLiked == null ? (
+              <Icon
+                icon={cx('ph:heart-duotone')}
+                onClick={() => handleLike(product.id)}
+              />
+            ) : (
+              <Icon
+                className={cx('liked')}
+                icon={cx('ph:heart-fill')}
+                onClick={() => handleUnlike(product.id)}
+              />
+            )}
           </span>
-        </div >
-      </div >
+        </div>
+      </div>
     )
   );
 };

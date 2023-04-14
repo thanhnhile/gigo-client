@@ -51,7 +51,7 @@ $wrapper-height: 50vh;
         font-size: 1.8rem;
         padding-right: 16px;
         @include mobile {
-          font-size: var(--font-paragraph);
+          font-size: var(--font-normal);
           padding-right: $sm-spacing;
         }
       }

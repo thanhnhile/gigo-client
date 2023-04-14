@@ -1,6 +1,6 @@
 import React, { useState, createContext, useRef, useEffect } from 'react';
 import className from 'classnames/bind';
-import styles from '~/pages/Personal/Personal.module.scss';
+import styles from './HistoryOrder.module.scss';
 import ListOrder from '~/components/Order/ListOrder/ListOrder';
 import { useAuth } from '~/hooks';
 import { ORDER_STATUS } from '~/utils/enum';

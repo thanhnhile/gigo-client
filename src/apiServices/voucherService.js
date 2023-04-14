@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import * as request from '../utils/request';
 export const httpGetAllVoucher = () => {
     try {
@@ -61,3 +62,24 @@ export const httpGetVoucherByAccount = () => {
       console.log(error.response.data);
     }
   };
+=======
+import * as request from '~/utils/request';
+
+export const getVoucherByAccount = () => {
+  try {
+    const res = request.get(`/vouchers/account`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const getVoucherByCode = (code) => {
+  try {
+    const res = request.get(`/vouchers/search?code=${code}`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+>>>>>>> 6278a91e5e58520d782bff8d32e3acccc1d189c7

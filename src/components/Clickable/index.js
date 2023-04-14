@@ -5,7 +5,7 @@ import styles from './Clickable.module.scss';
 const cx = className.bind(styles);
 
 const Clickable = (props) => {
-  const { onClick, text, primary, second, outline, disable } = props;
+  const { onClick, text, primary, second, outline, disable, noMargin } = props;
   return (
     <button
       onClick={onClick}
@@ -15,7 +15,8 @@ const Clickable = (props) => {
         { primary: primary },
         { second: second },
         { outline: outline },
-        { disable: disable }
+        { disable: disable },
+        { noMargin: noMargin }
       )}
     >
       {text}

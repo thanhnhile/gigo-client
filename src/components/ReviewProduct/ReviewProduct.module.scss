@@ -51,7 +51,7 @@
   }
   .list-star {
     display: flex;
-    font-size: 2rem;
+    font-size: 2.5rem;
     padding: unset;
     .star {
       padding: unset;
@@ -60,17 +60,19 @@
   .rating-item {
     margin-top: 15px;
     padding: 5px 0 15px;
+    margin-left: 21px;
+    border-bottom: 1px solid var(--primary);
     &__user {
       display: flex;
       align-items: center;
       line-height: unset;
       h5 {
-        font-size: 1.4rem;
+        font-size: var(--font-normal);
       }
       span {
         margin-left: 15px;
         font-weight: 400;
-        font-size: 1.2rem;
+        font-size: var(--font-sm);
         position: relative;
         bottom: 1px;
       }
@@ -79,6 +81,7 @@
     p {
       line-height: 24px;
       padding: 10px 0 5px;
+      font-size: var(--font-normal);
     }
   }
 }

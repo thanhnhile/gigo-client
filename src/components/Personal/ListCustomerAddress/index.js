@@ -96,7 +96,7 @@ const RadioGroupAddress = ({ selected, setSelected, listAddress }) => {
         {listAddress.length > 0
           ? listAddress.map((item) => {
               return (
-                <div className={cx('address-item')} key={item.id}>
+                <li className={cx('address-item')} key={item.id}>
                   <label className={cx('radio-label')} for={item.id}>
                     <input
                       id={item.id}
@@ -122,7 +122,7 @@ const RadioGroupAddress = ({ selected, setSelected, listAddress }) => {
                       Sửa
                     </button>
                   </div>
-                </div>
+                </li>
               );
             })
           : 'Không có địa chỉ nào được lưu'}

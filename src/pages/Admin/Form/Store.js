@@ -60,8 +60,8 @@ function Store() {
         const index = fullAddress.includes('huyện')
           ? fullAddress.indexOf('huyện')
           : fullAddress.includes('quận')
-            ? fullAddress.indexOf('quận')
-            : fullAddress.indexOf('thành phố');
+          ? fullAddress.indexOf('quận')
+          : fullAddress.indexOf('thành phố');
 
         const prefix =
           index > 0 ? store.address.slice(0, index - 2) : store.address;

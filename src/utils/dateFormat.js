@@ -1,7 +1,5 @@
-import { func } from 'prop-types';
-
 const PER_DAY = 60 * 60 * 24;
-const PER_HOUR = 60 * 60;
+export const PER_HOUR = 60 * 60;
 const PER_MINUTE = 60;
 const PER_WEEK = 7 * PER_DAY;
 
@@ -29,6 +27,7 @@ export function getDistanceFromNowToDate(date) {
 }
 
 export function getDiffFromNow(date) {
+  if (!date) return;
   let diff = Math.abs(compareWithNow(date));
   if (diff > PER_WEEK) {
     return formatDate(date);

@@ -17,6 +17,7 @@ import News from '../pages/News';
 /*user */
 import Personal from '../pages/Personal';
 import ListCustomerInfo from '../pages/ListCustomerInfo';
+import ListProductLiked from '../pages/ListProductLiked';
 
 /*admin */
 import Dashboard from '../pages/Admin/Dashboard';
@@ -108,6 +109,10 @@ export const userRoutes = [
   {
     path: '/customer-info',
     component: ListCustomerInfo,
+  },
+  {
+    path: '/productsLiked-info',
+    component: ListProductLiked,
   },
 ];
 export const adminRoutes = [

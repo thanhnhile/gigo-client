@@ -5,53 +5,16 @@ import Clickable from '~/components/Clickable';
 
 const cx = className.bind(styles);
 const News = () => {
-  return (
-    // <div className={cx("container-fluid")}>
-    //     <div className={cx("row")}>
-    //         <div className={cx("col-md-12")}>
-    //             <div id="news-slider" className={cx("owl-carousel")}>
-    //                 <div className={cx("post-slide")}>
-    //                     <div className={cx("post-img")}>
-    //                         <img src="https://images.unsplash.com/photo-1596265371388-43edbaadab94?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=301&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=501" alt="" />
-    //                         <a href="#" className={cx("over-layer")}><i className={cx("fa fa-link")} /></a>
-    //                     </div>
-    //                     <div className={cx("post-content")}>
-    //                         <h3 className={cx("post-title")}>
-    //                             <a href="#">Lorem ipsum dolor sit amet.</a>
-    //                         </h3>
-    //                         <p className={cx("post-description")}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
-    //                         <span className={cx("post-date")}><i className={cx("fa fa-clock-o")} />Out 27, 2019</span>
-    //                         <a href="#" className={cx("read-more")}>read more</a>
-    //                     </div>
-    //                 </div>
-    //                 <div className={cx("post-slide")}>
-    //                     <div className={cx("post-img")}>
-    //                         <img src="https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=303&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=503" alt="" />
-    //                         <a href="#" className={cx("over-layer")}><i className={cx("fa fa-link")} /></a>
-    //                     </div>
-    //                     <div className={cx("post-content")}>
-    //                         <h3 className={cx("post-title")}>
-    //                             <a href="#">Lorem ipsum dolor sit amet.</a>
-    //                         </h3>
-    //                         <p className={cx("post-description")}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
-    //                         <span className={cx("post-date")}><i className={cx("fa fa-clock-o")} />Out 27, 2019</span>
-    //                         <a href="#" className={cx("read-more")}>read more</a>
-    //                     </div>
-    //                 </div>
-
-    //             </div>
-    //         </div>
-    //     </div>
-    // </div>
+  return (    
     <div className={cx('news', 'container')}>
       <figure className={cx('snip1208')}>
         <img
-          src='https://hotelcareers.vn/wp-content/uploads/2020/12/phu-bep-ho-tro-bep-chinh.jpg'
+          src='https://vietblend.vn/wp-content/uploads/2016/10/abec3df68d986bc63289.jpg'
           alt='sample66'
         />
         <div className={cx('date')}>
           <span className={cx('day')}>28</span>
-          <span className={cx('month')}>Oct</span>
+          <span className={cx('month')}>May</span>
         </div>
         <i className={cx('ion-film-marker')} />
         <figcaption>
@@ -67,12 +30,12 @@ const News = () => {
       </figure>
       <figure className={cx('snip1208')}>
         <img
-          src='https://hrw.hstatic.net/200000000005/24/recruitment/1a160a4a24f641fea3bf63a0e2f984fb.jpg'
+          src='https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/318087070_3418636081793955_5583303226132047076_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8631f5&_nc_ohc=UGD0D3kZurAAX_i2fyc&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfDDav_GKzvbvXUhDx0UIFC-DYEizhyAmmA44I0bpV0JhQ&oe=64456AE3'
           alt='sample9'
         />
         <div className={cx('date')}>
           <span className={cx('day')}>17</span>
-          <span className={cx('month')}>Nov</span>
+          <span className={cx('month')}>July</span>
         </div>
         <i className={cx('ion-headphone')}> </i>
         <figcaption>
@@ -90,7 +53,7 @@ const News = () => {
       </figure>
       <figure className={cx('snip1208')}>
         <img
-          src='https://tasecodanang.vn/medias/thumbs/685/2022-05-origin-035b9b2946adc92828d14f5e9015c316-500x0.jpg'
+          src='https://hbland.net/wp-content/uploads/2021/09/TUYEN_DUNG-01_copy_27b97510-3b82-46cb-b1c0-14ac6fedc2a7_1024x1024.jpg'
           alt='sample6'
         />
         <div className={cx('date')}>
@@ -113,12 +76,12 @@ const News = () => {
       </figure>
       <figure className={cx('snip1208')}>
         <img
-          src='https://luatduonggia.vn/wp-content/uploads/2022/02/barista-la-gi-ky-nang-yeu-cau-doi-voi-barista-chuyen-nghiep.jpg'
+          src='https://cdn.shopify.com/s/files/1/0939/8326/products/SCA-BaristaSkills_2b33817a-f8ee-4187-8450-c61210161835_1000x.png?v=1676050412'
           alt='sample66'
         />
         <div className={cx('date')}>
           <span className={cx('day')}>28</span>
-          <span className={cx('month')}>Oct</span>
+          <span className={cx('month')}>April</span>
         </div>
         <i className={cx('ion-film-marker')} />
         <figcaption>

@@ -56,15 +56,17 @@ const Product = (props) => {
       <div className={cx('product')}>
         <div className={cx('product__item')}>
           <Link to={'/products/' + product.id}>
-            <div className={cx('point-rating')}>
-              <div className={cx('ribbon-head')}>
-                <h3>4.5</h3>
+            {!!product?.avgPoint && (
+              <div className={cx('point-rating')}>
+                <div className={cx('ribbon-head')}>
+                  <h3>{product.avgPoint}</h3>
+                </div>
+                <div className={cx('ribbon-tail')}>
+                  <div className={cx('left')}></div>
+                  <div className={cx('right')}></div>
+                </div>
               </div>
-              <div className={cx('ribbon-tail')}>
-                <div className={cx('left')}></div>
-                <div className={cx('right')}></div>
-              </div>
-            </div>
+            )}
             <div className={cx('img')}>
               <img
                 className={cx('product__img')}

@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import styles from './ReviewProduct.module.scss';
 import { RatingJustShow } from './Rating';
 import { getDiffFromNow } from '../../utils/dateFormat';
-import { get } from '../../utils/request';
 
 const cx = classNames.bind(styles);
 
@@ -16,12 +15,12 @@ const ListRating = ({ list }) => {
           {list.map((item) => (
             <li key={item.id} className={cx('rating-item')}>
               <div>
-                <RatingJustShow point={item.point} />
+                <RatingJustShow point={item?.point} />
                 <div className={cx('rating-item__user')}>
-                  <h5>{item.username}</h5>
-                  <span>{getDiffFromNow(item.created_date)}</span>
+                  <h5>{item?.username}</h5>
+                  <span>{getDiffFromNow(item?.created_date)}</span>
                 </div>
-                <p>{item.content}</p>
+                <p>{item?.content}</p>
               </div>
             </li>
           ))}

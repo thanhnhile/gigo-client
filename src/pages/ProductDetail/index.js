@@ -5,18 +5,17 @@ import Detail from '../../components/Product/Detail';
 
 function ProductDetail() {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const [productDetail, setProductDetail] = useState({});
   useEffect(() => {
     const getProductById = async () => {
       const response = await httpGetProductById(id);
-      console.log(response.data);
-      setProduct(response.data);
+      setProductDetail(response.data);
     };
     getProductById();
   }, [id]);
   return (
     <>
-      <Detail product={product} />
+      <Detail product={productDetail?.product} rates={productDetail?.rates} />
     </>
   );
 }

@@ -12,7 +12,7 @@ export const httpPostOrder = (payload) => {
 
 export const httpGetOrderByAccountUsername = (username) => {
   try {
-    const res = request.get(`/orders/account/${username}`);
+    const res = request.get(`/orders/history`);
     return res;
   } catch (error) {
     console.log(error.response.data);

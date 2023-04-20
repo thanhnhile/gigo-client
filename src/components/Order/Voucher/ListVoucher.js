@@ -5,6 +5,7 @@ import styles from './Voucher.module.scss';
 import Clickable from '../../Clickable';
 import { formatPrice } from '~/utils/format';
 import { getDistanceFromNowToDate, compareWithNow } from '~/utils/dateFormat';
+import useOrder from '~/hooks/useOrder';
 
 import {
   getVoucherByAccount,
@@ -20,6 +21,7 @@ const mapVoucherData = (data) => {
   }));
 };
 const ListVoucher = ({ seleted, setSelected }) => {
+  const { orderDetail, caclTotalCart } = useOrder();
   const voucherCodeRef = useRef();
   const [vouchers, setVouchers] = useState([]);
   useEffect(() => {
@@ -31,6 +33,22 @@ const ListVoucher = ({ seleted, setSelected }) => {
     };
     getVoucherForAccount();
   }, []);
+  const handleChange = (item) => {
+    const sumPrice = caclTotalCart(orderDetail?.details);
+    if (sumPrice < item?.minimumOrderValue) {
+      toast.warning(
+        `Bạn cần mua thêm ${formatPrice(
+          item?.minimumOrderValue - sumPrice
+        )} để sử dụng voucher này!`,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+        }
+      );
+      return;
+    }
+    setSelected(item);
+  };
   const handleSearch = async (e) => {
     e.preventDefault();
     const code = voucherCodeRef.current.value;
@@ -61,24 +79,25 @@ const ListVoucher = ({ seleted, setSelected }) => {
         <Clickable text='Áp dụng' noMargin primary />
       </form>
       <div className={cx('radio-group-wrapper')}>
-        <h3>Mã giảm giá dành cho bạn</h3>
+        <h3>
+          Mã giảm giá dành cho bạn{' '}
+          <button onClick={() => setSelected({})}>Bỏ chọn</button>
+        </h3>
         <p>Có thể chọn 1 Voucher</p>
         <form className={cx('group-voucher')}>
           {vouchers?.length > 0
             ? vouchers.map((item) => (
                 <li className={cx('voucher-item')} key={item.id}>
                   {item.disabled && (
-                    <div className={cx('voucher-item-cover')}>
-                      
-                    </div>
+                    <div className={cx('voucher-item-cover')}></div>
                   )}
                   <label className={cx('radio-label')} for={item.id}>
                     <input
                       id={item.id}
                       type='radio'
                       name='voucher'
-                      checked={item.id === seleted.id}
-                      onChange={() => setSelected(item)}
+                      checked={item.id === seleted?.id}
+                      onChange={() => handleChange(item)}
                       hidden
                       disabled={item.disabled}
                     />

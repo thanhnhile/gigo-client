@@ -6,8 +6,6 @@ export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const REMOVE_ALL = 'REMOVE_ALL';
 
 const addToCart = (state, product) => {
-  console.log(state.cart);
-  console.log('ADDING TO CART ', product.id);
   const updatedCart = [...state.cart];
   const index = updatedCart.findIndex(
     (item) =>
@@ -28,7 +26,6 @@ const addToCart = (state, product) => {
   return { ...state, cart: updatedCart };
 };
 const removeFromCart = (state, productId) => {
-  console.log(state.cart);
   const updatedCart = [...state.cart];
   const index = updatedCart.findIndex(
     (item) => Number.parseInt(item.id) === Number.parseInt(productId)

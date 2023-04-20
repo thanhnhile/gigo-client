@@ -7,7 +7,7 @@ import ListRating from '~/components/ReviewProduct/ListRating';
 import useCart from '~/hooks/useCart';
 const cx = className.bind(styles);
 
-const ProductDetail = ({ product }) => {
+const ProductDetail = ({ product, rates }) => {
   const [size, setSize] = useState('S');
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
@@ -41,14 +41,14 @@ const ProductDetail = ({ product }) => {
     <div className={cx('wrapper', 'min-container')}>
       <div className={cx('flex-box', 'product-detail')}>
         <div className={cx('left-column')}>
-          <img src={product.img_url} alt='' />
+          <img src={product?.img_url} alt='' />
         </div>
 
         <div className={cx('right-column')}>
           <div className={cx('product-description')}>
-            <h1>{product.name}</h1>
-            <h3 className={cx('price')}>{formatPrice(product.price)}</h3>
-            <p>{product.description}</p>
+            <h1>{product?.name}</h1>
+            <h3 className={cx('price')}>{formatPrice(product?.price)}</h3>
+            <p>{product?.description}</p>
           </div>
           <div className={cx('product-size')}>
             <span>Chọn size (bắt buộc)</span>
@@ -112,7 +112,7 @@ const ProductDetail = ({ product }) => {
           <Clickable text='Đặt ngay' primary onClick={handleAddToCart} />
         </div>
       </div>
-      <ListRating list={product.rates} />
+      <ListRating list={rates} />
     </div>
   );
 };

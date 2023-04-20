@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import className from 'classnames/bind';
 import styles from './Personal.module.scss';
 import { useAuth } from '~/hooks';
@@ -9,6 +9,9 @@ import AccountSetting from '../../components/Personal/AccountSetting';
 const cx = className.bind(styles);
 
 const Personal = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [isLoading, setLoading] = useState(false);
   const { auth } = useAuth();
   if (isLoading) return 'Loading....';

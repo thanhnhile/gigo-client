@@ -1,7 +1,7 @@
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
 import { formatPrice } from '~/utils/format';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import Clickable from '~/components/Clickable';
 import ListRating from '~/components/ReviewProduct/ListRating';
 import useCart from '~/hooks/useCart';
@@ -33,6 +33,10 @@ const ProductDetail = ({ product, rates }) => {
     addToCart(cartItem);
     setQuantity(1);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={cx('wrapper', 'min-container')}>
       <div className={cx('flex-box', 'product-detail')}>

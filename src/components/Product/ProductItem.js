@@ -59,7 +59,7 @@ const Product = (props) => {
             {!!product?.avgPoint && (
               <div className={cx('point-rating')}>
                 <div className={cx('ribbon-head')}>
-                  <h3>{product.avgPoint}</h3>
+                  <h3>{product.avgPoint}<Icon icon={cx('ic:baseline-star-rate')}/></h3>
                 </div>
                 <div className={cx('ribbon-tail')}>
                   <div className={cx('left')}></div>

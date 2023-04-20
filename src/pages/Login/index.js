@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import className from 'classnames/bind';
@@ -42,6 +42,9 @@ function Login() {
       message: ValidationRegex.password.message,
     },
   ];
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={cx('container', 'wrapper')}>
       <h1>Đăng nhập</h1>

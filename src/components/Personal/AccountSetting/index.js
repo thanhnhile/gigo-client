@@ -37,6 +37,9 @@ const AccountSetting = () => {
       state: { action: FORM_ACTION.VIEW },
     });
   };
+  const handleViewListProductLiked = () => {
+    navigate(`/productsLiked-info`);
+};
   const handleSave = (e) => {};
   return (
     <div className={cx('user-infor')}>
@@ -80,6 +83,15 @@ const AccountSetting = () => {
           icon='material-symbols:list-alt-outline-rounded'
         />
         Xem tất cả
+      </div>
+      <h4>Sản phẩm yêu thích</h4>
+      <div className={cx('form-control')}>
+        <Icon
+          onClick={handleViewListProductLiked}
+          className={cx('action-btn')}
+          icon='ph:heart'
+        />
+        Xem danh sách
       </div>
       <Icon onClick={handleToggle} className={cx('icon')} icon='mdi:pencil' />
       <div className={cx('logout-btn')}>

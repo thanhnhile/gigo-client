@@ -13,11 +13,11 @@ const About = () => {
   }, []);
 
   return (
-    <div className={cx('about')}>
+    <div className={cx('container','about')}>
       <div className={cx('container-fluid', 'cover')}>
         <div className={cx('story-photo')}></div>
       </div>
-      <div className={cx('container', 'content')}>
+      <div className={cx( 'content')}>
         <h2>Hành trình của GoGi</h2>
         <p>
           Luôn tâm huyết với việc khai thác nguồn nông sản Việt Nam để tạo ra

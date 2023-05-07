@@ -49,7 +49,7 @@ const TableOrder = ({ data, detailButton }) => {
       name: 'Chi tiết',
       button: true,
       cell: (row) => (
-        <Link to={detailButton ? `/employee/order/${row.id}` : '#'}>
+        <Link to={detailButton ? `/employee/orders/${row.id}` : '#'}>
           {' '}
           <Icon icon='mdi:eye-plus-outline' />
         </Link>

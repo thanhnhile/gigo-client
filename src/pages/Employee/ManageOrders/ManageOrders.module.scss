@@ -7,9 +7,9 @@
     background-color: var(--white);
     border-radius: var(--image-border-radius);
     .filter-item {
-      font-size: 1.6rem;
+      font-size: var(--font-title);
       &.icon {
-        font-size: 2.3rem;
+        font-size: var(--font-heading);
         cursor: pointer;
         &:hover {
           color: var(--primary);
@@ -20,6 +20,7 @@
       }
       input,
       select {
+        font-size: var(--font-title);
         min-width: 300px;
         padding: 10px 15px;
         border-radius: 8px;
@@ -33,6 +34,6 @@
   }
   .table-wrapper {
     width: 100%;
-    font-size: 1.4rem;
+    font-size: var(--font-normal);
   }
 }

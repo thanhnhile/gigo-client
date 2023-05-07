@@ -16,7 +16,9 @@ const Product = (props) => {
   const [productLiked, setProductLiked] = useState([]);
   const getProductLiked = async () => {
     const response = await httpGetProductLiked();
-    setProductLiked(response.data);
+    if (response?.data) {
+      setProductLiked(response.data);
+    }
   };
 
   useEffect(() => {
@@ -59,7 +61,10 @@ const Product = (props) => {
             {!!product?.avgPoint && (
               <div className={cx('point-rating')}>
                 <div className={cx('ribbon-head')}>
-                  <h3>{product.avgPoint}<Icon icon={cx('ic:baseline-star-rate')}/></h3>
+                  <h3>
+                    {product.avgPoint}
+                    <Icon icon={cx('ic:baseline-star-rate')} />
+                  </h3>
                 </div>
                 <div className={cx('ribbon-tail')}>
                   <div className={cx('left')}></div>

@@ -1,10 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
-import { Icon } from '@iconify/react';
-import { DELIVERY_METHOD, ORDER_STATUS } from '~/utils/enum';
-import Status from '~/components/Status';
-import { formatPrice } from '~/utils/format';
 
 const customStyles = {
   rows: {

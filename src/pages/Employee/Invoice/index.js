@@ -7,27 +7,14 @@ import {
   httpUpdateStatusOrder,
 } from '~/apiServices/orderServices';
 import getStatusComponent from '~/components/Status';
-import { formatPrice } from '~/utils/format';
 import Clickable from '../../../components/Clickable';
-import { DELIVERY_METHOD, ORDER_STATUS } from '~/utils/enum';
+import { formatPrice } from '~/utils/format';
+
+import { DELIVERY_METHOD, ORDER_STATUS, PERMISSION } from '~/utils/enum';
 
 const cx = className.bind(styles);
-// const getStatusComponent = (status = 0) => {
-//   switch (status) {
-//     case 0:
-//       return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
-//     case 1:
-//       return <Status text={ORDER_STATUS.DELIVERING.name} delivering />;
-//     case 2:
-//       return <Status text={ORDER_STATUS.SUCCESS.name} success />;
-//     case 3:
-//       return <Status text={ORDER_STATUS.CANCELED.name} canceled />;
-//     default:
-//       return <Status text={ORDER_STATUS.IN_PROGRESS.name} inProgress />;
-//   }
-// };
 
-const Invoice = () => {
+const Invoice = ({ permission }) => {
   const { id } = useParams();
   const [order, setOrder] = useState({});
   useEffect(() => {
@@ -40,6 +27,15 @@ const Invoice = () => {
     };
     getOrderById();
   }, [id]);
+  const discount = useMemo(() => {
+    if (!order?.voucher) return 0;
+    const { value, maximumDiscountAmount } = order?.voucher || {};
+    return value === 1
+      ? maximumDiscountAmount
+      : ((order?.total - DELIVERY_METHOD[order?.orderType]?.price) * value) /
+          (1 - value);
+  }, [order, order?.voucher]);
+
   const handleClick = useMemo(
     () => async (status) => {
       const res = await httpUpdateStatusOrder(id, status);
@@ -50,7 +46,7 @@ const Invoice = () => {
     [id]
   );
   return order?.details?.length > 0 ? (
-    <div className={cx('wrapper')}>
+    <div className={cx('wrapper', 'container')}>
       <h1>Chi tiết đơn hàng</h1>
       <div className={cx('row')}>
         <div className={cx('status')}>
@@ -99,52 +95,46 @@ const Invoice = () => {
       <div className={cx('row', 'order-info')}>
         <div className={cx('info')}>
           <h4>phương thức</h4>
-          <p>{DELIVERY_METHOD[order.orderType].name}</p>
+          <p>{DELIVERY_METHOD[order?.orderType].name}</p>
         </div>
         <div className={cx('info')}>
           <h4>Phí giao hàng</h4>
-          <p>{formatPrice(DELIVERY_METHOD[order.orderType].price)}</p>
+          <p>{formatPrice(DELIVERY_METHOD[order?.orderType].price)}</p>
         </div>
         <div className={cx('info')}>
           <h4>Giảm giá</h4>
-          <p>0%</p>
+          <p>{formatPrice(discount)}</p>
         </div>
         <div className={cx('info')}>
           <h4>Tổng đơn</h4>
-          <p className={cx('price')}>{formatPrice(order.total)}</p>
+          <p className={cx('price')}>{formatPrice(order?.total)}</p>
         </div>
       </div>
-      {/* <div className={cx('row', 'select-employee')}>
-        <h4>Nhân viên</h4>
-        <select>
-          <option>Nhi</option>
-          <option>Thanh Hai</option>
-          <option>My</option>
-        </select>
-      </div> */}
-      <div className={cx('row')}>
-        <Clickable
-          onClick={() => handleClick(1)}
-          text='Xác nhận'
-          disable={order.status !== ORDER_STATUS.IN_PROGRESS.id}
-          primary
-        />
-        <Clickable
-          onClick={() => handleClick(2)}
-          text='Giao hàng'
-          outline
-          disable={order.status !== ORDER_STATUS.DELIVERING.id}
-        />
-        <Clickable
-          onClick={() => handleClick(3)}
-          text='Hủy'
-          second
-          disable={
-            order.status === ORDER_STATUS.SUCCESS.id ||
-            order.status === ORDER_STATUS.CANCELED.id
-          }
-        />
-      </div>
+      {permission?.includes(PERMISSION.UPDATE) && (
+        <div className={cx('row')}>
+          <Clickable
+            onClick={() => handleClick(1)}
+            text='Xác nhận'
+            disable={order?.status !== ORDER_STATUS.IN_PROGRESS.id}
+            primary
+          />
+          <Clickable
+            onClick={() => handleClick(2)}
+            text='Giao hàng'
+            outline
+            disable={order?.status !== ORDER_STATUS.DELIVERING.id}
+          />
+          <Clickable
+            onClick={() => handleClick(3)}
+            text='Hủy'
+            second
+            disable={
+              order?.status === ORDER_STATUS.SUCCESS.id ||
+              order?.status === ORDER_STATUS.CANCELED.id
+            }
+          />
+        </div>
+      )}
     </div>
   ) : (
     <p>Không có đơn hàng</p>

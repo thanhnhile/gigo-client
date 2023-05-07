@@ -10,9 +10,12 @@ import {
 import RequireAuth from './components/RequireAuth';
 import { DefaultLayout, AdminLayout } from './layouts';
 import { ROLE, LOCAL_STORAGE_KEY } from '~/utils/enum';
+import Error from './pages/Error';
 import Missing from './pages/Missing';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PERMISSION } from '~/utils/enum';
+import Unauthorized from './pages/Unauthorized';
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -25,6 +28,7 @@ function App() {
   const createRoute = (routes, layout) => {
     return routes.map((route, index) => {
       const Page = route.component;
+      const permission = route?.permission || PERMISSION.VIEW;
       const Layout = layout || DefaultLayout;
       return (
         <Route
@@ -32,7 +36,7 @@ function App() {
           path={route.path}
           element={
             <Layout>
-              <Page />
+              <Page permission={permission} />
             </Layout>
           }
         />
@@ -63,6 +67,8 @@ function App() {
           {createRoute(employeeRoutes, AdminLayout)}
         </Route>
         {/* catch all */}
+        <Route path='/unauthorized' element={<Unauthorized />} />
+        <Route path='/error' element={<Error />} />
         <Route path='*' element={<Missing />} />
       </Routes>
       <ToastContainer />

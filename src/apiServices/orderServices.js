@@ -10,7 +10,7 @@ export const httpPostOrder = (payload) => {
   }
 };
 
-export const httpGetOrderByAccountUsername = (username) => {
+export const httpGetOrderByAccountUsername = () => {
   try {
     const res = request.get(`/orders/history`);
     return res;

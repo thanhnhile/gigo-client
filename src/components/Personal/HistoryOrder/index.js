@@ -2,7 +2,6 @@ import React, { useState, createContext, useRef, useEffect } from 'react';
 import className from 'classnames/bind';
 import styles from './HistoryOrder.module.scss';
 import ListOrder from '~/components/Order/ListOrder/ListOrder';
-import { useAuth } from '~/hooks';
 import { ORDER_STATUS } from '~/utils/enum';
 import { httpGetRatesByUsername } from '~/apiServices/ratingServices';
 import { httpGetOrderByAccountUsername } from '~/apiServices/orderServices';
@@ -11,14 +10,14 @@ export const historyOrderContext = createContext();
 const cx = className.bind(styles);
 
 const HistoryOrder = () => {
-  const { auth } = useAuth();
   const [tab, setTab] = useState(0);
   const [orders, setOrders] = useState([]);
   const productsRated = useRef([]);
   const getHistoryOrders = async () => {
-    const res = await httpGetOrderByAccountUsername(auth.username);
+    const res = await httpGetOrderByAccountUsername();
 
     if (res.data) {
+      console.log(res.data);
       setOrders(res.data);
     }
   };
@@ -33,7 +32,6 @@ const HistoryOrder = () => {
   }, []);
   useEffect(() => {
     getHistoryOrders();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab]);
   return (
     <div className={cx('order-info')}>

@@ -57,3 +57,11 @@ export const STATUS = [
     name: 'Ẩn',
   },
 ];
+
+export const PERMISSION = {
+  ALL: ['view', 'create', 'update', 'delete'],
+  VIEW: 'view',
+  CREATE: 'create',
+  UPDATE: 'update',
+  DELETE: 'delete',
+};

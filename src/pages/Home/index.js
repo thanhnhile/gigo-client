@@ -10,8 +10,9 @@ const Home = () => {
   useEffect(() => {
     const getAllProduct = async () => {
       const response = await httpGetAllProduct();
-      console.log(response.data);
-      setProduct(response.data.content);
+      if (response?.data) {
+        setProduct(response.data.content);
+      }
     };
     getAllProduct();
   }, []);

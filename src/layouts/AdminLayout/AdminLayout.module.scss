@@ -1,23 +1,26 @@
 $header-height: 60px;
 .wrapper {
-  display: grid;
-  grid-template-columns: 20% 80%;
+  // display: grid;
+  // grid-template-columns: 20% 80%;
+  position: relative;
+  padding-left: 20%;
   .content {
     min-height: 100vh;
     .header {
       width: 100%;
-      height: 60px;
+      height: $header-height;
       padding: 0 3rem;
-      position: absolute;
-      top: 0;
-      left: 0;
       background-color: var(--white);
       display: flex;
       align-items: center;
       justify-content: flex-end;
       font-size: 2.5rem;
       box-shadow: 3px 2px 5px #ccc;
-      position: relative;
+      position: sticky;
+      top: 0;
+      right: 0;
+      left: 20%;
+      z-index: 99;
       span,
       a {
         color: var(--primary);

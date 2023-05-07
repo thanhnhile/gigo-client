@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CustomDataTable from '~/components/CustomDataTable';
-//import { httpGetOrderByStoreId } from '~/apiServices/orderServices';
 import { useAuth } from '~/hooks';
 import { formatPrice } from '~/utils/format';
 import { DELIVERY_METHOD } from '~/utils/enum';
@@ -49,7 +48,7 @@ const columns = [
     name: 'Chi tiết',
     button: true,
     cell: (row) => (
-      <Link to={`/employee/order/${row.id}`}>
+      <Link to={`/employee/orders/${row.id}`}>
         {' '}
         <Icon icon='mdi:eye-plus-outline' />
       </Link>
@@ -69,25 +68,19 @@ const style = {
 const Dashboard = () => {
   const { auth } = useAuth();
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    // const getOrderByStoreId = async () => {
-    //   const res = await httpGetOrderByStoreId(auth?.employeeInfo?.storeId);
-    //   if (res.data) {
-    //     const rowData = res.data.filter(
-    //       (item) => item.status === ORDER_STATUS.IN_PROGRESS.id
-    //     );
-    //     setData(rowData);
-    //   }
-
-    // };
-    // getOrderByStoreId();
+    setIsLoading(true);
     const url = `http://localhost:8089/subscribe/stores/${auth?.employeeInfo?.storeId}/employees/${auth?.employeeInfo?.employeeId}`;
     const eventSource = new EventSource(url);
     eventSource.addEventListener('LIST_ORDERS_UPDATE', (event) => {
       console.log(event);
       const data = JSON.parse(event.data);
       console.log(data);
-      setData(data);
+      if (data.length > 0) {
+        setData(data);
+        setIsLoading(false);
+      }
     });
     eventSource.onopen = (e) => console.log('connection');
     eventSource.onerror = (event) => {
@@ -104,9 +97,13 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Đơn hàng gần đây - {data?.length || 0}</h1>
-      <div style={style.tableWrapper}>
-        <CustomDataTable columns={columns} data={data} />
-      </div>
+      {isLoading ? (
+        <div className='loader'></div>
+      ) : (
+        <div style={style.tableWrapper}>
+          <CustomDataTable columns={columns} data={data} />
+        </div>
+      )}
     </div>
   );
 };

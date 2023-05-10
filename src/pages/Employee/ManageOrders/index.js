@@ -15,7 +15,7 @@ const ManageOrders = () => {
   const [data, setData] = useState([]);
   const [dataRow, setDataRow] = useState(data);
   const [userPhone, setUserPhone] = useState('');
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState(-1);
   const getOrderByStoreId = async () => {
     const res = await httpGetOrderByStoreId(auth?.employeeInfo?.storeId);
     if (res.data) {
@@ -35,9 +35,9 @@ const ManageOrders = () => {
   const handleFilterByStatus = async (e) => {
     setStatus(e.target.value);
     const result = data.filter(
-      (item) => item.status === Number.parseInt(e.target.value)
+      (item) =>
+        item.status === Number.parseInt(e.target.value) || e.target.value === -1
     );
-    console.log(result);
     setDataRow(result);
   };
   useEffect(() => {
@@ -51,8 +51,8 @@ const ManageOrders = () => {
           <Icon
             onClick={() => {
               getOrderByStoreId();
-              // console.log(data);
-              // setDataRow(data);
+              setStatus(-1);
+              setUserPhone('');
             }}
             icon='mdi:reload'
           />
@@ -71,6 +71,9 @@ const ManageOrders = () => {
             value={status}
             onChange={(e) => handleFilterByStatus(e)}
           >
+            <option key={'all'} value={-1}>
+              Tất cả
+            </option>
             {Object.values(ORDER_STATUS).map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
@@ -79,7 +82,7 @@ const ManageOrders = () => {
           </select>
         </div>
         <div className={cx('filter-item')}>
-          <Clickable primary text='Downloads' />
+          <Clickable primary text='Tải xuống' />
         </div>
       </div>
       <TableOrder data={dataRow} detailButton />

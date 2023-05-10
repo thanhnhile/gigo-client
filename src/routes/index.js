@@ -7,12 +7,11 @@ import Register from '../pages/Register';
 import ProductDetail from '../pages/ProductDetail';
 import Stores from '../pages/Store';
 import Checkout from '../pages/Checkout';
-import Unauthorized from '../pages/Unauthorized';
 import SearchResult from '../pages/SearchResult';
 import Menu from '../pages/Menu';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
-import News from '../pages/News';
+import News from '~/pages/News';
 
 /*user */
 import Personal from '../pages/Personal';
@@ -36,6 +35,8 @@ import CreateOreUpdateVoucher from '../pages/Admin/Form/Voucher';
 import ManageOrders from '../pages/Employee/ManageOrders';
 import Invoice from '../pages/Employee/Invoice';
 import { default as EmployeeDashboard } from '../pages/Employee/Dashboard';
+
+import { PERMISSION } from '~/utils/enum';
 
 export const publicRoutes = [
   {
@@ -75,10 +76,6 @@ export const publicRoutes = [
     component: Checkout,
   },
   {
-    path: '/unauthorized',
-    component: Unauthorized,
-  },
-  {
     path: '/search',
     component: SearchResult,
   },
@@ -113,6 +110,10 @@ export const userRoutes = [
   {
     path: '/productsLiked-info',
     component: ListProductLiked,
+  },
+  {
+    path: '/orders/:id',
+    component: Invoice,
   },
 ];
 export const adminRoutes = [
@@ -164,7 +165,7 @@ export const adminRoutes = [
   {
     path: '/admin/vouchers/:id',
     component: CreateOreUpdateVoucher,
-  }
+  },
 ];
 export const employeeRoutes = [
   {
@@ -176,7 +177,8 @@ export const employeeRoutes = [
     component: ManageOrders,
   },
   {
-    path: '/employee/order/:id',
+    path: '/employee/orders/:id',
     component: Invoice,
+    permission: [...PERMISSION.ALL],
   },
 ];

@@ -44,10 +44,10 @@ function Product() {
 
   const getProductById = async () => {
     const response = await httpGetProductById(id);
-    console.log(response.data);
-    setProduct(response.data);
+    console.log(response.data.product);
+    setProduct(response.data.product);
     setImage((prev) => {
-      return { ...prev, url: response.data.img_url };
+      return { ...prev, url: response.data.product.img_url };
     });
   };
 

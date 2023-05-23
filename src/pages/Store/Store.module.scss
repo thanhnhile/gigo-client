@@ -19,8 +19,6 @@ $largest-screen: 80rem;
       justify-content: center;
       align-items: center;
       margin: auto;
-      //@include slideDown(alternate, 1s, 1s);
-
       div {
         justify-content: space-between;
 
@@ -53,32 +51,30 @@ $largest-screen: 80rem;
     display: grid;
     height: 100%;
     grid-template-columns: repeat(3, 1fr);
-    padding-left: 6rem;
     margin: 3rem auto 2.5rem;
-    gap: 1rem;
+    column-gap: 2rem;
+    row-gap: 3rem;
 
     .store-card {
       display: flex;
       flex-direction: column;
-      margin-bottom: 1.5rem;
+      padding: 1rem 4rem 1rem 1.5rem;
 
       h3 {
         font-size: var(--font-heading-sm);
         color: var(--primary);
-        padding: 5px 0;
-        text-transform: capitalize;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
       }
 
       .store-data {
-        display: grid;
-        grid-template-columns: 2rem auto;
-        font-size: var(--font-normal);
-        padding-bottom: 0.5rem;
-        gap: 8px;
+        display: flex;
         align-items: center;
+        font-size: var(--font-normal);
+        margin-top: 0.8rem;
 
         .icon-wrapper {
-          margin-right: 16px;
+          margin-right: 12px;
           font-size: var(--font-heading-sm);
           i {
             color: var(--primary);

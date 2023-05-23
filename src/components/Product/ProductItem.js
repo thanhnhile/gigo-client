@@ -1,56 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
 
 import { formatPrice } from '~/utils/format';
-import { httpGetProductLiked } from '../../apiServices/accountServices';
-import {
-  httpLikeProduct,
-  httpUnlikeProduct,
-} from '../../apiServices/likeServices';
+import { httpLikeProduct, httpUnlikeProduct } from '~/apiServices/likeServices';
 const cx = className.bind(styles);
 const Product = (props) => {
-  const { product } = props;
-  const [productLiked, setProductLiked] = useState([]);
-  const getProductLiked = async () => {
-    const response = await httpGetProductLiked();
-    if (response?.data) {
-      setProductLiked(response.data);
-    }
-  };
+  const { product, isLiked = false } = props;
+  const [liked, setLiked] = useState(isLiked);
 
-  useEffect(() => {
-    getProductLiked();
-  }, []);
-  const search = (id, array) => {
-    let new_array = [];
-    if (array != null) {
-      for (let i = 0; i < array.length; i++) {
-        if (array[i].id === id || array[i] === id) {
-          new_array.push(array[i]);
-        }
-      }
-    }
-    return new_array;
-  };
-  const handleLike = async (id) => {
-    try {
-      await httpLikeProduct(id);
-      getProductLiked();
-      console.log('like');
-    } catch (error) {
-      console.log(error);
+  const handleLike = async () => {
+    const res = await httpLikeProduct(product.id);
+    if (res?.errMsg === null) {
+      setLiked(true);
     }
   };
-  const handleUnlike = async (id) => {
-    try {
-      await httpUnlikeProduct(id);
-      getProductLiked();
-      console.log('unlike');
-    } catch (error) {
-      console.log(error);
+  const handleUnlike = async () => {
+    const res = await httpUnlikeProduct(product.id);
+    if (res?.errMsg === null) {
+      setLiked(false);
     }
   };
   return (
@@ -125,17 +95,17 @@ const Product = (props) => {
             </span>
           </Link>
           <span className={cx('heart')}>
-            {search(product.id, productLiked).length <= 0 ||
-            productLiked == null ? (
+            {liked ? (
               <Icon
-                icon={cx('ph:heart-duotone')}
-                onClick={() => handleLike(product.id)}
+                icon='mdi:cards-heart'
+                color={'red'}
+                onClick={handleUnlike}
               />
             ) : (
               <Icon
-                className={cx('liked')}
-                icon={cx('ph:heart-fill')}
-                onClick={() => handleUnlike(product.id)}
+                icon='mdi:cards-heart'
+                color='#7c7b7b'
+                onClick={handleLike}
               />
             )}
           </span>

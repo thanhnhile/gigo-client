@@ -18,11 +18,11 @@ export function getDistanceFromNowToDate(date) {
   if (diff >= 3 * PER_DAY) {
     return `HSD: ${formatDate(date)}`;
   } else if (diff > PER_DAY) {
-    return `Còn ${Math.floor(diff / PER_DAY)} ngày`;
+    return `Sắp hết hạn: Còn ${Math.floor(diff / PER_DAY)} ngày`;
   } else if (diff >= PER_HOUR) {
-    return `Còn ${Math.floor(diff / PER_HOUR)} giờ`;
+    return `Sắp hết hạn: Còn ${Math.floor(diff / PER_HOUR)} giờ`;
   } else if (diff >= PER_MINUTE) {
-    return `Còn ${Math.floor(diff / PER_MINUTE)} phút`;
+    return `Sắp hết hạn: Còn ${Math.floor(diff / PER_MINUTE)} phút`;
   }
 }
 

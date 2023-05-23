@@ -16,12 +16,14 @@ import {
   httpEditCustomer,
   httpPostCustomer,
 } from '~/apiServices/customerServices';
+import { useNavigate } from 'react-router-dom';
 
 const cx = className.bind(styles);
 
 const Customerinfo = ({ customerId, action }) => {
+  const navigate = useNavigate();
   const { auth } = useAuth();
-  const [customer, setCustomer] = useState({
+  const initValue = {
     id: '',
     name: '',
     phone: '',
@@ -29,7 +31,8 @@ const Customerinfo = ({ customerId, action }) => {
     provinceId: null,
     districtId: null,
     accountUsername: auth?.username ? auth.username : '',
-  });
+  };
+  const [customer, setCustomer] = useState(initValue);
   const [input, setInput] = useState(customer);
   const [address, setAddress] = useState(() => {
     return {
@@ -81,23 +84,19 @@ const Customerinfo = ({ customerId, action }) => {
       address: fullAddress.toLowerCase(),
     };
     try {
-      let res = {};
       setSubmitting(true);
       if (action === FORM_ACTION.EDIT) {
-        res = await httpEditCustomer(customer.id, updatedCustomer);
+        await httpEditCustomer(customer.id, updatedCustomer);
       } else {
-        res = await httpPostCustomer(updatedCustomer);
+        await httpPostCustomer(updatedCustomer);
       }
       setSubmitting(false);
       toast.success('Lưu thông tin thành công!', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
-      setCustomer(res.data);
-      console.log(getSplitAddress(res.data.address)?.streetName);
-      setInput({
-        ...res.data,
-        address: getSplitAddress(res.data.address).streetName,
+      navigate(`/customer-info`, {
+        state: { action: FORM_ACTION.VIEW },
       });
     } catch (error) {
       console.log(error);

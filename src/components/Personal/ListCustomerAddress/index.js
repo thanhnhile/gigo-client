@@ -17,6 +17,7 @@ const ListCustomerAddress = ({ selected, setSelected }) => {
   useEffect(() => {
     const getListCustomerInfoOfAccount = async () => {
       const res = await httpGetAllCustomerInfo();
+      console.log(res);
       if (res.data) {
         setListAddress(res.data);
         const defaultItem = res?.data.find((item) => item.isDefault);

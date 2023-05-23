@@ -1,7 +1,8 @@
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
+import { Icon } from '@iconify/react';
 import { formatPrice } from '~/utils/format';
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Clickable from '~/components/Clickable';
 import ListRating from '~/components/ReviewProduct/ListRating';
 import useCart from '~/hooks/useCart';
@@ -109,7 +110,11 @@ const ProductDetail = ({ product, rates }) => {
               </div>
             </form>
           </div>
-          <Clickable text='Đặt ngay' primary onClick={handleAddToCart} />
+          <Clickable
+            primary
+            onClick={handleAddToCart}
+            icon={<Icon icon='mdi:add-shopping-cart' width='24' />}
+          />
         </div>
       </div>
       <ListRating list={rates} />

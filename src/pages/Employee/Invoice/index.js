@@ -22,7 +22,6 @@ const Invoice = ({ permission }) => {
       const res = await httpGetOrderById(id);
       if (res.data) {
         setOrder(res.data);
-        console.log(res.data);
       }
     };
     getOrderById();
@@ -110,31 +109,36 @@ const Invoice = ({ permission }) => {
           <p className={cx('price')}>{formatPrice(order?.total)}</p>
         </div>
       </div>
-      {permission?.includes(PERMISSION.UPDATE) && (
-        <div className={cx('row')}>
-          <Clickable
-            onClick={() => handleClick(1)}
-            text='Xác nhận'
-            disable={order?.status !== ORDER_STATUS.IN_PROGRESS.id}
-            primary
-          />
-          <Clickable
-            onClick={() => handleClick(2)}
-            text='Giao hàng'
-            outline
-            disable={order?.status !== ORDER_STATUS.DELIVERING.id}
-          />
-          <Clickable
-            onClick={() => handleClick(3)}
-            text='Hủy'
-            second
-            disable={
-              order?.status === ORDER_STATUS.SUCCESS.id ||
-              order?.status === ORDER_STATUS.CANCELED.id
-            }
-          />
-        </div>
-      )}
+      <div className={cx('row')}>
+        <Clickable
+          onClick={() => handleClick(1)}
+          text='Xác nhận'
+          disable={
+            order?.status !== ORDER_STATUS.IN_PROGRESS.id ||
+            !permission?.includes(PERMISSION.DELIVERY)
+          }
+          primary
+        />
+        <Clickable
+          onClick={() => handleClick(2)}
+          text='Giao hàng'
+          outline
+          disable={
+            order?.status !== ORDER_STATUS.DELIVERING.id ||
+            !permission?.includes(PERMISSION.SUCCESS)
+          }
+        />
+        <Clickable
+          onClick={() => handleClick(3)}
+          text='Hủy'
+          second
+          disable={
+            order?.status === ORDER_STATUS.SUCCESS.id ||
+            order?.status === ORDER_STATUS.CANCELED.id ||
+            !permission.includes(PERMISSION.CANCEL)
+          }
+        />
+      </div>
     </div>
   ) : (
     <p>Không có đơn hàng</p>

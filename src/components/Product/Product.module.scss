@@ -294,15 +294,6 @@ $product-box-shadow: 0px 0px 0px 2px $light-gray;
     width: 50%;
     margin-top: 60px;
 
-    span {
-      font-size: 20px;
-      font-weight: 400;
-      color: #000000;
-      margin-bottom: 20px;
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-
     button {
       margin-top: 36px;
     }
@@ -334,10 +325,16 @@ $product-box-shadow: 0px 0px 0px 2px $light-gray;
     }
   }
 
-  .product-size {
+  .product-select {
+    font-size: var(--font-normal);
+    summary {
+      font-size: var(--font-normal);
+      font-weight: 400;
+    }
     .switch-field {
       display: flex;
-      margin-bottom: 36px;
+      margin-top: 10px;
+      margin-bottom: 20px;
       margin-right: 10px;
       overflow: hidden;
 
@@ -359,7 +356,7 @@ $product-box-shadow: 0px 0px 0px 2px $light-gray;
         border-radius: 5px;
         padding: 3px 8px;
         box-shadow: none;
-        font-size: 1.4rem;
+        font-size: var(--font-normal);
         margin-right: 15px;
         overflow: hidden;
         cursor: pointer;
@@ -373,6 +370,11 @@ $product-box-shadow: 0px 0px 0px 2px $light-gray;
 
   .product-count {
     margin-top: 15px;
+    span {
+      font-size: var(--font-normal);
+      font-weight: 400;
+      padding-bottom: 20px;
+    }
 
     .display-flex {
       display: flex;

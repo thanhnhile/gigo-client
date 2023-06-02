@@ -6,30 +6,23 @@ import styles from './ListOrder.module.scss';
 import { formatPrice } from '~/utils/format';
 import { formatDate } from '~/utils/dateFormat';
 import { ORDER_STATUS } from '~/utils/enum';
-import { httpUpdateStatusOrder } from '~/apiServices/orderServices';
 import { historyOrderContext } from '~/components/Personal/HistoryOrder';
+import Clickable from '../../Clickable';
+import { useNavigate } from 'react-router-dom';
 const cx = className.bind(styles);
 
 const OrderItem = ({ order }) => {
+  const navigate = useNavigate();
   const targetItem = useRef();
   const [showModal, setShowModal] = useState(false);
-  const { tab, setTab, productsRated } = useContext(historyOrderContext);
+  const { tab, productsRated } = useContext(historyOrderContext);
   const checkIsProductRatedByLoggedUser = (productId) => {
     if (productsRated?.length <= 0) {
       return false;
     }
-    return productsRated.filter((item) => item === productId).length > 0
-      ? true
-      : false;
+    return productsRated.filter((item) => item === productId).length > 0;
   };
 
-  const handleCancel = async (id) => {
-    const res = await httpUpdateStatusOrder(id, ORDER_STATUS.CANCELED.id);
-    if (res.data) {
-      console.log(res.data);
-      setTab(res.data.status);
-    }
-  };
   const handleClick = (item) => {
     setShowModal(true);
     targetItem.current = item;
@@ -83,12 +76,11 @@ const OrderItem = ({ order }) => {
         </div>
       </div>
       <div className={cx('action')}>
-        <button
-          onClick={() => handleCancel(order.id)}
-          disabled={order.status !== ORDER_STATUS.IN_PROGRESS.id}
-        >
-          Hủy
-        </button>
+        <Clickable
+          text='Chi tiết'
+          outline
+          onClick={() => navigate(`/orders/${order?.id}`)}
+        />
       </div>
     </div>
   );

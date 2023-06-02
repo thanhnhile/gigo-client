@@ -15,9 +15,7 @@ const HistoryOrder = () => {
   const productsRated = useRef([]);
   const getHistoryOrders = async () => {
     const res = await httpGetOrderByAccountUsername();
-
     if (res.data) {
-      console.log(res.data);
       setOrders(res.data);
     }
   };

@@ -1,10 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
+import { Icon } from '@iconify/react';
 import { toast } from 'react-toastify';
 import styles from './Voucher.module.scss';
 import Clickable from '../../Clickable';
 import { formatPrice } from '~/utils/format';
-import { getDistanceFromNowToDate, compareWithNow } from '~/utils/dateFormat';
+import {
+  getDistanceFromNowToDate,
+  compareWithNow,
+  formatDate,
+} from '~/utils/dateFormat';
 import useOrder from '~/hooks/useOrder';
 
 import {
@@ -14,16 +19,30 @@ import {
 
 const cx = classNames.bind(styles);
 
-const mapVoucherData = (data) => {
-  return data.map((item) => ({
-    ...item,
-    disabled: compareWithNow(item.startDate) > 0,
-  }));
-};
 const ListVoucher = ({ seleted, setSelected }) => {
   const { orderDetail, caclTotalCart } = useOrder();
   const voucherCodeRef = useRef();
   const [vouchers, setVouchers] = useState([]);
+
+  const mapVoucherData = useCallback((data) => {
+    const sumPrice = caclTotalCart(orderDetail?.details);
+    return data.map((item) => {
+      const warningMsg =
+        sumPrice < item.minimumOrderValue
+          ? `Vui lòng mua thêm ${formatPrice(
+              item.minimumOrderValue - sumPrice
+            )} để sử dụng ưu đãi`
+          : compareWithNow(item.startDate) > 0
+          ? `Ưu đãi có giá trị từ ngày ${formatDate(item.startDate)}`
+          : '';
+      return {
+        ...item,
+        disabled: !!warningMsg,
+        warningMsg: warningMsg,
+      };
+    });
+  }, []);
+
   useEffect(() => {
     const getVoucherForAccount = async () => {
       const res = await getVoucherByAccount();
@@ -33,22 +52,7 @@ const ListVoucher = ({ seleted, setSelected }) => {
     };
     getVoucherForAccount();
   }, []);
-  const handleChange = (item) => {
-    const sumPrice = caclTotalCart(orderDetail?.details);
-    if (sumPrice < item?.minimumOrderValue) {
-      toast.warning(
-        `Bạn cần mua thêm ${formatPrice(
-          item?.minimumOrderValue - sumPrice
-        )} để sử dụng voucher này!`,
-        {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 2000,
-        }
-      );
-      return;
-    }
-    setSelected(item);
-  };
+
   const handleSearch = async (e) => {
     e.preventDefault();
     const code = voucherCodeRef.current.value;
@@ -87,32 +91,47 @@ const ListVoucher = ({ seleted, setSelected }) => {
         <form className={cx('group-voucher')}>
           {vouchers?.length > 0
             ? vouchers.map((item) => (
-                <li className={cx('voucher-item')} key={item.id}>
-                  {item.disabled && (
-                    <div className={cx('voucher-item-cover')}></div>
+                <>
+                  <li className={cx('voucher-item')} key={item.id}>
+                    {item.disabled && (
+                      <>
+                        <div className={cx('voucher-item-cover')}></div>
+                      </>
+                    )}
+                    <label className={cx('radio-label')} for={item.id}>
+                      <input
+                        id={item.id}
+                        type='radio'
+                        name='voucher'
+                        checked={item.id === seleted?.id}
+                        onChange={() => setSelected(item)}
+                        hidden
+                        disabled={item.disabled}
+                      />
+                      <div className={cx('radio-button')}></div>
+                    </label>
+                    <VoucherLabel voucher={item} />
+                    <div className={cx('voucher-info')}>
+                      <h4>{item?.name}</h4>
+                      <p>
+                        Đơn tối thiểu {formatPrice(item?.minimumOrderValue)}
+                      </p>
+                      <p>Tối đa {formatPrice(item?.maximumDiscountAmount)}</p>
+                      <h5>{getDistanceFromNowToDate(item?.endDate)}</h5>
+                    </div>
+                  </li>
+                  {item?.warningMsg && (
+                    <p className={cx('voucher-warning')}>
+                      <Icon
+                        className={cx('icon')}
+                        icon='mdi:warning-circle-outline'
+                      />{' '}
+                      {item.warningMsg}
+                    </p>
                   )}
-                  <label className={cx('radio-label')} for={item.id}>
-                    <input
-                      id={item.id}
-                      type='radio'
-                      name='voucher'
-                      checked={item.id === seleted?.id}
-                      onChange={() => handleChange(item)}
-                      hidden
-                      disabled={item.disabled}
-                    />
-                    <div className={cx('radio-button')}></div>
-                  </label>
-                  <VoucherLabel voucher={item} />
-                  <div className={cx('voucher-info')}>
-                    <h4>{item?.name}</h4>
-                    <p>Đơn tối thiểu {formatPrice(item?.minimumOrderValue)}</p>
-                    <p>Tối đa {formatPrice(item?.maximumDiscountAmount)}</p>
-                    <h5>{getDistanceFromNowToDate(item?.endDate)}</h5>
-                  </div>
-                </li>
+                </>
               ))
-            : 'Không có'}
+            : 'Không có ưu đãi'}
         </form>
       </div>
     </div>

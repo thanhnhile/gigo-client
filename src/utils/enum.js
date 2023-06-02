@@ -70,9 +70,10 @@ export const TOPPING_STATUS = [
   },
 ];
 export const PERMISSION = {
-  ALL: ['view', 'create', 'update', 'delete'],
+  ALL: ['view', 'create', 'delivery', 'success', 'cancel'],
   VIEW: 'view',
-  CREATE: 'create',
-  UPDATE: 'update',
-  DELETE: 'delete',
+  IN_PROGRESS: 'create',
+  DELIVERY: 'delivery',
+  SUCCESS: 'success',
+  CANCEL: 'cancel',
 };

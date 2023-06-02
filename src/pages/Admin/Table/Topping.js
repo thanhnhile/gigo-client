@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { formatPrice } from '~/utils/format';
-import { httpGetAllToppings, httpDeleteTopping } from '../../../apiServices/toppingService';
+import { httpGetAllToppings, httpDeleteTopping } from '../../../apiServices/toppingServices';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
 import CustomDataTable from '~/components/CustomDataTable';

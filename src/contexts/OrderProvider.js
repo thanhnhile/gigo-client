@@ -83,7 +83,6 @@ const OrderProvider = ({ children }) => {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
-      console.log(res.errMsg);
     }
     setSubmitting(false);
   };

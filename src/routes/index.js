@@ -116,6 +116,7 @@ export const userRoutes = [
   {
     path: '/orders/:id',
     component: Invoice,
+    permission: [PERMISSION.CANCEL],
   },
 ];
 export const adminRoutes = [

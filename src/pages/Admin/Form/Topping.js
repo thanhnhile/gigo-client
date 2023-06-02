@@ -1,7 +1,7 @@
 import className from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { httpGetToppingById, httpPostTopping, httpPutTopping } from '../../../apiServices/toppingService';
+import { httpGetToppingById, httpPostTopping, httpPutTopping } from '../../../apiServices/toppingServices';
 import styles from './Form.module.scss';
 import { STATUS } from '~/utils/enum';
 import Clickable from '~/components/Clickable';

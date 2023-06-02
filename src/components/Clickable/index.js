@@ -5,7 +5,8 @@ import styles from './Clickable.module.scss';
 const cx = className.bind(styles);
 
 const Clickable = (props) => {
-  const { onClick, text, primary, second, outline, disable, noMargin } = props;
+  const { onClick, text, primary, second, outline, disable, noMargin, icon } =
+    props;
   return (
     <button
       onClick={onClick}
@@ -19,6 +20,7 @@ const Clickable = (props) => {
         { noMargin: noMargin }
       )}
     >
+      {icon && icon}
       {text}
     </button>
   );

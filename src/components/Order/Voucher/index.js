@@ -4,7 +4,6 @@ import { Icon } from '@iconify/react';
 import styles from './Voucher.module.scss';
 import Modal from '~/components/Modal';
 import ListVoucher from './ListVoucher';
-import { func } from 'prop-types';
 
 const cx = classNames.bind(styles);
 

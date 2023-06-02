@@ -57,12 +57,12 @@ function Voucher() {
         {
             name: 'Ngày bắt đầu',
             width: '16%',
-            selector: (row) => moment(row.startDate).utc().format('MM-DD-YYYY hh:mm A'),
+            selector: (row) => moment(row.startDate).format('MM-DD-YYYY hh:mm A'),
         },
         {
             name: 'Ngày kết thúc',
             width: '16%',
-            selector: (row) => moment(row.endDate).utc().format('MM-DD-YYYY hh:mm A'),
+            selector: (row) => moment(row.endDate).format('MM-DD-YYYY hh:mm A'),
         },
         {
             name: 'Mã code',

@@ -30,7 +30,7 @@ const News = () => {
       </figure>
       <figure className={cx('snip1208')}>
         <img
-          src='https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/318087070_3418636081793955_5583303226132047076_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8631f5&_nc_ohc=UGD0D3kZurAAX_i2fyc&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfDDav_GKzvbvXUhDx0UIFC-DYEizhyAmmA44I0bpV0JhQ&oe=64456AE3'
+          src='https://baochauelec.com/cdn1/images/202102/thumb_article/tuyen-dung-quan-ly-cua-hang-thumb-1614325384.jpg'
           alt='sample9'
         />
         <div className={cx('date')}>

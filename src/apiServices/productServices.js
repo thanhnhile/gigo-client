@@ -68,3 +68,30 @@ export const httpGetAll = () => {
     console.log(error.response.data.errMsg);
   }
 };
+
+export const httpGetProductsForYou = () => {
+  try {
+    const res = request.get('/products/forYou');
+    return res;
+  } catch (error) {
+    console.log(error.response.data.errMsg);
+  }
+};
+
+export const httpGetBestSeller = () => {
+  try {
+    const res = request.get('/products/bestSeller');
+    return res;
+  } catch (error) {
+    console.log(error.response.data.errMsg);
+  }
+};
+
+export const httpGetCombo = () => {
+  try {
+    const res = request.get('/products/combo');
+    return res;
+  } catch (error) {
+    console.log(error.response.data.errMsg);
+  }
+};

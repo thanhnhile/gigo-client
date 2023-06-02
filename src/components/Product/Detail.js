@@ -6,7 +6,7 @@ import { Icon } from '@iconify/react';
 import Clickable from '~/components/Clickable';
 import ListRating from '~/components/ReviewProduct/ListRating';
 import useCart from '~/hooks/useCart';
-import { httpGetAllTopping } from '~/apiServices/toppingServices';
+import { httpGetAllToppings } from '~/apiServices/toppingServices';
 import { formatPrice } from '~/utils/format';
 const cx = className.bind(styles);
 
@@ -96,7 +96,7 @@ const ProductDetail = ({ product, rates }) => {
 
   useEffect(() => {
     const getToppings = async () => {
-      const res = await httpGetAllTopping();
+      const res = await httpGetAllToppings();
       if (res?.data) {
         setToppingOptions(mapToppingOptions(res.data));
       }

@@ -1,10 +1,15 @@
+$min-height: 120px;
+
 .cart-item {
+  min-height: $min-height;
   display: flex;
   padding: 8px 0;
   overflow: hidden;
   padding-left: 25px;
   padding-right: 25px;
   justify-content: space-between;
+  box-shadow: 1px 1px 1px 2px #cccc;
+  border-radius: 5px;
   &-img {
     width: 100px;
     max-height: 200px;
@@ -12,7 +17,7 @@
     margin-right: 15px;
   }
   & ~ .cart-item {
-    margin-top: 10px;
+    margin-top: 15px;
   }
   &-info {
     flex: 1;
@@ -30,8 +35,10 @@
     }
   }
   &-action {
-    width: 30px;
-    height: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
     .icon {
       font-size: 2.5rem;
       color: var(--text-color);
@@ -40,6 +47,47 @@
       &:hover {
         transform: scale(1.2);
         color: var(--primary);
+      }
+    }
+    .quantity {
+      span {
+        font-size: var(--font-normal);
+        font-weight: 400;
+        padding-bottom: 20px;
+      }
+
+      .display-flex {
+        display: flex;
+      }
+
+      .qtyminus,
+      .qtyplus {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 19px;
+        line-height: 36px;
+        color: var(--text-color);
+        border: 1px solid var(--color-border);
+        cursor: pointer;
+      }
+
+      .qtyplus {
+        border-left: none;
+        border-radius: 0 3px 3px 0;
+      }
+
+      .qtyminus {
+        border-right: none;
+        border-radius: 3px 0 0 3px;
+      }
+
+      .qty {
+        width: 60px;
+        height: 34px;
+        text-align: center;
       }
     }
   }

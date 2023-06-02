@@ -36,7 +36,7 @@ export const httpGetProductByCateId = (id, limit = 6, offSet = 1) => {
 };
 export const httpPostProduct = (payload) => {
   try {
-    const res = request.post('/products/add', payload);
+    const res = request.post('/products', payload);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);
@@ -45,7 +45,7 @@ export const httpPostProduct = (payload) => {
 
 export const httpPutProduct = (id, payload) => {
   try {
-    const res = request.put(`/products/update/${id}`, payload);
+    const res = request.put(`/products/${id}`, payload);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);
@@ -53,7 +53,7 @@ export const httpPutProduct = (id, payload) => {
 };
 export const httpDeleteProduct = (id) => {
   try {
-    const res = request.put(`/products/update/product/${id}`);
+    const res = request.put(`/products/update/status/${id}`);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);

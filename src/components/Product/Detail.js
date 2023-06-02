@@ -109,7 +109,7 @@ const ProductDetail = ({ product, rates }) => {
               </div>
             </form>
           </div>
-          <Clickable text='Đặt ngay' primary onClick={handleAddToCart} />
+          <Clickable text='Thêm vào giỏ' primary onClick={handleAddToCart} />
         </div>
       </div>
       <ListRating list={rates} />

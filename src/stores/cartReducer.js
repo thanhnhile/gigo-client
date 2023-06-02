@@ -4,6 +4,8 @@ export const initState = { cart: [] };
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const REMOVE_ALL = 'REMOVE_ALL';
+export const PLUS_QUANTITY = 'PLUS_QUANTITY';
+export const MINUS_QUANTITY = 'MINUS_QUANTITY';
 
 const addToCart = (state, product) => {
   const updatedCart = [...state.cart];
@@ -25,6 +27,7 @@ const addToCart = (state, product) => {
   });
   return { ...state, cart: updatedCart };
 };
+
 const removeFromCart = (state, productId) => {
   const updatedCart = [...state.cart];
   const index = updatedCart.findIndex(
@@ -39,6 +42,7 @@ const removeFromCart = (state, productId) => {
   });
   return { ...state, cart: updatedCart };
 };
+
 const removeAll = (state) => {
   return { ...state, cart: [] };
 };

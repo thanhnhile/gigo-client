@@ -13,6 +13,8 @@ const CartItem = (props) => {
   const handleRemove = () => {
     removeFromCart(id);
   };
+  const handleMinus = () => {};
+  const handlePlus = () => {};
   return (
     <div key={id} className={cx('cart-item')}>
       <img alt={name} src={image} className={cx('cart-item-img')}></img>
@@ -32,6 +34,22 @@ const CartItem = (props) => {
           icon='humbleicons:times-circle'
           className={cx('icon')}
         />
+        <div className={cx('quantity')}>
+          <form action='#' className={cx('display-flex')}>
+            <div onClick={handleMinus} className={cx('qtyminus')}>
+              -
+            </div>
+            <input
+              type='text'
+              name='quantity'
+              value={quantity}
+              className={cx('qty')}
+            />
+            <div onClick={handlePlus} className={cx('qtyplus')}>
+              +
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

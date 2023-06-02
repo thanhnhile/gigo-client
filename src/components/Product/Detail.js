@@ -159,16 +159,32 @@ const ProductDetail = ({ product, rates }) => {
   };
   console.log(toppings);
   return (
-    <div className={cx('wrapper', 'min-container')}>
+    <div className={cx('wrapper', 'container')}>
       <div className={cx('flex-box', 'product-detail')}>
         <div className={cx('left-column')}>
           <img src={product?.img_url} alt='' />
+          <p className={cx('description')}>{product?.description}</p>
         </div>
         <div className={cx('right-column')}>
           <div className={cx('product-description')}>
             <h1>{product?.name}</h1>
             <h3 className={cx('price')}>{formatPrice(product?.price)}</h3>
-            <p>{product?.description}</p>
+            <div className={cx('product-count')}>
+              <form action='#' className={cx('display-flex')}>
+                <div onClick={handleMinus} className={cx('qtyminus')}>
+                  -
+                </div>
+                <input
+                  type='text'
+                  name='quantity'
+                  value={quantity}
+                  className={cx('qty')}
+                />
+                <div onClick={handlePlus} className={cx('qtyplus')}>
+                  +
+                </div>
+              </form>
+            </div>
           </div>
           <SwitchField
             title='Chọn size'
@@ -192,35 +208,17 @@ const ProductDetail = ({ product, rates }) => {
             handleChange={handleChangeOption}
           />
           <SwitchField
-            title='Chọn topping'
+            title='Chọn topping (có thể chọn nhiều loại)'
             options={toppinOptions}
             fieldName={'toppings'}
             checked={(value) => toppings?.includes(value)}
             type='checkbox'
             handleChange={handleChangeToppingOption}
           />
-          <div className={cx('product-count')}>
-            <span>Số lượng</span>
-            <form action='#' className={cx('display-flex')}>
-              <div onClick={handleMinus} className={cx('qtyminus')}>
-                -
-              </div>
-              <input
-                type='text'
-                name='quantity'
-                value={quantity}
-                className={cx('qty')}
-              />
-              <div onClick={handlePlus} className={cx('qtyplus')}>
-                +
-              </div>
-            </form>
-          </div>
-          <Clickable
-            primary
-            onClick={handleAddToCart}
-            icon={<Icon icon='mdi:add-shopping-cart' width='24' />}
-          />
+          <button className={cx('add-cart-btn')} onClick={handleAddToCart}>
+            <Icon icon='material-symbols:add-shopping-cart' />
+            Thêm vào giỏ hàng
+          </button>
         </div>
       </div>
       <ListRating list={rates} />
@@ -237,7 +235,7 @@ const SwitchField = ({
   type = 'radio',
 }) => {
   return (
-    <details className={cx('product-select')}>
+    <details className={cx('product-select')} open>
       <summary className={cx('title')}>{title}</summary>
       <div className={cx('switch-field')}>
         {options.map((item) => (

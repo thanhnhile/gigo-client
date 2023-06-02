@@ -14,6 +14,18 @@ import Select from 'react-select';
 import TableOrder from '~/components/TableOrder';
 
 const cx = className.bind(styles);
+const initData = {
+  countOrders: 0,
+  total: 0,
+  countProducts: 0,
+  inProgress: 0,
+  delivering: 0,
+  success: 0,
+  canceled: 0,
+  weaklyRevenue: 0,
+  stores: [],
+};
+
 const countOrderColumns = [
   {
     name: 'ID',
@@ -55,7 +67,7 @@ const revenueOrderColumns = [
   },
 ];
 const Dashboard = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(initData);
   useEffect(() => {
     const getStatistics = async () => {
       const res = await getAdminStatistics();
@@ -115,7 +127,6 @@ const Dashboard = () => {
         if (item.store?.id === store || store === -1) return item;
       }
     });
-    console.log(result);
     setDataRow(result);
   };
   useEffect(() => {

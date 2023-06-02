@@ -89,8 +89,8 @@
 
 .pay-btn {
   display: block;
-  min-width: 100%;
-  padding: 4px 0;
+  min-width: 50%;
+  padding: 7px 0;
   background-color: var(--primary);
   color: var(--white);
   font-weight: 600;
@@ -98,11 +98,11 @@
   border-radius: var(--button-border-radius);
   border: 1px solid transparent;
   overflow: hidden;
-  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.9rem;
+  font-size: var(--font-title);
+  margin-top: 36px;
   :first-child {
     font-size: 2.5rem;
     margin-right: 10px;

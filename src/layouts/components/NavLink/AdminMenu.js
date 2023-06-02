@@ -33,11 +33,15 @@ const AdminMenu = () => {
       to: '/admin/employees',
       icon: <Icon icon='clarity:employee-group-line' />,
     },
-    ,
     {
       title: 'Mã giảm giá',
       to: '/admin/vouchers',
       icon: <Icon icon='mdi:voucher-outline' />,
+    },
+    {
+      title: 'Topping',
+      to: '/admin/toppings',
+      icon: <Icon icon='streamline:food-cherries-cook-plant-cherry-plants-drink-cooking-nutrition-vegetarian-fruit-food' />,
     },
   ];
   const location = useLocation().pathname.split('/').pop();

@@ -2,15 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Form.module.scss';
-import { Icon } from '@iconify/react';
 import { httpGetAllCategories } from '~/apiServices/categoryServices';
-import { httpPostProduct } from '~/apiServices/productServices';
 import uploadImage from '~/apiServices/uploadImage';
-import { STATUS } from '~/utils/enum';
+import { STATUS, TOPPING_STATUS } from '~/utils/enum';
 import { useNavigate, useParams } from 'react-router-dom';
 import Clickable from '~/components/Clickable';
 import {
   httpGetProductById,
+  httpPostProduct,
   httpPutProduct,
 } from '~/apiServices/productServices';
 
@@ -26,8 +25,10 @@ function Product() {
     },
     description: '',
     price: 0,
+    discount: 0,
     img_url: '',
     status: 1,
+    hasTopping: 1,
   });
   const [image, setImage] = useState({
     file: '',
@@ -44,10 +45,10 @@ function Product() {
 
   const getProductById = async () => {
     const response = await httpGetProductById(id);
-    console.log(response.data);
-    setProduct(response.data);
+    console.log(response.data.product);
+    setProduct(response.data.product);
     setImage((prev) => {
-      return { ...prev, url: response.data.img_url };
+      return { ...prev, url: response.data.product.img_url };
     });
   };
 
@@ -124,6 +125,9 @@ function Product() {
         <label>Giá</label>
         <input name='price' value={product.price} onChange={handleChange} required />
 
+        <label>Giảm giá</label>
+        <input name='discount' value={product.discount} onChange={handleChange} required />
+
         <label>Mô tả</label>
         <textarea
           name='description'
@@ -140,6 +144,15 @@ function Product() {
           ))}
         </select>
 
+        <label>Topping</label>
+        <select name='hasTopping' value={product.hasTopping} onChange={handleChange}>
+          {TOPPING_STATUS.map((item) => (
+            <option key={item.id} value={item.value}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+
         <label>Ảnh</label>
         <div className={cx('image-wrapper')}>
           {image.url && <img className={cx('image')} src={image.url} alt='' />}
@@ -148,7 +161,7 @@ function Product() {
               name='image'
               id='image'
               type='file'
-              onChange={handleChangeImage}/>
+              onChange={handleChangeImage} />
           )}
         </div>
 

@@ -57,7 +57,18 @@ export const STATUS = [
     name: 'Ẩn',
   },
 ];
-
+export const TOPPING_STATUS = [
+  {
+    id: 0,
+    value: true,
+    name: 'Có',
+  },
+  {
+    id: 1,
+    value: false,
+    name: 'Không',
+  },
+];
 export const PERMISSION = {
   ALL: ['view', 'create', 'delivery', 'success', 'cancel'],
   VIEW: 'view',

@@ -8,13 +8,19 @@ import useCart from '../../../hooks/useCart';
 const cx = className.bind(styles);
 
 const CartItem = (props) => {
-  const { id, name, image, price, size, quantity } = props.data;
-  const { removeFromCart } = useCart();
+  const {
+    id,
+    name,
+    image,
+    price,
+    size,
+    quantity,
+    toppings = [],
+  } = props.data || {};
+  const { removeFromCart, plusQuantity, minusQuantity } = useCart();
   const handleRemove = () => {
     removeFromCart(id);
   };
-  const handleMinus = () => {};
-  const handlePlus = () => {};
   return (
     <div key={id} className={cx('cart-item')}>
       <img alt={name} src={image} className={cx('cart-item-img')}></img>
@@ -23,20 +29,16 @@ const CartItem = (props) => {
         <br />
         <span>Size: {size}</span>
         <br />
-        <span>
-          {quantity ?? 1} x{' '}
-          <span className={cx('price')}>{formatPrice(price)}</span>
-        </span>
+        <span>{toppings.map((item) => item.name).join(', ')}</span>
+        <br />
       </div>
       <div className={cx('cart-item-action')}>
-        <Icon
-          onClick={handleRemove}
-          icon='humbleicons:times-circle'
-          className={cx('icon')}
-        />
+        <span>
+          <span className={cx('price')}>{formatPrice(price)}</span>
+        </span>
         <div className={cx('quantity')}>
           <form action='#' className={cx('display-flex')}>
-            <div onClick={handleMinus} className={cx('qtyminus')}>
+            <div onClick={() => minusQuantity(id)} className={cx('qtyminus')}>
               -
             </div>
             <input
@@ -45,11 +47,18 @@ const CartItem = (props) => {
               value={quantity}
               className={cx('qty')}
             />
-            <div onClick={handlePlus} className={cx('qtyplus')}>
+            <div onClick={() => plusQuantity(id)} className={cx('qtyplus')}>
               +
             </div>
           </form>
         </div>
+      </div>
+      <div className={cx('cart-item-remove')}>
+        <Icon
+          onClick={handleRemove}
+          icon='mdi:bin-outline'
+          className={cx('icon')}
+        />
       </div>
     </div>
   );

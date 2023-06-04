@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Slider from '../../components/Slider';
 import Section from '../../components/Section';
 import ListProduct from '../../components/Product/ListProduct';
-import { httpGetBestSeller, httpGetCombo, httpGetProductsForYou } from '../../apiServices/productServices';
+import {
+  httpGetBestSeller,
+  httpGetCombo,
+  httpGetProductsForYou,
+} from '../../apiServices/productServices';
 
 const Home = () => {
   const [productBestSeller, setProductBestSeller] = useState([]);
@@ -35,15 +39,15 @@ const Home = () => {
   return (
     <div>
       <Slider />
-      { productForYou.length > 0 
-        ? <ListProduct product={productForYou} title='Dành cho bạn' /> 
-        : <div></div>
-      }
-      
+      {productForYou.length > 0 ? (
+        <ListProduct product={productForYou} title='Dành cho bạn' />
+      ) : (
+        <div></div>
+      )}
+
       <ListProduct product={productBestSeller} title='Bán chạy nhất' />
       <ListProduct product={combo} title='Combo siêu HOT' />
       <Section reverse />
-      <Section />
     </div>
   );
 };

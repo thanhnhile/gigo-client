@@ -15,6 +15,7 @@ const cx = className.bind(styles);
 
 function Order() {
   const { cart, removeAll } = useCart();
+  console.log(cart);
   const { orderDetail, setOrderDetail, accountUsername, caclTotalCart } =
     useOrder();
   const [shipMethod, setShipMethod] = useState(
@@ -45,10 +46,13 @@ function Order() {
     setOrderDetail((prev) => {
       const newDetails = cart.map((item) => {
         return {
-          product_id: item.id,
+          product_id: item.productId,
           quantity: item.quantity,
           price: item.price,
           size: item.size,
+          sugar: item.sugar,
+          iced: item.iced,
+          toppings: item.toppings,
         };
       });
       const total = sumPrice + getShipPrice() - getDiscount();

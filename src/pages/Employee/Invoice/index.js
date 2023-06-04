@@ -7,13 +7,52 @@ import {
   httpUpdateStatusOrder,
 } from '~/apiServices/orderServices';
 import getStatusComponent from '~/components/Status';
-import Clickable from '../../../components/Clickable';
+import CustomDataTable from '~/components/CustomDataTable';
+import Clickable from '~/components/Clickable';
 import { formatPrice } from '~/utils/format';
 
 import { DELIVERY_METHOD, ORDER_STATUS, PERMISSION } from '~/utils/enum';
 
 const cx = className.bind(styles);
-
+const columns = [
+  {
+    name: 'STT',
+    width: '50px',
+    selector: (row, index) => index + 1,
+  },
+  {
+    name: 'Sản phẩm',
+    selector: (row) => row.product_name,
+  },
+  {
+    name: 'Kích cỡ',
+    width: '100px',
+    selector: (row) => row.size,
+  },
+  {
+    name: 'Lượng đường',
+    width: '150px',
+    selector: (row) => row.sugar,
+  },
+  {
+    name: 'Lượng đá',
+    width: '100px',
+    selector: (row) => row.iced,
+  },
+  {
+    name: 'Giá',
+    width: '150px',
+    selector: (row) => formatPrice(row.price),
+  },
+  {
+    name: 'Kèm theo',
+    selector: (row) => {
+      return row.toppings.map((item) => (
+        <div className={cx('topping-name')}>- {item.name}</div>
+      ));
+    },
+  },
+];
 const Invoice = ({ permission }) => {
   const { id } = useParams();
   const [order, setOrder] = useState({});
@@ -44,6 +83,8 @@ const Invoice = ({ permission }) => {
     },
     [id]
   );
+
+  console.log(order?.details);
   return order?.details?.length > 0 ? (
     <div className={cx('wrapper', 'container')}>
       <h1>Chi tiết đơn hàng</h1>
@@ -70,26 +111,7 @@ const Invoice = ({ permission }) => {
       </div>
       <div className={cx('order-details')}>
         <h4>Chi tiết</h4>
-        {order?.details?.length > 0 &&
-          order.details.map((item) => {
-            return (
-              <div className={cx('product-item')}>
-                <img alt={item.product_name} src={item.img_url}></img>
-                <div className={cx('product-item-info')}>
-                  <span>{item.product_name}</span>
-                  <br />
-                  <span>Size: {item.size}</span>
-                  <br />
-                  <span>
-                    {item.quantity ?? 1} x{' '}
-                    <span className={cx('price')}>
-                      {formatPrice(item.price)}
-                    </span>
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+        <CustomDataTable columns={columns} data={order?.details} />
       </div>
       <div className={cx('row', 'order-info')}>
         <div className={cx('info')}>
@@ -133,8 +155,7 @@ const Invoice = ({ permission }) => {
           text='Hủy'
           second
           disable={
-            order?.status === ORDER_STATUS.SUCCESS.id ||
-            order?.status === ORDER_STATUS.CANCELED.id ||
+            order?.status !== ORDER_STATUS.IN_PROGRESS.id ||
             !permission.includes(PERMISSION.CANCEL)
           }
         />

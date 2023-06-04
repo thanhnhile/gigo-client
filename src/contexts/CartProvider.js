@@ -5,6 +5,8 @@ import cartReducer, {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   REMOVE_ALL,
+  PLUS_QUANTITY,
+  MINUS_QUANTITY,
 } from '../stores/cartReducer';
 import { useLocalStorage } from '~/hooks';
 import { LOCAL_CART_KEY } from '~/utils/enum';
@@ -23,10 +25,10 @@ const CartProvider = ({ children }) => {
       payload: product,
     });
   };
-  const removeFromCart = (productId) => {
+  const removeFromCart = (id) => {
     dispatch({
       type: REMOVE_PRODUCT,
-      payload: productId,
+      payload: id,
     });
   };
 
@@ -35,6 +37,21 @@ const CartProvider = ({ children }) => {
       type: REMOVE_ALL,
     });
   };
+
+  const plusQuantity = (id) => {
+    dispatch({
+      type: PLUS_QUANTITY,
+      payload: id,
+    });
+  };
+
+  const minusQuantity = (id) => {
+    dispatch({
+      type: MINUS_QUANTITY,
+      payload: id,
+    });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -42,6 +59,8 @@ const CartProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         removeAll,
+        plusQuantity,
+        minusQuantity,
       }}
     >
       {children}

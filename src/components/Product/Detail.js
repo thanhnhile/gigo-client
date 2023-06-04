@@ -2,8 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
 import { Icon } from '@iconify/react';
-
-import Clickable from '~/components/Clickable';
 import ListRating from '~/components/ReviewProduct/ListRating';
 import useCart from '~/hooks/useCart';
 import { httpGetAllToppings } from '~/apiServices/toppingServices';
@@ -14,17 +12,17 @@ const SIZE_OPTIONS = [
   {
     id: 'size-s',
     value: 'S',
-    name: 'Nhỏ + 0đ',
+    label: 'Nhỏ + 0đ',
   },
   {
     id: 'size-m',
     value: 'M',
-    name: 'Vừa + 6.000đ',
+    label: 'Vừa + 6.000đ',
   },
   {
     id: 'size-l',
     value: 'L',
-    name: 'Lớn + 10.000đ',
+    label: 'Lớn + 10.000đ',
   },
 ];
 
@@ -32,27 +30,27 @@ const SUGAR_OPTIONS = [
   {
     id: 'sugar-0',
     value: '0',
-    name: 'Không đường',
+    label: 'Không đường',
   },
   {
     id: 'sugar-30',
     value: '30%',
-    name: '30%',
+    label: '30%',
   },
   {
     id: 'sugar-50',
     value: '50%',
-    name: '50%',
+    label: '50%',
   },
   {
     id: 'sugar-70',
     value: '70%',
-    name: '70%',
+    label: '70%',
   },
   {
     id: 'sugar-100',
     value: '100%',
-    name: '100%',
+    label: '100%',
   },
 ];
 
@@ -60,31 +58,34 @@ const ICE_OPTIONS = [
   {
     id: 'ice-0',
     value: '0',
-    name: 'Không đá',
+    label: 'Không đá',
   },
   {
     id: 'ice-50',
     value: '50%',
-    name: '50%',
+    label: '50%',
   },
   {
     id: 'ice-100',
     value: '100%',
-    name: '100%',
+    label: '100%',
   },
 ];
 
 const mapToppingOptions = (data = []) => {
   return data
     .filter((item) => item.status)
-    .map((item) => ({
+    .map((item, index) => ({
       id: item.id,
-      value: item.id,
-      name: `${item.name} + ${formatPrice(item.price)}`,
+      value: index,
+      name: item.name,
+      label: `${item.name} + ${formatPrice(item.price)}`,
+      price: item.price,
     }));
 };
 
 const ProductDetail = ({ product, rates }) => {
+  const [price, setPrice] = useState(0);
   const [size, setSize] = useState('S');
   const [sugar, setSugar] = useState('100%');
   const [ice, setIce] = useState('100%');
@@ -104,8 +105,18 @@ const ProductDetail = ({ product, rates }) => {
     product?.hasTopping && getToppings();
   }, [product?.hasTopping]);
   useEffect(() => {
+    setPrice(product?.price);
+  }, [product]);
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  useEffect(() => {
+    const surCharge = size === 'S' ? 0 : size === 'M' ? 6000 : 10000;
+    const toppingsPrice = toppings.reduce((total, item) => {
+      return total + item.price;
+    }, 0);
+    setPrice(product?.price + surCharge + toppingsPrice);
+  }, [product?.price, size, toppinOptions, toppings]);
 
   const handlePlus = () => {
     setQuantity(quantity + 1);
@@ -129,35 +140,47 @@ const ProductDetail = ({ product, rates }) => {
     }
   }, []);
 
+  const checkToppingIsSelecting = (index) => {
+    const selected = toppinOptions[Number.parseInt(index)];
+    return toppings.filter((item) => item.id === selected.id).length > 0;
+  };
   const handleChangeToppingOption = useCallback(
     (e) => {
-      const toppingId = Number.parseInt(e.target.value);
-      if (!toppings.includes(toppingId)) {
-        const newToppings = [...toppings];
-        newToppings.push(toppingId);
+      const index = Number.parseInt(e.target.value);
+      const selected = toppinOptions[index];
+      if (checkToppingIsSelecting(index)) {
+        const newToppings = toppings.filter((item) => item.id !== selected.id);
         setToppings(newToppings);
       } else {
-        const newToppings = toppings.filter((item) => item !== toppingId);
+        const newToppings = [...toppings];
+        newToppings.push(selected);
         setToppings(newToppings);
       }
     },
-    [toppings]
+    [toppinOptions, toppings]
   );
 
   const handleAddToCart = () => {
-    const surCharge = size === 'S' ? 0 : size === 'M' ? 6000 : 10000;
+    const selectToppings = toppings.map((item) => ({
+      id: item.id,
+      name: item.name,
+    }));
     const cartItem = {
-      id: product.id,
+      productId: product.id,
       image: product.img_url,
       name: product.name,
       quantity: quantity,
       size: size,
-      price: product.price + surCharge,
+      price,
+      sugar,
+      iced: ice,
+      toppings: selectToppings,
     };
     addToCart(cartItem);
     setQuantity(1);
+    setToppings([]);
   };
-  console.log(toppings);
+
   return (
     <div className={cx('wrapper', 'container')}>
       <div className={cx('flex-box', 'product-detail')}>
@@ -168,7 +191,7 @@ const ProductDetail = ({ product, rates }) => {
         <div className={cx('right-column')}>
           <div className={cx('product-description')}>
             <h1>{product?.name}</h1>
-            <h3 className={cx('price')}>{formatPrice(product?.price)}</h3>
+            <h3 className={cx('price')}>{formatPrice(price)}</h3>
             <div className={cx('product-count')}>
               <form action='#' className={cx('display-flex')}>
                 <div onClick={handleMinus} className={cx('qtyminus')}>
@@ -211,7 +234,7 @@ const ProductDetail = ({ product, rates }) => {
             title='Chọn topping (có thể chọn nhiều loại)'
             options={toppinOptions}
             fieldName={'toppings'}
-            checked={(value) => toppings?.includes(value)}
+            checked={(value) => checkToppingIsSelecting(value)}
             type='checkbox'
             handleChange={handleChangeToppingOption}
           />
@@ -249,7 +272,7 @@ const SwitchField = ({
               hidden
               onChange={handleChange}
             />
-            <label for={item.id}>{item.name}</label>
+            <label for={item.id}>{item.label}</label>
           </div>
         ))}
       </div>

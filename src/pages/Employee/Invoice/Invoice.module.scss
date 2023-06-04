@@ -48,6 +48,10 @@
       text-align: left;
     }
   }
+  .topping-name {
+    font-size: var(--font-sm);
+    padding: 8px 0;
+  }
   .product {
     &-item {
       display: flex;

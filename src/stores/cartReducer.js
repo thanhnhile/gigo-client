@@ -7,19 +7,31 @@ export const REMOVE_ALL = 'REMOVE_ALL';
 export const PLUS_QUANTITY = 'PLUS_QUANTITY';
 export const MINUS_QUANTITY = 'MINUS_QUANTITY';
 
-const addToCart = (state, product) => {
+/** 
+ * const cartItem = {
+      id:
+      productId: product.id,
+      image: product.img_url,
+      name: product.name,
+      quantity: quantity,
+      size: size,
+      price: product.price + surCharge,
+    };
+*/
+const addToCart = (state, cartItem) => {
   const updatedCart = [...state.cart];
   const index = updatedCart.findIndex(
-    (item) =>
-      Number.parseInt(item.id) === Number.parseInt(product.id) &&
-      item.size === product.size
+    ({ id, ...item }) => JSON.stringify(cartItem) === JSON.stringify(item)
   );
   if (index >= 0) {
     const updatedItem = { ...updatedCart[index] };
-    updatedItem.quantity += product.quantity;
+    updatedItem.quantity += cartItem.quantity;
     updatedCart[index] = updatedItem;
   } else {
-    updatedCart.push(product);
+    const newItem = { ...cartItem };
+    const newId = Math.floor(Date.now() / Math.floor(Math.random() * 1000));
+    Object.assign(newItem, { id: newId });
+    updatedCart.push(newItem);
   }
   toast.success('Thêm giỏ hàng thành công', {
     position: toast.POSITION.TOP_CENTER,
@@ -28,11 +40,15 @@ const addToCart = (state, product) => {
   return { ...state, cart: updatedCart };
 };
 
-const removeFromCart = (state, productId) => {
-  const updatedCart = [...state.cart];
-  const index = updatedCart.findIndex(
-    (item) => Number.parseInt(item.id) === Number.parseInt(productId)
+const findCartItemIndex = (cart, id) => {
+  return cart.findIndex(
+    (item) => Number.parseInt(item.id) === Number.parseInt(id)
   );
+};
+
+const removeFromCart = (state, id) => {
+  const updatedCart = [...state.cart];
+  const index = findCartItemIndex(updatedCart, id);
   if (index >= 0) {
     updatedCart.splice(index, 1);
   }
@@ -47,6 +63,28 @@ const removeAll = (state) => {
   return { ...state, cart: [] };
 };
 
+const plusQuantity = (state, id) => {
+  const updatedCart = [...state.cart];
+  const index = findCartItemIndex(updatedCart, id);
+  if (index >= 0) {
+    const updatedItem = { ...updatedCart[index] };
+    updatedItem.quantity++;
+    updatedCart[index] = updatedItem;
+  }
+  return { ...state, cart: updatedCart };
+};
+
+const minusQuantity = (state, id) => {
+  const updatedCart = [...state.cart];
+  const index = findCartItemIndex(updatedCart, id);
+  if (index >= 0) {
+    const updatedItem = { ...updatedCart[index] };
+    updatedItem.quantity--;
+    updatedCart[index] = updatedItem;
+  }
+  return { ...state, cart: updatedCart };
+};
+
 const cartReducer = (state, action) => {
   switch (action.type) {
     case ADD_PRODUCT:
@@ -55,6 +93,10 @@ const cartReducer = (state, action) => {
       return removeFromCart(state, action.payload);
     case REMOVE_ALL:
       return removeAll(state);
+    case PLUS_QUANTITY:
+      return plusQuantity(state, action.payload);
+    case MINUS_QUANTITY:
+      return minusQuantity(state, action.payload);
     default:
       return state;
   }

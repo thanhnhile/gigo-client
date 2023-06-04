@@ -58,7 +58,6 @@ const Contact = () => {
       pattern: ValidationRegex.email.pattern,
       message: ValidationRegex.email.message,
     },
-
   ];
   return (
     <div className={cx('min-container', 'wrapper')}>
@@ -85,7 +84,8 @@ const Contact = () => {
               <textarea
                 name='content'
                 value={feedback.content}
-                placeholder='Hãy gửi feedback cho chúng tôi*'
+                placeholder='Hãy gửi feedback cho chúng tôi (tối thiểu 200 ký tự)'
+                minLength={200}
                 onChange={handleChange}
                 required
               />

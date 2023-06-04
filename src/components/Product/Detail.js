@@ -26,6 +26,11 @@ const SIZE_OPTIONS = [
   },
 ];
 
+const SIZE_PRICE = {
+  S: 0,
+  M: 6000,
+  L: 10000,
+};
 const SUGAR_OPTIONS = [
   {
     id: 'sugar-0',
@@ -90,7 +95,7 @@ const ProductDetail = ({ product, rates }) => {
   const [sugar, setSugar] = useState('100%');
   const [ice, setIce] = useState('100%');
   const [toppings, setToppings] = useState([]);
-  const [toppinOptions, setToppingOptions] = useState([]);
+  const [toppingOptions, setToppingOptions] = useState([]);
 
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
@@ -111,12 +116,11 @@ const ProductDetail = ({ product, rates }) => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    const surCharge = size === 'S' ? 0 : size === 'M' ? 6000 : 10000;
     const toppingsPrice = toppings.reduce((total, item) => {
       return total + item.price;
     }, 0);
-    setPrice(product?.price + surCharge + toppingsPrice);
-  }, [product?.price, size, toppinOptions, toppings]);
+    setPrice(product?.price + SIZE_PRICE[size] + toppingsPrice);
+  }, [product?.price, size, toppings]);
 
   const handlePlus = () => {
     setQuantity(quantity + 1);
@@ -124,10 +128,20 @@ const ProductDetail = ({ product, rates }) => {
   const handleMinus = () => {
     quantity > 1 ? setQuantity(quantity - 1) : setQuantity(1);
   };
+
+  const handleSizeChange = (newSize) => {
+    let upSize = 0;
+    setSize((prev) => {
+      upSize = SIZE_PRICE[newSize] - SIZE_PRICE[prev];
+      return newSize;
+    });
+
+    setPrice((prev) => prev + upSize);
+  };
   const handleChangeOption = useCallback((e) => {
     switch (e.target.name) {
       case 'size':
-        setSize(e.target.value);
+        handleSizeChange(e.target.value);
         break;
       case 'sugar':
         setSugar(e.target.value);
@@ -140,14 +154,17 @@ const ProductDetail = ({ product, rates }) => {
     }
   }, []);
 
-  const checkToppingIsSelecting = (index) => {
-    const selected = toppinOptions[Number.parseInt(index)];
-    return toppings.filter((item) => item.id === selected.id).length > 0;
-  };
+  const checkToppingIsSelecting = useCallback(
+    (index) => {
+      const selected = toppingOptions[Number.parseInt(index)];
+      return toppings.filter((item) => item.id === selected.id).length > 0;
+    },
+    [toppingOptions, toppings]
+  );
   const handleChangeToppingOption = useCallback(
     (e) => {
       const index = Number.parseInt(e.target.value);
-      const selected = toppinOptions[index];
+      const selected = toppingOptions[index];
       if (checkToppingIsSelecting(index)) {
         const newToppings = toppings.filter((item) => item.id !== selected.id);
         setToppings(newToppings);
@@ -157,7 +174,7 @@ const ProductDetail = ({ product, rates }) => {
         setToppings(newToppings);
       }
     },
-    [toppinOptions, toppings]
+    [checkToppingIsSelecting, toppingOptions, toppings]
   );
 
   const handleAddToCart = () => {
@@ -232,7 +249,7 @@ const ProductDetail = ({ product, rates }) => {
           />
           <SwitchField
             title='Chọn topping (có thể chọn nhiều loại)'
-            options={toppinOptions}
+            options={toppingOptions}
             fieldName={'toppings'}
             checked={(value) => checkToppingIsSelecting(value)}
             type='checkbox'

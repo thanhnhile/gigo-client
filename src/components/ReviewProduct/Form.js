@@ -17,7 +17,12 @@ const Form = ({ handleSubmit }) => {
       />
       <span>{`${content.length}/${MAX_LENGTH}`}</span>
 
-      <Clickable text='Gửi đánh giá' primary onClick={(e)=>handleSubmit(e,content)} />
+      <Clickable
+        text='Gửi đánh giá'
+        primary
+        onClick={(e) => handleSubmit(e, content)}
+        disable={content.length < MIN_LENGTH || content.length > MAX_LENGTH}
+      />
     </form>
   );
 };

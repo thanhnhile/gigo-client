@@ -21,7 +21,10 @@ export const MINUS_QUANTITY = 'MINUS_QUANTITY';
 const addToCart = (state, cartItem) => {
   const updatedCart = [...state.cart];
   const index = updatedCart.findIndex(
-    ({ id, ...item }) => JSON.stringify(cartItem) === JSON.stringify(item)
+    ({ id, quantity: oldQuantity, ...item }) => {
+      const { quantity, ...newItem } = cartItem;
+      return JSON.stringify(newItem) === JSON.stringify(item);
+    }
   );
   if (index >= 0) {
     const updatedItem = { ...updatedCart[index] };

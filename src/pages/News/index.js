@@ -24,7 +24,7 @@ const News = () => {
             Ưu tiên có kinh nghiệm làm bếp từ 06 tháng đến 1 năm hoặc đã được
             đào tạo về nghề bếp.
           </p>
-          <Clickable text='Xem thêm' second />
+          <Clickable text='Xem thêm' primary />
         </figcaption>
         <a href='#' />
       </figure>
@@ -47,7 +47,7 @@ const News = () => {
             Có kinh nghiệm trên 6 tháng ở vị trí Cửa hàng trưởng trong ngành cà
             phê hoặc nhà hàng, hoặc trên 1 năm ở vị trí giám sát cửa hàng
           </p>
-          <Clickable text='Xem thêm' second />
+          <Clickable text='Xem thêm' primary />
         </figcaption>
         <a href='#' />
       </figure>
@@ -70,7 +70,7 @@ const News = () => {
             Nam, từ 18-60 tuổi. Có sức khỏe tốt, tháo vát. Giao tiếp thân thiện,
             vui vẻ
           </p>
-          <Clickable text='Xem thêm' second />
+          <Clickable text='Xem thêm' primary />
         </figcaption>
         <a href='#' />
       </figure>
@@ -81,14 +81,14 @@ const News = () => {
         />
         <div className={cx('date')}>
           <span className={cx('day')}>28</span>
-          <span className={cx('month')}>April</span>
+          <span className={cx('month')}>August</span>
         </div>
         <i className={cx('ion-film-marker')} />
         <figcaption>
           <h3>Barista - 8.000.000</h3>
           <p>Thực hiện pha chế thức uống cho khách theo menu và quy định</p>
           <p>Tuổi từ đủ 19 trở lên - Nhanh nhẹn, vui vẻ, hoạt bát </p>
-          <Clickable text='Xem thêm' second />
+          <Clickable text='Xem thêm' primary />
         </figcaption>
         <a href='#' />
       </figure>

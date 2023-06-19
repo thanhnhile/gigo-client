@@ -112,7 +112,7 @@ function Register() {
               }}
               href='/'
             >
-              Quay lai trang chủ
+              Quay lại trang chủ
             </a>
             <Clickable text='Đăng ký' primary />
           </form>

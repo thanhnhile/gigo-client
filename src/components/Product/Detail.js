@@ -4,7 +4,7 @@ import styles from './Product.module.scss';
 import { Icon } from '@iconify/react';
 import ListRating from '~/components/ReviewProduct/ListRating';
 import useCart from '~/hooks/useCart';
-import { httpGetAllToppings } from '~/apiServices/toppingServices';
+import { httpGetAvailableToppings } from '~/apiServices/toppingServices';
 import { formatPrice } from '~/utils/format';
 const cx = className.bind(styles);
 
@@ -102,7 +102,7 @@ const ProductDetail = ({ product, rates }) => {
 
   useEffect(() => {
     const getToppings = async () => {
-      const res = await httpGetAllToppings();
+      const res = await httpGetAvailableToppings();
       if (res?.data) {
         setToppingOptions(mapToppingOptions(res.data));
       }
@@ -208,7 +208,8 @@ const ProductDetail = ({ product, rates }) => {
         <div className={cx('right-column')}>
           <div className={cx('product-description')}>
             <h1>{product?.name}</h1>
-            <h3 className={cx('price')}>{formatPrice(price)}</h3>
+            <h3 className={cx('price')}><span>{formatPrice(product?.price / (1 - product?.discount))}</span>
+              {formatPrice(price)}</h3>
             <div className={cx('product-count')}>
               <form action='#' className={cx('display-flex')}>
                 <div onClick={handleMinus} className={cx('qtyminus')}>
@@ -271,7 +272,7 @@ const SwitchField = ({
   fieldName,
   options = [],
   handleChange,
-  checked = () => {},
+  checked = () => { },
   type = 'radio',
 }) => {
   return (

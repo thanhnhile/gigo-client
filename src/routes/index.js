@@ -175,7 +175,7 @@ export const adminRoutes = [
     component: Topping,
   },
   {
-    path: '/admin/toopings/:id',
+    path: '/admin/toppings/:id',
     component: CreateOrUpdateTopping,
   },
 ];

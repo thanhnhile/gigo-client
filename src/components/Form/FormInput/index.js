@@ -4,6 +4,7 @@ import styles from './FormInput.module.scss';
 
 const cx = classNames.bind(styles);
 const FormInput = ({
+  title,
   placeholder,
   onChange,
   message,
@@ -37,6 +38,7 @@ const FormInput = ({
   }, []);
   return (
     <div className={cx('form-control')}>
+      <label>{title}</label>
       <input
         {...inputProps}
         onChange={onChange}

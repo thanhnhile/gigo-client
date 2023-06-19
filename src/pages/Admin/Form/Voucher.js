@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Form.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
+import FormValidation from '~/components/Form/FormValidation';
+import FormInput from '~/components/Form/FormInput';
+import ValidationRegex from '~/utils/validationRegex';
 import Clickable from '~/components/Clickable';
 import {
   httpGetVoucherById,
@@ -11,19 +14,19 @@ import {
 import moment from 'moment-timezone';
 
 const cx = className.bind(styles);
-
+const initValue = {
+  name: '',
+  value: 0,
+  startDate: '',
+  endDate: '',
+  code: '',
+  minimumOrderValue: 0,
+  maximumDiscountAmount: 0,
+};
 function Voucher() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [voucher, setVoucher] = useState({
-    name: '',
-    value: 0,
-    startDate: '',
-    endDate: '',
-    code: '',
-    minimumOrderValue: 0,
-    maximumDiscountAmount: 0,
-  });
+  const [voucher, setVoucher] = useState(initValue);
 
   useEffect(() => {
     if (id === 'add') {
@@ -45,18 +48,19 @@ function Voucher() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, formValidated) => {
     try {
       e.preventDefault();
-      const newVoucher = { ...voucher };
-      console.log(newVoucher);
+      if (!formValidated) {
+        return;
+      }
       if (id === 'add') {
-        const res = await httpPostVoucher(newVoucher);
+        const res = await httpPostVoucher(voucher);
         if (res.data) {
           console.log(res.data);
         } else console.log(res.errMsg);
       } else {
-        const res = await httpPutVoucher(voucher.id, newVoucher);
+        const res = await httpPutVoucher(voucher.id, voucher);
         if (res.data) {
           console.log(res.data);
         } else console.log(res.errMsg);
@@ -66,71 +70,101 @@ function Voucher() {
     }
     navigate('/admin/vouchers');
   };
+  const formInputs = [
+    {
+      id: 1,
+      name: 'name',
+      title: 'Tên mã giảm giá',
+      type: 'text',
+      placeholder: 'VD: Ưu đãi khách hàng mới',
+      required: true,
+      pattern: ValidationRegex.name.pattern,
+      message: ValidationRegex.name.message,
+    },
+    {
+      id: 2,
+      name: 'value',
+      title: 'Giá trị',
+      type: 'number',
+      placeholder: 'VD: 0.1',
+      required: true,
+    },
+    {
+      id: 3,
+      name: 'code',
+      title: 'Mã code',
+      type: 'text',
+      placeholder: 'VD: KHACHMOI',
+      required: true,
+      pattern: ValidationRegex.code.pattern,
+      message: ValidationRegex.code.message,
 
+    },
+    {
+      id: 4,
+      name: 'minimumOrderValue',
+      title: 'Đơn tối thiểu',
+      type: 'number',
+      placeholder: 'VD: 5000',
+      required: true,
+      pattern: ValidationRegex.price.pattern,
+      message: ValidationRegex.price.message,
+
+    },
+    {
+      id: 1,
+      name: 'maximumDiscountAmount',
+      title: 'Giảm tối đa',
+      type: 'text',
+      placeholder: 'VD: 10000',
+      required: true,
+      pattern: ValidationRegex.price.pattern,
+      message: ValidationRegex.price.message,
+
+    }
+  ];
   return (
     <div className={cx('wrapper')}>
-      <form onSubmit={handleSubmit}>
-        <h1>Mã giảm giá</h1>
+      <FormValidation>
+        {({ setValidated, formValidated }) => (
+          <form
+            onSubmit={(e) => handleSubmit(e, formValidated)}
+            className={cx('form')}
+          >
+            <h1>Mã giảm giá</h1>
 
-        <label>Tên mã giảm giá</label>
-        <input
-          name='name'
-          value={voucher.name}
-          onChange={handleChange}
-          required
-        />
+            {formInputs.map((formInput) => (
+              <FormInput
+                key={formInput.id}
+                value={voucher[formInput.name]}
+                onChange={handleChange}
+                setValidated={setValidated}
+                {...formInput}
+              />
+            ))}
+            <label>Ngày bắt đầu</label>
+            <input
+              type='datetime-local'
+              name='startDate'
+              value={moment(voucher.startDate).format('YYYY-MM-DDTHH:mm')}
+              onChange={handleChange}
+              required
+            />
 
-        <label>Giá trị</label>
-        <input
-          name='value'
-          value={voucher.value}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Ngày bắt đầu</label>
-        <input
-          type='datetime-local'
-          name='startDate'
-          value={moment(voucher.startDate).format('YYYY-MM-DDTHH:mm')}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Ngày kết thúc</label>
-        <input
-          type='datetime-local'
-          name='endDate'
-          value={moment(voucher.endDate).format('YYYY-MM-DDTHH:mm')}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Mã code</label>
-        <input
-          name='code'
-          value={voucher.code}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Đơn tối thiểu</label>
-        <input
-          name='minimumOrderValue'
-          value={voucher.minimumOrderValue}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Giảm tối đa</label>
-        <input
-          name='maximumDiscountAmount'
-          value={voucher.maximumDiscountAmount}
-          onChange={handleChange}
-          required
-        />
-        <Clickable text='Lưu' primary />
-      </form>
+            <label>Ngày kết thúc</label>
+            <input
+              type='datetime-local'
+              name='endDate'
+              value={moment(voucher.endDate).format('YYYY-MM-DDTHH:mm')}
+              onChange={handleChange}
+              required
+            />
+            <span className={cx('height')} />
+            <Clickable text='Gửi' primary />
+          </form>
+        )}
+      </FormValidation>
+      
     </div>
   );
 }

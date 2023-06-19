@@ -2,10 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Form.module.scss';
-import { httpGetAllCategories } from '~/apiServices/categoryServices';
+import { httpGetAvailableCategories } from '~/apiServices/categoryServices';
 import uploadImage from '~/apiServices/uploadImage';
 import { STATUS, TOPPING_STATUS } from '~/utils/enum';
 import { useNavigate, useParams } from 'react-router-dom';
+import FormValidation from '~/components/Form/FormValidation';
+import FormInput from '~/components/Form/FormInput';
+import ValidationRegex from '~/utils/validationRegex';
 import Clickable from '~/components/Clickable';
 import {
   httpGetProductById,
@@ -53,11 +56,11 @@ function Product() {
   };
 
   useEffect(() => {
-    const getAllCategory = async () => {
-      const response = await httpGetAllCategories();
+    const getAllAvailableCategory = async () => {
+      const response = await httpGetAvailableCategories();
       setCategory(response.data);
     };
-    getAllCategory();
+    getAllAvailableCategory();
   }, []);
 
   const handleChange = (e) => {
@@ -71,9 +74,12 @@ function Product() {
     const url = URL.createObjectURL(file);
     setImage({ file, url });
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, formValidated) => {
     try {
       e.preventDefault();
+      if (!formValidated) {
+        return;
+      }
       if (image.file) {
         const url = await uploadImage(image.file);
         const productToAdd = { ...product, img_url: url };
@@ -100,9 +106,122 @@ function Product() {
     }
     navigate('/admin/products');
   };
+  const formInputs = [
+    {
+      id: 1,
+      name: 'name',
+      type: 'text',
+      title: 'Tên sản phẩm',
+      placeholder: 'VD: Trà sữa trân châu',
+      required: true,
+      pattern: ValidationRegex.name.pattern,
+      message: ValidationRegex.name.message,
+    },
+    {
+      id: 2,
+      name: 'price',
+      type: 'number',
+      title: 'Giá',
+      placeholder: 'VD: 30000',
+      required: true,
+      pattern: ValidationRegex.price.pattern,
+      message: ValidationRegex.price.message,
+    },
+    {
+      id: 3,
+      name: 'discount',
+      type: 'number',
+      title: 'Giảm giá',
+      placeholder: 'VD: 0.1',
+      required: true,
+    }
+  ];
   return (
     <div className={cx('wrapper')}>
-      <form onSubmit={handleSubmit}>
+      <FormValidation>
+        {({ setValidated, formValidated }) => (
+          <form
+            onSubmit={(e) => handleSubmit(e, formValidated)}
+            className={cx('form')}
+          >
+            <h1>Sản phẩm</h1>
+
+            <label>Phân loại</label>
+            <select
+              required
+              name='category'
+              value={product.category.id}
+              onChange={(e) =>
+                setProduct({ ...product, category: { id: e.target.value } })
+              }
+            >
+              <option value="">--Chọn--</option>
+              {category.map((category) => {
+                return <option value={category.id}>{category.name}</option>;
+              })}
+            </select>
+            {formInputs.map((formInput) => (
+              <FormInput
+                key={formInput.id}
+                value={product[formInput.name]}
+                onChange={handleChange}
+                setValidated={setValidated}
+                {...formInput}
+              />
+            ))}
+            <label>Mô tả</label>
+            <textarea
+              className={cx('vertical-resize')}
+              name='description'
+              value={product.description}
+              onChange={handleChange}
+            />
+
+            <label>Trạng thái</label>
+            <select name='status' value={product.status} onChange={handleChange}>
+              {STATUS.map((item) => (
+                <option key={item.id} value={item.value}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+
+            <label>Topping</label>
+            <select name='hasTopping' value={product.hasTopping} onChange={handleChange}>
+              {TOPPING_STATUS.map((item) => (
+                <option key={item.id} value={item.value}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+
+            <label>Ảnh</label>
+            <div className={cx('image-wrapper')}>
+              {image.url && <img className={cx('image')} src={image.url} alt='' />}
+              {!image.file && image.url && (
+                <input
+                  name='image'
+                  id='image'
+                  type='file'
+                  onChange={handleChangeImage}
+                />
+              )}
+              {!image.file && !image.url && (
+                <input
+                  name='image'
+                  id='image'
+                  type='file'
+                  onChange={handleChangeImage}
+                  required
+                />
+              )}
+            </div>
+            <span className={cx('height')} />
+            <Clickable text='Gửi' primary />
+          </form>
+        )}
+      </FormValidation>
+      {/* <form onSubmit={handleSubmit}>
         <h1>Sản phẩm</h1>
 
         <label>Phân loại</label>
@@ -130,6 +249,7 @@ function Product() {
 
         <label>Mô tả</label>
         <textarea
+        className={cx('vertical-resize')}
           name='description'
           value={product.description}
           onChange={handleChange}
@@ -166,7 +286,7 @@ function Product() {
         </div>
 
         <Clickable text='Lưu' primary />
-      </form>
+      </form> */}
     </div>
   );
 }

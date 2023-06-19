@@ -6,6 +6,9 @@ import { httpGetAllStore } from '~/apiServices/storeServices';
 import { httpGetAllAccount } from '~/apiServices/accountServices';
 import { useNavigate, useParams } from 'react-router-dom';
 import { httpGetEmployeeById, httpPostEmployee, httpPutEmployee } from '~/apiServices/employeeServices';
+import FormValidation from '~/components/Form/FormValidation';
+import FormInput from '~/components/Form/FormInput';
+import ValidationRegex from '~/utils/validationRegex';
 import Clickable from '~/components/Clickable';
 
 const cx = className.bind(styles);
@@ -71,9 +74,12 @@ function Employee() {
         setEmployee({ ...employee, account: e.value })
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, formValidated) => {
         try {
             e.preventDefault();
+            if (!formValidated) {
+                return;
+            }
             const newEmployee = { ...employee };
             console.log(newEmployee);
             if (id === 'add') {
@@ -94,10 +100,62 @@ function Employee() {
         }
         navigate('/admin/employees');
     };
-
+    const formInputs = [
+        {
+            id: 1,
+            name: 'name',
+            title: 'Tên nhân viên',
+            type: 'text',
+            placeholder: 'VD: Nguyễn Văn A',
+            required: true,
+            pattern: ValidationRegex.name.pattern,
+            message: ValidationRegex.name.message,
+        }
+    ];
     return (
         <div className={cx("wrapper")}>
-            <form onSubmit={handleSubmit}>
+            <FormValidation>
+                {({ setValidated, formValidated }) => (
+                    <form
+                        onSubmit={(e) => handleSubmit(e, formValidated)}
+                        className={cx('form')}
+                    >
+                        <h1>Nhân viên</h1>
+
+                        {formInputs.map((formInput) => (
+                            <FormInput
+                                key={formInput.id}
+                                value={employee[formInput.name]}
+                                onChange={handleChange}
+                                setValidated={setValidated}
+                                {...formInput}
+                            />
+                        ))}
+                        <label>Cửa hàng</label>
+                        <select
+                            required
+                            name="store"
+                            value={employee.store.id}
+                            onChange={(e) =>
+                                setEmployee({ ...employee, store: { id: e.target.value } })
+                            }>
+                            <option value="">--Chọn--</option>
+                            {stores.map((store) => {
+                                return (
+                                    <option value={store.id}>{store.storeName}</option>);
+                            })}
+                        </select>
+
+                        <label>Tài khoản</label>
+
+                        <Select value={options.find(obj => obj.value === employee.account || obj.value === selectedValue)}
+                            onChange={handleChangeSelect} options={options} isSearchable required/>
+                        <span className={cx('height')} />
+                        <Clickable text='Gửi' primary />
+                    </form>
+                )}
+            </FormValidation>
+            {/* <form onSubmit={handleSubmit}>
                 <h1>Nhân viên</h1>
 
                 <label>Tên</label>
@@ -127,7 +185,7 @@ function Employee() {
                     onChange={handleChangeSelect} options={options} />
 
                 <Clickable text='Lưu' primary />
-            </form>
+            </form> */}
         </div>
 
     )

@@ -12,6 +12,26 @@ const ValidationRegex = {
     pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
     message: 'Email không hợp lệ',
   },
+  price: {
+    pattern: /^(\d*([.,](?=\d{3}))?\d+)+((?!\2)[.,]\d\d)?$/,
+    message: 'Giá tiền không hợp lệ',
+  },
+  name: {
+    pattern: /^[ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\w:+]+$/g,
+    message: 'Tên không chứa ký tự đặc biệt',
+  },
+  address: {
+    pattern: /^[ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\w,/]+$/g,
+    message: 'Địa chỉ chưa hợp lệ',
+  },
+  code: {
+    pattern: /^[A-Z0-9]+$/,
+    message: 'Mã code chứa cái ký tự in hoa và số',
+  },
+  option: {
+    pattern: /^[0-9]+$/,
+    message: 'Chọn lựa chọn phù hợp',
+  },
 };
 
 export default ValidationRegex;

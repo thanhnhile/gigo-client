@@ -7,6 +7,14 @@ export const httpGetAllCategories = () => {
     console.log(error.response.data);
   }
 };
+export const httpGetAvailableCategories = () => {
+  try {
+    const res = request.get(`/categories/available`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
 export const httpGetCategoryById = (id) => {
   try {
     const res = request.get(`/categories/${id}`);
@@ -36,7 +44,7 @@ export const httpPutCategory = (id, payload) => {
 
 export const httpDeleteCategory = (id) => {
   try {
-    const res = request.put(`/categories/update/status//${id}`);
+    const res = request.put(`/categories/update/status/${id}`);
     return res;
   } catch (error) {
     console.log(error.response.data.errMsg);

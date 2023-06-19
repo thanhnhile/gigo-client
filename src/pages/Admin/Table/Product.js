@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { httpDeleteProduct, httpGetAll } from '~/apiServices/productServices';
-import { formatPrice } from '~/utils/format';
+import { formatPrice, formatPercent } from '~/utils/format';
 import className from 'classnames/bind';
 import styles from './Table.module.scss';
 import CustomDataTable from '~/components/CustomDataTable';
@@ -39,53 +39,53 @@ function Product() {
     const columns = [
         {
             name: 'ID',
-            width: '5%',
+            width: '40px',
             selector: (row) => row.id,
         },
         {
             name: 'Tên sản phẩm',
-            width: '25%',
+            width: '200px',
             selector: (row) => row.name,
         }
         ,
         {
             name: 'Giá',
-            width: '10%',
+            width: '100px',
             selector: (row) => formatPrice(row.price),
         },
         {
             name: 'Giảm',
-            width: '7%',
-            selector: (row) => formatPrice(row.discount),
+            width: '70px',
+            selector: (row) => formatPercent(row.discount),
         },
         {
             name: 'Mô tả',
-            width: '23%',
+            width: '250px',
             selector: (row) => row.description,
             grow: 2,
         },
         {
             name: 'Trạng thái',
-            width: '10%',
+            width: '100px',
             selector: (row) => row.status === true
                 ? ('Hoạt động')
                 : ('Ẩn'),
         },
         {
             name: 'Topping',
-            width: '10%',
+            width: '100px',
             selector: (row) => row.hasTopping === true
                 ? ('Có')
                 : ('Không'),
         },
         {
-            width: '5%',
+            width: '30px',
             selector: (row) =>
                 <Link to={`/admin/products/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
             ,
         },
         {
-            width: '5%',
+            width: '30px',
             selector: (row) =>
                 row.status === true
                     ? (<Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />)

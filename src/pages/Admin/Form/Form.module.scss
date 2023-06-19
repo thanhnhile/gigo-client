@@ -27,7 +27,9 @@
     box-sizing: border-box;
     padding: 10px;
     width: 100%;
-	margin-bottom: 10px;
+  }
+  textarea.vertical-resize{
+    resize: vertical;
   }
   label {
     color: #3d3d3d;
@@ -36,12 +38,12 @@
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 5px;
+    margin-top: 5px;
   }
   .error {
-    color: red;
-    font-family: sans-serif;
-    font-size: 12px;
-    height: 30px;
+    font-size: var(--font-sm);
+    padding: 3px 0;
+    color: var(--err-color);
   }
   .submitButton {
     background-color: var(--primary);
@@ -54,5 +56,8 @@
     width: 400px;
     height: 350px;
     object-fit: contain;
+  }
+  .height {
+    height: 10px;
   }
 }

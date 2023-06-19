@@ -7,6 +7,14 @@ export const httpGetAllToppings = () => {
     console.log(error.response.data);
   }
 };
+export const httpGetAvailableToppings = () => {
+  try {
+    const res = request.get(`/toppings/available`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
 export const httpGetToppingById = (id) => {
   try {
     const res = request.get(`/toppings/${id}`);

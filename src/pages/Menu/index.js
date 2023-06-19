@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './Menu.module.scss';
-import { httpGetAllCategories } from '../../apiServices/categoryServices';
+import { httpGetAvailableCategories } from '../../apiServices/categoryServices';
 import ListProduct from '../../components/Product/ListProduct';
 import Pagination from '../../components/Pagination';
 import {
@@ -21,11 +21,11 @@ const Menu = () => {
   const [page, setPage] = useState(1);
   const location = useLocation();
   useEffect(() => {
-    const getAllCategories = async () => {
-      const response = await httpGetAllCategories();
+    const getAllAvailableCategories = async () => {
+      const response = await httpGetAvailableCategories();
       setMenu(response.data);
     };
-    getAllCategories();
+    getAllAvailableCategories();
     if (id === 'all') {
       getProductAll();
     } else {
@@ -62,7 +62,7 @@ const Menu = () => {
     <div className={cx('container', 'wrap')}>
       <div className={cx('col', 'menu')}>
         <Link to='/menu/all'>
-          <h3>MENU</h3>
+          <h3>Danh mục</h3>
         </Link>
         <ul>
           {menu &&
@@ -75,7 +75,7 @@ const Menu = () => {
                   })}
                   key={menuItem.id}
                 >
-                  <Link to={`/menu/${menuItem.id}`}>{menuItem.name}</Link>
+                  <Link to={`/menu/${menuItem.id}`}><b>{menuItem.name}</b></Link>
                 </li>
               ))}
         </ul>

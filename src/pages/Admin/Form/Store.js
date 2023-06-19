@@ -7,20 +7,24 @@ import {
   httpPostStore,
   httpPutStore,
 } from '~/apiServices/storeServices';
+import FormValidation from '~/components/Form/FormValidation';
+import FormInput from '~/components/Form/FormInput';
+import ValidationRegex from '~/utils/validationRegex';
 import { useNavigate, useParams } from 'react-router-dom';
 import Clickable from '~/components/Clickable';
 
 const cx = className.bind(styles);
-
+const initValue = {
+  storeName: '',
+  provinceId: '',
+  districtId: '',
+  address: '',
+};
 function Store() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [store, setStore] = useState({
-    storeName: '',
-    provinceId: '',
-    districtId: '',
-    address: '',
-  });
+  const [store, setStore] = useState(initValue);
+  const [err, setErr] = useState('');
 
   const [address, setAddress] = useState({
     provinceId: '',
@@ -52,16 +56,22 @@ function Store() {
     setStore({ ...store, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, formValidated) => {
     try {
       e.preventDefault();
+      if (!formValidated) {
+        return;
+      }
       let fullAddress = store.address;
-      if (address.districtId !== store.districtId) {
+      if (id === 'add') {
+        fullAddress = `${address}, ${address.districtName}, ${address.provinceName}`;
+      }
+      if (address.districtId !== store.districtId || address.provinceId !== store.provinceId) {
         const index = fullAddress.includes('huyện')
           ? fullAddress.indexOf('huyện')
           : fullAddress.includes('quận')
-          ? fullAddress.indexOf('quận')
-          : fullAddress.indexOf('thành phố');
+            ? fullAddress.indexOf('quận')
+            : fullAddress.indexOf('thành phố');
 
         const prefix =
           index > 0 ? store.address.slice(0, index - 2) : store.address;
@@ -73,59 +83,85 @@ function Store() {
         districtId: address.districtId,
         address: fullAddress.toLowerCase(),
       };
-      console.log(newStore);
-      if (id === 'add') {
-        const res = await httpPostStore(newStore);
-        if (res.data) {
-          console.log(res.data);
-        } else console.log(res.errMsg);
+      if (address.districtId === '' || address.provinceId === '') {
+        setErr('Chọn địa chỉ');
       } else {
-        const res = await httpPutStore(store.id, newStore);
-        if (res.data) {
-          console.log(res.data);
-        } else console.log(res.errMsg);
+        console.log(newStore);
+        if (id === 'add') {
+          const res = await httpPostStore(newStore);
+          if (res.data) {
+            console.log(res.data);
+          } else console.log(res.errMsg);
+        } else {
+          const res = await httpPutStore(store.id, newStore);
+          if (res.data) {
+            console.log(res.data);
+          } else console.log(res.errMsg);
+        }
+        navigate('/admin/stores');
       }
+
     } catch (error) {
       console.log(error);
     }
-    navigate('/admin/stores');
-  };
 
+  };
+  const formInputs = [
+    {
+      id: 1,
+      name: 'storeName',
+      type: 'text',
+      title: 'Tên cửa hàng',
+      placeholder: 'VD: Gogi Thủ Đức',
+      required: true,
+      pattern: ValidationRegex.name.pattern,
+      message: ValidationRegex.name.message,
+    },
+    {
+      id: 2,
+      name: 'address',
+      type: 'text',
+      title: 'Địa chỉ chi tiết',
+      placeholder: 'VD: 134 Kha Vạn Cân, phường Linh Trung',
+      required: true,
+      pattern: ValidationRegex.address.pattern,
+      message: ValidationRegex.address.message,
+    },
+  ];
   return (
     store.provinceId && (
       <div className={cx('wrapper')}>
-        <form onSubmit={handleSubmit}>
-          <h1>Store</h1>
-
-          <label>Tên cửa hàng</label>
-          <input
-            name='storeName'
-            type='text'
-            value={store.storeName}
-            onChange={handleChange}
-            required
-          />
-
-          <label>Địa chỉ</label>
-          <SelectAddress
-            address={{
-              provinceId: store.provinceId,
-              districtId: store.districtId,
-            }}
-            setAddress={setAddress}
-          />
-
-          <label>Địa chỉ chi tiết</label>
-          <input
-            name='address'
-            type='text'
-            value={store.address}
-            onChange={handleChange}
-            required
-          />
-
-          <Clickable text='Lưu' primary />
-        </form>
+        <FormValidation>
+          {({ setValidated, formValidated }) => (
+            <form
+              onSubmit={(e) => handleSubmit(e, formValidated)}
+              className={cx('form')}
+            >
+              <h1>Cửa hàng</h1>
+              {formInputs.map((formInput) => (
+                <FormInput
+                  key={formInput.id}
+                  value={store[formInput.name]}
+                  onChange={handleChange}
+                  setValidated={setValidated}
+                  {...formInput}
+                />
+              ))}
+              <label>Địa chỉ</label>
+              <SelectAddress
+                address={{
+                  provinceId: store.provinceId,
+                  districtId: store.districtId,
+                }}
+                setAddress={setAddress}
+              />
+              {err !== '' ? (<span className={cx('error')}>{err}</span>)
+                : (<span></span>)}
+              <span className={cx('height')} />
+              <Clickable text='Gửi' primary />
+            </form>
+          )}
+        </FormValidation>
       </div>
     )
   );

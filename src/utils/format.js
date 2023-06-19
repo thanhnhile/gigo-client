@@ -26,3 +26,7 @@ export const getSplitAddress = (fullAddress) => {
   const provinceName = fullAddress.slice(indexProvinceStart);
   return { streetName, districtName, provinceName };
 };
+
+export const formatPercent = (percent) => {
+  return percent*100 + '%';
+};

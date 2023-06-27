@@ -69,8 +69,9 @@ function Login() {
               setSubmitting(false);
               return;
             }
-            const username = response.data.username;
-            const accessToken = response.data.accessToken;
+            const username = response.data?.username;
+            const accessToken = response.data?.accessToken;
+            const refreshToken = response.data?.refreshToken;
             const roles = response.data.roles.map((role) => role.authority);
             if (roles.includes(ROLE['EMPLOYEE'])) {
               const res = await httpGetEmployeeAccountUsername(username);

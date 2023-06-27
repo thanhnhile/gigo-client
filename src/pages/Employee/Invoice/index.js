@@ -10,6 +10,7 @@ import getStatusComponent from '~/components/Status';
 import CustomDataTable from '~/components/CustomDataTable';
 import Clickable from '~/components/Clickable';
 import { formatPrice } from '~/utils/format';
+import { formatDate } from '~/utils/dateFormat';
 
 import { DELIVERY_METHOD, ORDER_STATUS, PERMISSION } from '~/utils/enum';
 
@@ -43,6 +44,11 @@ const columns = [
     name: 'Giá',
     width: '150px',
     selector: (row) => formatPrice(row.price),
+  },
+  {
+    name: 'Số lượng',
+    width: '100px',
+    selector: (row) => row.quantity,
   },
   {
     name: 'Kèm theo',
@@ -84,7 +90,6 @@ const Invoice = ({ permission }) => {
     [id]
   );
 
-  console.log(order?.details);
   return order?.details?.length > 0 ? (
     <div className={cx('wrapper', 'container')}>
       <h1>Chi tiết đơn hàng</h1>
@@ -99,10 +104,7 @@ const Invoice = ({ permission }) => {
         </div>
       </div>
       <div className={cx('row')}>
-        <h4>
-          Ngày đặt:{' '}
-          {order.createdDate.slice(0, 10).split('-').reverse().join('/')}
-        </h4>
+        <h4>Ngày đặt: {formatDate(order?.createdDate)}</h4>
         <h4>Mã đơn hàng: {order.id}</h4>
         <div className={cx('info')}>
           <h4>Đến: {order?.customer?.name}</h4>

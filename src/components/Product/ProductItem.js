@@ -1,28 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
 
+import { useAuth } from '~/hooks';
 import { formatPrice, formatPercent } from '~/utils/format';
 import { httpLikeProduct, httpUnlikeProduct } from '~/apiServices/likeServices';
 const cx = className.bind(styles);
-const Product = (props) => {
-  const { product, isLiked = false } = props;
-  const [liked, setLiked] = useState(isLiked);
+const Product = ({ product, isLiked }) => {
+  const { setNeedToUpdateProductLiked } = useAuth();
+  const [liked, setLiked] = useState(false);
 
   const handleLike = async () => {
     const res = await httpLikeProduct(product.id);
     if (res?.errMsg === null) {
       setLiked(true);
+      setNeedToUpdateProductLiked(true);
     }
   };
   const handleUnlike = async () => {
     const res = await httpUnlikeProduct(product.id);
     if (res?.errMsg === null) {
       setLiked(false);
+      setNeedToUpdateProductLiked(true);
     }
   };
+  useEffect(() => {
+    setLiked(isLiked);
+  }, [isLiked]);
+
   return (
     product.status && (
       <div className={cx('product')}>
@@ -45,14 +52,17 @@ const Product = (props) => {
             </div>
             <span className={cx('product__name')}>{product.name}</span>
             <span className={cx('product__price')}>
-              <span className={cx('discount')}>{formatPrice(product.price / (1 - product.discount))}</span>
+              <span className={cx('discount')}>
+                {formatPrice(product.price / (1 - product.discount))}
+              </span>
               {formatPrice(product.price)}
             </span>
           </Link>
-          <span className={cx('discount-ticket')}>
-            <h3>
-              - {formatPercent(product.discount)}
-            </h3></span>
+          {!!product.discount && (
+            <span className={cx('discount-ticket')}>
+              <h3>- {formatPercent(product.discount)}</h3>
+            </span>
+          )}
           <span className={cx('heart')}>
             {liked ? (
               <Icon

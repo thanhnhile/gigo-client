@@ -4,7 +4,7 @@ const PER_MINUTE = 60;
 const PER_WEEK = 7 * PER_DAY;
 
 export function formatDate(dateTime) {
-  return dateTime.slice(0, 10).split('-').reverse().join('/');
+  return dateTime ? dateTime.slice(0, 10).split('-').reverse().join('/') : ' ';
 }
 export function getTimestamp(date) {
   return Math.ceil(new Date(date) / 1000);

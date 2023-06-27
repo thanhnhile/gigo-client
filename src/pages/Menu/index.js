@@ -19,7 +19,6 @@ const Menu = () => {
     totalPages: 0,
   });
   const [page, setPage] = useState(1);
-  const location = useLocation();
   useEffect(() => {
     const getAllAvailableCategories = async () => {
       const response = await httpGetAvailableCategories();
@@ -71,11 +70,13 @@ const Menu = () => {
               .map((menuItem) => (
                 <li
                   className={cx('category', {
-                    active: location.pathname.includes(menuItem.id),
+                    active: Number.parseInt(id) === menuItem.id,
                   })}
                   key={menuItem.id}
                 >
-                  <Link to={`/menu/${menuItem.id}`}><b>{menuItem.name}</b></Link>
+                  <Link to={`/menu/${menuItem.id}`}>
+                    <b>{menuItem.name}</b>
+                  </Link>
                 </li>
               ))}
         </ul>

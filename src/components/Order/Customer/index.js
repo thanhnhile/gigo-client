@@ -39,6 +39,7 @@ const Customer = () => {
     const getCustomerInfoDefault = async () => {
       const res = await httpGetCustomerInfoDefault();
       if (res.data) {
+        setCustomer(res.data);
         let storeRes = [];
         storeRes = await httpGetStoreByAddress(
           res.data?.provinceId,

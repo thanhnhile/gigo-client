@@ -1,21 +1,18 @@
-import React, { useEffect } from 'react';
-import { useLocation, Navigate } from 'react-router-dom';
-
-const ErrorHandler = ({ error }) => {
-  const { code, message } = error;
-  const location = useLocation();
-  useEffect(() => {
-    switch (code) {
-      case '401':
-        <Navigate to='/unauthorized' state={{ from: location }} replace />;
-        break;
-      case '403':
-        <Navigate to='/auth' state={{ from: location }} replace />;
-        break;
-      default:
-        <Navigate to='/error' state={{ from: location, message }} replace />;
-    }
-  }, [code, error, location, message]);
-  return;
+import React from 'react';
+const MyFallbackComponent = ({ error, resetErrorBoundary }) => {
+  const {
+    message,
+    response: { data },
+  } = error;
+  return (
+    <div role='alert'>
+      <p>Something went wrong:</p>
+      <pre>{message}</pre>
+      <pre>{data.status}</pre>
+      <pre>{data.error}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
 };
-export default ErrorHandler;
+
+export default MyFallbackComponent;

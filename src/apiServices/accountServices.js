@@ -59,3 +59,12 @@ export const httpGetProductLiked = () => {
     console.log(error.response.data);
   }
 };
+
+export const httpGetProductIdsLiked = () => {
+  try {
+    const res = request.get('/accounts/productsLiked/id');
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};

@@ -10,7 +10,6 @@ import {
 import RequireAuth from './components/RequireAuth';
 import { DefaultLayout, AdminLayout } from './layouts';
 import { ROLE, LOCAL_STORAGE_KEY } from '~/utils/enum';
-import Error from './pages/Error';
 import Missing from './pages/Missing';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -68,7 +67,6 @@ function App() {
         </Route>
         {/* catch all */}
         <Route path='/unauthorized' element={<Unauthorized />} />
-        <Route path='/error' element={<Error />} />
         <Route path='*' element={<Missing />} />
       </Routes>
       <ToastContainer />

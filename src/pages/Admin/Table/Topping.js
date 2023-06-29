@@ -64,15 +64,15 @@ function Topping() {
         {
             width: '5%',
             selector: (row) =>
-                <Link to={`/admin/toppings/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                <Link to={`/admin/toppings/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' fontSize='18px'/> </Link>
             ,
         },
         {
             width: '10%',
             selector: (row) =>
                 row.status === true
-                    ? (<Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />)
-                    : (<Icon icon='material-symbols:auto-delete-outline' />)
+                    ? (<Icon icon='material-symbols:delete-outline' fontSize='18px' onClick={() => deleteData(row.id)} />)
+                    : (<Icon icon='material-symbols:auto-delete-outline' fontSize='18px'/>)
             ,
         },
     ];

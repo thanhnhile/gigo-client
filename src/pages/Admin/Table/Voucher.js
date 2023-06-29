@@ -46,7 +46,7 @@ function Voucher() {
         },
         {
             name: 'Tên mã giảm giá',
-            width: '18%',
+            width: '15%',
             selector: (row) => row.name,
         },
         {
@@ -80,14 +80,14 @@ function Voucher() {
             selector: (row) => formatPrice(row.maximumDiscountAmount),
         },
         {
-            width: '3%',
+            width: '5%',
             selector: (row) =>
-                <Link to={`/admin/vouchers/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                <Link to={`/admin/vouchers/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' fontSize='18px'/> </Link>
             ,
         },
         {
             width: '5%',
-            selector: (row) => <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />
+            selector: (row) => <Icon icon='material-symbols:delete-outline' fontSize='18px' onClick={() => deleteData(row.id)} />
             ,
         },
     ];

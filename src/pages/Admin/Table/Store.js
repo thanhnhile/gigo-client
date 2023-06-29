@@ -55,12 +55,12 @@ function Store() {
         {
             width: '5%',
             selector: (row) =>
-                <Link to={`/admin/stores/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' /> </Link>
+                <Link to={`/admin/stores/${row.id}`} ><Icon icon='material-symbols:edit-square-outline-rounded' fontSize='18px'/> </Link>
             ,
         },
         {
             width: '10%',
-            selector: (row) => <Icon icon='material-symbols:delete-outline' onClick={() => deleteData(row.id)} />
+            selector: (row) => <Icon icon='material-symbols:delete-outline' fontSize='18px' onClick={() => deleteData(row.id)} />
             ,
         },
     ];

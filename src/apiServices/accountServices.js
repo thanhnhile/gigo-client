@@ -7,6 +7,14 @@ export const httpGetAllAccount = () => {
     console.log(error.response.data);
   }
 };
+export const httpGetAvailableAccount = () => {
+  try {
+    const res = request.get(`/accounts/available`);
+    return res;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
 export const httpForgotPassword = (email) => {
   const res = request.post(`/accounts/forgot_password/${email}`);
   return res;

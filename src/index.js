@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import GlobalStyles from 'comps/GlobalStyles';
 import AuthProvider from '~/contexts/AuthProvider';
 import CartProvider from '~/contexts/CartProvider';
-import MyFallbackComponent from './components/ErrorHandler';
+import GlobalErrorBoundary from 'comps/GlobalErrorBoundary';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,9 +17,9 @@ ReactDOM.render(
               <Route
                 path='/*'
                 element={
-                  <ErrorBoundary FallbackComponent={MyFallbackComponent}>
+                  <GlobalErrorBoundary>
                     <App />
-                  </ErrorBoundary>
+                  </GlobalErrorBoundary>
                 }
               />
             </Routes>

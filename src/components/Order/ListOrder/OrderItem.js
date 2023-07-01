@@ -16,13 +16,13 @@ const OrderItem = ({ order }) => {
   const targetItem = useRef();
   const [showModal, setShowModal] = useState(false);
   const { tab, productsRated } = useContext(historyOrderContext);
+
   const checkIsProductRatedByLoggedUser = (productId) => {
     if (productsRated?.length <= 0) {
       return false;
     }
     return productsRated.filter((item) => item === productId).length > 0;
   };
-
   const handleClick = (item) => {
     setShowModal(true);
     targetItem.current = item;

@@ -18,15 +18,22 @@ const SelectAddress = ({ address, setAddress }) => {
   const districtValue = useRef();
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
+
   const handleProvinceChange = (e) => {
     const data = provinces.find((item) => item.code === e.value);
     provinceValue.current = e;
-    districtValue.current = '';
-    setDistricts(data.districts);
+    districtValue.current = -1;
+    let addressDistrict = { provinceId: -1 },
+      districts = [];
+    if (data) {
+      addressDistrict = { provinceId: data?.code, provinceName: data?.name };
+      districts = data?.districts;
+    }
+    setDistricts(districts);
     setAddress((prev) => {
       return {
-        provinceId: data.code,
-        provinceName: data.name,
+        ...prev,
+        ...addressDistrict,
         districtId: -1,
       };
     });

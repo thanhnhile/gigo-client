@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOCAL_STORAGE_KEY } from './enum';
-//import MyFallbackComponent from '../components/ErrorHandler';
-
+import { handleException } from './handleException';
+const LOGIN_PATH = '/auth';
 const refreshToken = async () => {
   try {
     const res = await axios.get('http://localhost:8089/refresh', {
@@ -9,7 +9,7 @@ const refreshToken = async () => {
     });
     return res.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -24,39 +24,58 @@ request.interceptors.request.use(function (config) {
   config.headers.Authorization = token ? `Bearer ${token}` : '';
   return config;
 });
-
+let isRefreshing = false;
+let refreshSubscribers = [];
 //handle response
 request.interceptors.response.use(
   (response) => {
     return response;
   },
-  async (err) => {
-    console.log(err);
-    const originalConfig = err.config;
-    if (err.response.status === 403 && !originalConfig._retry) {
-      originalConfig._retry = true;
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response &&
+      error.response.status === 403 &&
+      !originalRequest._retry
+    ) {
+      if (isRefreshing) {
+        // Wait for the new access token
+        return new Promise((resolve) => {
+          refreshSubscribers.push((accessToken) => {
+            originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+            resolve(axios(originalRequest));
+          });
+        });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
       try {
-        const rs = await refreshToken();
-        const { accessToken } = rs.data;
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(accessToken));
-        originalConfig.headers['Authorization'] = `Bearer ${accessToken}`;
-        return request({
-          ...originalConfig,
+        const response = await refreshToken();
+        const { accessToken } = response.data;
+        // Update the original request headers with the new access token
+        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+        //Update auth storage in local
+        const auth = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+        const newAuth = { ...auth, accessToken };
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newAuth));
+        // Retry the original request with the new access token
+        return axios({
+          ...originalRequest,
           ...{
-            headers: originalConfig.headers.toJSON(),
+            headers: originalRequest.headers.toJSON(),
           },
         });
-      } catch (_error) {
-        if (_error.response && _error.response.data) {
-          return Promise.reject(_error.response.data);
-        }
-
-        return Promise.reject(_error);
+      } catch (refreshError) {
+        redirectToSameOriginPage(LOGIN_PATH);
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+      } finally {
+        isRefreshing = false;
+        refreshSubscribers.forEach((subscriber) => subscriber());
+        refreshSubscribers = [];
       }
-    }
-    if (err.response.status === 401) {
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
-    }
+    } else throw handleException(error);
   }
 );
 
@@ -80,4 +99,13 @@ export const put = async (path, payload) => {
   return response.data;
 };
 
+function redirectToSameOriginPage(pathname) {
+  const origin = window.location.hostname;
+
+  // Replace the pathname portion of the URL with the desired path
+  const newUrl = `${origin}${pathname}`;
+
+  // Redirect to the new URL
+  window.location.href = newUrl;
+}
 export default request;

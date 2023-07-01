@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import className from 'classnames/bind';
 import styles from './Store.module.scss';
 import { Icon } from '@iconify/react';
@@ -15,32 +15,38 @@ const Stores = () => {
     provinceId: '',
     districtId: '',
   });
+
+  const getAllStore = useCallback(async () => {
+    const response = await httpGetAllStore();
+    setStore(response.data);
+  }, []);
+
+  const getStoreByAddress = useCallback(async () => {
+    try {
+      const res = await httpGetStoreByAddress(
+        address.provinceId,
+        address.districtId
+      );
+      if (res.data) {
+        setStore(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [address.provinceId, address.districtId]);
+
   useEffect(() => {
-    const getAllStore = async () => {
-      const response = await httpGetAllStore();
-      console.log(response);
-      setStore(response.data);
-    };
     getAllStore();
   }, []);
   useEffect(() => {
-    console.log(address);
-    const getStoreByAddress = async () => {
-      console.log(address);
-      try {
-        const res = await httpGetStoreByAddress(
-          address.provinceId,
-          address.districtId
-        );
-        if (res.data) {
-          setStore(res.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getStoreByAddress();
-  }, [address.provinceId, address.districtId, address]);
+    address.provinceId !== -1 ? getStoreByAddress() : getAllStore();
+  }, [
+    address.provinceId,
+    address.districtId,
+    address,
+    getStoreByAddress,
+    getAllStore,
+  ]);
   return (
     <div className={cx('container', 'stores')}>
       <h2>Hệ thống cửa hàng Gogi</h2>

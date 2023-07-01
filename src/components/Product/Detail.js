@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import ListRating from '~/components/ReviewProduct/ListRating';
 import useCart from '~/hooks/useCart';
 import { httpGetAvailableToppings } from '~/apiServices/toppingServices';
-import { formatPrice } from '~/utils/format';
+import { formatPrice, capitalizeFirstLetter } from '~/utils/format';
 const cx = className.bind(styles);
 
 const SIZE_OPTIONS = [
@@ -203,13 +203,19 @@ const ProductDetail = ({ product, rates }) => {
       <div className={cx('flex-box', 'product-detail')}>
         <div className={cx('left-column')}>
           <img src={product?.img_url} alt='' />
-          <p className={cx('description')}>{product?.description}</p>
+          <p className={cx('description')}>
+            {capitalizeFirstLetter(product?.description)}
+          </p>
         </div>
         <div className={cx('right-column')}>
           <div className={cx('product-description')}>
             <h1>{product?.name}</h1>
-            <h3 className={cx('price')}><span>{formatPrice(product?.price / (1 - product?.discount))}</span>
-              {formatPrice(price)}</h3>
+            <h3 className={cx('price')}>
+              <span>
+                {formatPrice(product?.price / (1 - product?.discount))}
+              </span>
+              {formatPrice(price)}
+            </h3>
             <div className={cx('product-count')}>
               <form action='#' className={cx('display-flex')}>
                 <div onClick={handleMinus} className={cx('qtyminus')}>
@@ -272,7 +278,7 @@ const SwitchField = ({
   fieldName,
   options = [],
   handleChange,
-  checked = () => { },
+  checked = () => {},
   type = 'radio',
 }) => {
   return (

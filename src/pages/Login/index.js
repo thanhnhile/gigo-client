@@ -11,7 +11,6 @@ import { httpAuth } from '../../apiServices/authServices';
 import { httpGetEmployeeAccountUsername } from '~/apiServices/employeeServices';
 import { ROLE } from '~/utils/enum';
 import ValidationRegex from '~/utils/validationRegex';
-
 const cx = className.bind(styles);
 const initValue = { username: '', password: '' };
 
@@ -60,34 +59,34 @@ function Login() {
               return;
             }
             setSubmitting(true);
-            const response = await httpAuth(user);
-            if (response.errMsg) {
-              toast.error('Sai tài khoản hoặc mật khẩu', {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
-              });
-              setSubmitting(false);
-              return;
-            }
-            const username = response.data?.username;
-            const accessToken = response.data?.accessToken;
-            const refreshToken = response.data?.refreshToken;
-            const roles = response.data.roles.map((role) => role.authority);
-            if (roles.includes(ROLE['EMPLOYEE'])) {
-              const res = await httpGetEmployeeAccountUsername(username);
-              if (response.data) {
-                const employeeInfo = {
-                  employeeId: res.data.id,
-                  storeId: res.data?.store?.id,
-                };
-                setAuth({ username, accessToken, roles, employeeInfo });
+            try {
+              const response = await httpAuth(user);
+              const username = response.data?.username;
+              const accessToken = response.data?.accessToken;
+              const roles = response.data.roles.map((role) => role.authority);
+              if (roles.includes(ROLE['EMPLOYEE'])) {
+                const res = await httpGetEmployeeAccountUsername(username);
+                if (response.data) {
+                  const employeeInfo = {
+                    employeeId: res.data.id,
+                    storeId: res.data?.store?.id,
+                  };
+                  setAuth({ username, accessToken, roles, employeeInfo });
+                }
+              } else {
+                setAuth({ username, accessToken, roles });
               }
-            } else {
-              setAuth({ username, accessToken, roles });
+              setUser(initValue);
+              navigate('/');
+            } catch (err) {
+              err.errMsg &&
+                toast.error(err.errMsg, {
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose: 2000,
+                });
+            } finally {
+              setSubmitting(false);
             }
-            setSubmitting(false);
-            setUser(initValue);
-            navigate('/');
           };
           return (
             <form

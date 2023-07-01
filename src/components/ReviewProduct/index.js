@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import className from 'classnames/bind';
+import styles from './ReviewProduct.module.scss';
 import { RatingCanChange } from './Rating';
 import Form from './Form';
-import styles from './ReviewProduct.module.scss';
 import { httpPostRating } from '~/apiServices/ratingServices';
 import { toast } from 'react-toastify';
 

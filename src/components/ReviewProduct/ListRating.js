@@ -2,7 +2,8 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './ReviewProduct.module.scss';
 import { RatingJustShow } from './Rating';
-import { getDiffFromNow } from '../../utils/dateFormat';
+import { getDiffFromNow } from '~/utils/dateFormat';
+import { capitalizeFirstLetter } from '~/utils/format';
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +21,7 @@ const ListRating = ({ list }) => {
                   <h5>{item?.username}</h5>
                   <span>{getDiffFromNow(item?.created_date)}</span>
                 </div>
-                <p>{item?.content}</p>
+                <p>{capitalizeFirstLetter(item?.content || '')}</p>
               </div>
             </li>
           ))}

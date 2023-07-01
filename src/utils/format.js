@@ -28,5 +28,9 @@ export const getSplitAddress = (fullAddress) => {
 };
 
 export const formatPercent = (percent) => {
-  return percent*100 + '%';
+  return percent * 100 + '%';
+};
+
+export const capitalizeFirstLetter = (string) => {
+  return string ? string.charAt(0).toUpperCase() + string.slice(1) : '';
 };

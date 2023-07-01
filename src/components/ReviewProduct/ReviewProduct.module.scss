@@ -29,10 +29,14 @@
         border-color: #000;
       }
     }
-    span {
-      position: absolute;
-      bottom: 0;
-      right: 0;
+    .form-bottom-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 30px;
+      span {
+        justify-self: end;
+      }
     }
   }
 }

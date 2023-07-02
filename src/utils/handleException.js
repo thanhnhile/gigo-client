@@ -1,5 +1,5 @@
 const DEFAULT_ERROR = {
-  errCode: 500,
+  errCode: '500',
   errMsg: 'Sorry, unexpected error',
 };
 
@@ -12,7 +12,7 @@ export const handleException = (errorRes) => {
     data: { errMsg, errCode, status },
   } = errorRes.response;
   if (errMsg != null && (errCode != null || status != null)) {
-    error = { errMsg, errCode: errCode ?? status };
+    error = { errMsg, errCode: errCode ?? toString(status) };
   }
   return error;
 };

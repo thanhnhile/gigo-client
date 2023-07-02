@@ -12,26 +12,20 @@ const Personal = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [isLoading, setLoading] = useState(false);
   const { auth } = useAuth();
-  if (isLoading) return 'Loading....';
   return (
     <div className={cx('container')}>
-      {isLoading ? (
-        <h1>Đang tải....</h1>
-      ) : (
-        <>
-          <h1>Xin chào {auth.username} </h1>
-          <div className={cx('wrapper')}>
-            {/* Account setting*/}
-            <AccountSetting />
-            {/* Account Setting*/}
-            {/*History order */}
-            <HistoryOrder />
-            {/*History order */}
-          </div>
-        </>
-      )}
+      <>
+        <h1>Xin chào {auth.username} </h1>
+        <div className={cx('wrapper')}>
+          {/* Account setting*/}
+          <AccountSetting />
+          {/* Account Setting*/}
+          {/*History order */}
+          <HistoryOrder />
+          {/*History order */}
+        </div>
+      </>
     </div>
   );
 };

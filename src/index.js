@@ -5,7 +5,6 @@ import App from './App';
 import GlobalStyles from 'comps/GlobalStyles';
 import AuthProvider from '~/contexts/AuthProvider';
 import CartProvider from '~/contexts/CartProvider';
-import GlobalErrorBoundary from 'comps/GlobalErrorBoundary';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,14 +13,7 @@ ReactDOM.render(
         <AuthProvider>
           <CartProvider>
             <Routes>
-              <Route
-                path='/*'
-                element={
-                  <GlobalErrorBoundary>
-                    <App />
-                  </GlobalErrorBoundary>
-                }
-              />
+              <Route path='/*' element={<App />} />
             </Routes>
           </CartProvider>
         </AuthProvider>

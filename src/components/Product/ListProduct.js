@@ -11,7 +11,7 @@ function ListProduct(props) {
   const { productsLiked } = useAuth();
   const checkProductIsLiked = (productId) => {
     if (productsLiked?.length <= 0) return false;
-    return productsLiked.filter((item) => item === productId).length > 0;
+    return productsLiked.filter((item) => item.id === productId).length > 0;
   };
   return (
     <div className={cx('wrapper', 'container')}>

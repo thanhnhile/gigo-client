@@ -8,7 +8,7 @@ import ListCustomerAddress from '../../Personal/ListCustomerAddress';
 import FormValidation from '~/components/Form/FormValidation';
 import Authenticated from './Authenticated';
 import UnAuthenticated from './UnAuthenticated';
-import useOrder from '~/hooks/useOrder';
+import { useToastError, useOrder } from '~/hooks';
 import { httpGetStoreByAddress } from '~/apiServices/storeServices';
 import { httpGetCustomerInfoDefault } from '~/apiServices/accountServices';
 
@@ -16,6 +16,7 @@ const cx = className.bind(styles);
 
 const Customer = () => {
   const { customer: initValue, accountUsername, handleCheckout } = useOrder();
+  const { showToastError } = useToastError();
   const [customer, setCustomer] = useState(initValue);
   const [stores, setStores] = useState([]);
   const [address, setAddress] = useState({
@@ -26,36 +27,46 @@ const Customer = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const getListStoreByAddress = async (provinceId, districtId) => {
-    let res = [];
-    res = await httpGetStoreByAddress(provinceId, districtId);
-    if (res.data?.length > 0) {
-      setStores(res.data);
-      setCustomer((prev) => ({ ...prev, store_id: res.data[0]?.id }));
-    } else {
-      setStores([{ id: null, storeName: 'Không có cửa hàng tại địa chỉ này' }]);
+    try {
+      let res = [];
+      res = await httpGetStoreByAddress(provinceId, districtId);
+      if (res.data?.length > 0) {
+        setStores(res.data);
+        setCustomer((prev) => ({ ...prev, store_id: res.data[0]?.id }));
+      } else {
+        setStores([
+          { id: null, storeName: 'Không có cửa hàng tại địa chỉ này' },
+        ]);
+      }
+    } catch (error) {
+      showToastError(error);
     }
   };
   useEffect(() => {
     const getCustomerInfoDefault = async () => {
-      const res = await httpGetCustomerInfoDefault();
-      if (res.data) {
-        setCustomer(res.data);
-        let storeRes = [];
-        storeRes = await httpGetStoreByAddress(
-          res.data?.provinceId,
-          res.data?.districtId
-        );
-        if (storeRes.data?.length > 0) {
-          setStores(storeRes.data);
-          setCustomer({
-            ...res.data,
-            store_id: storeRes.data[0].id,
-          });
-        } else {
-          setStores([
-            { id: null, storeName: 'Không có cửa hàng tại địa chỉ này' },
-          ]);
+      try {
+        const res = await httpGetCustomerInfoDefault();
+        if (res?.data) {
+          setCustomer(res.data);
+          let storeRes = [];
+          storeRes = await httpGetStoreByAddress(
+            res.data?.provinceId,
+            res.data?.districtId
+          );
+          if (storeRes.data?.length > 0) {
+            setStores(storeRes.data);
+            setCustomer({
+              ...res.data,
+              store_id: storeRes.data[0].id,
+            });
+          } else {
+            setStores([
+              { id: null, storeName: 'Không có cửa hàng tại địa chỉ này' },
+            ]);
+          }
         }
+      } catch (error) {
+        showToastError(error);
       }
     };
     accountUsername

@@ -1,64 +1,65 @@
 import * as request from '~/utils/request';
+import { handleException } from '~/utils/handleException';
 import { ORDER_STATUS } from '../utils/enum';
 
-export const httpPostOrder = (payload) => {
+export const httpPostOrder = async (payload) => {
   try {
-    const res = request.post('/orders', payload);
+    const res = await request.post('/orders', payload);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpGetOrderByAccountUsername = () => {
+export const httpGetOrderByAccountUsername = async () => {
   try {
-    const res = request.get(`/orders/history`);
+    const res = await request.get(`/orders/history`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpGetOrderByStoreId = (id) => {
+export const httpGetOrderByStoreId = async (id) => {
   try {
-    const res = request.get(`/orders?store_id=${id}`);
+    const res = await request.get(`/orders?store_id=${id}`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpGetOrderById = (id) => {
+export const httpGetOrderById = async (id) => {
   try {
-    const res = request.get(`/orders/${id}`);
+    const res = await request.get(`/orders/${id}`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpUpdateStatusOrder = (id, status) => {
+export const httpUpdateStatusOrder = async (id, status) => {
   try {
     switch (status) {
       case ORDER_STATUS.DELIVERING.id:
-        return request.put(`/orders/update/delivering/${id}`);
+        return await request.put(`/orders/update/delivering/${id}`);
       case ORDER_STATUS.SUCCESS.id:
-        return request.put(`/orders/update/success/${id}`);
+        return await request.put(`/orders/update/success/${id}`);
       case ORDER_STATUS.CANCELED.id:
-        return request.put(`/orders/update/cancel/${id}`);
+        return await request.put(`/orders/update/cancel/${id}`);
       default:
         console.log('NOT SUPPORT');
     }
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpGetAllOrders = () => {
+export const httpGetAllOrders = async () => {
   try {
-    const res = request.get('/orders/all');
+    const res = await request.get('/orders/all');
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };

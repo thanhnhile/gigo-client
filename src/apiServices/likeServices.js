@@ -1,18 +1,19 @@
 import * as request from '../utils/request';
+import { handleException } from '~/utils/handleException';
 
-export const httpLikeProduct = (id) => {
+export const httpLikeProduct = async (id) => {
   try {
-    const res = request.post(`/like/${id}`);
+    const res = await request.post(`/like/${id}`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
-export const httpUnlikeProduct = (id) => {
+export const httpUnlikeProduct = async (id) => {
   try {
-    const res = request.post(`/like/unlike/${id}`);
+    const res = await request.post(`/like/unlike/${id}`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };

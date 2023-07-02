@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '~/hooks/useAuth';
-import useCart from '~/hooks/useCart';
+import { useAuth, useCart, useToastError } from '~/hooks';
 import { httpPostOrder } from '../apiServices/orderServices';
 import { toast } from 'react-toastify';
 
@@ -10,6 +9,7 @@ export const OrderContext = createContext({});
 const OrderProvider = ({ children }) => {
   const { auth } = useAuth();
   const { removeAll } = useCart();
+  const { showToastError } = useToastError();
   const navigate = useNavigate();
   const initValue = {
     orderType: null,
@@ -67,9 +67,8 @@ const OrderProvider = ({ children }) => {
       account_username: auth?.username ? auth.username : null,
     };
     setSubmitting(true);
-    const res = await httpPostOrder(orderPayload);
-    console.log(res.data);
-    if (res.data) {
+    try {
+      await httpPostOrder(orderPayload);
       removeAll();
       toast.success('Đặt hàng thành công', {
         position: toast.POSITION.TOP_RIGHT,
@@ -78,13 +77,11 @@ const OrderProvider = ({ children }) => {
       setTimeout(() => {
         navigate('/personal');
       }, 2000);
-    } else {
-      toast.error(res.errMsg, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+    } catch (error) {
+      showToastError(error);
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
   return (
     <OrderContext.Provider

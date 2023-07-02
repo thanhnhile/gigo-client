@@ -5,6 +5,7 @@ import styles from './Register.module.scss';
 import Clickable from '~/components/Clickable';
 import FormValidation from '~/components/Form/FormValidation';
 import FormInput from '~/components/Form/FormInput';
+import { useToastError } from '~/hooks';
 import { httpRegister } from '~/apiServices/authServices';
 import { toast } from 'react-toastify';
 import ValidationRegex from '~/utils/validationRegex';
@@ -14,6 +15,7 @@ const initValue = { username: '', email: '', password: '' };
 
 function Register() {
   const navigate = useNavigate();
+  const { showToastError } = useToastError();
   const [user, setUser] = useState(initValue);
   const formInputs = [
     {
@@ -57,32 +59,33 @@ function Register() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e, formValidated) => {
+  const handleSubmit = async (e, formValidated, setSubmitting) => {
     e.preventDefault();
     if (!formValidated) {
       return;
     }
-    const newUser = {
-      username: user.username,
-      email: user.email,
-      password: user.password,
-    };
-    const response = await httpRegister(newUser);
-    if (response.errMsg) {
-      toast.error(response.errMsg, {
+    setSubmitting(true);
+    try {
+      const newUser = {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+      };
+      await httpRegister(newUser);
+      setUser(initValue);
+      toast.success('Tạo tài khoản thành công', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000,
       });
-      return;
+      setTimeout(() => {
+        navigate('/auth');
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+      showToastError(error);
+    } finally {
+      setSubmitting(false);
     }
-    setUser(initValue);
-    toast.success('Tạo tài khoản thành công', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-    });
-    setTimeout(() => {
-      navigate('/auth');
-    }, 1000);
   };
   return (
     <div className={cx('container', 'wrapper')}>
@@ -91,9 +94,9 @@ function Register() {
         Đã có tài khoản?<span onClick={() => navigate('/auth')}>Đăng nhập</span>
       </p>
       <FormValidation>
-        {({ formValidated, setValidated }) => (
+        {({ formValidated, setValidated, setSubmitting }) => (
           <form
-            onSubmit={(e) => handleSubmit(e, formValidated)}
+            onSubmit={(e) => handleSubmit(e, formValidated, setSubmitting)}
             className={cx('form')}
           >
             {formInputs.map((formInput) => (

@@ -1,35 +1,36 @@
 import * as request from '~/utils/request';
+import { handleException } from '~/utils/handleException';
 
-export const httpGetCustomerById = (id) => {
+export const httpGetCustomerById = async (id) => {
   try {
-    const res = request.get(`/customers/${id}`);
+    const res = await request.get(`/customers/${id}`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
-export const httpEditCustomer = (id, payload) => {
+export const httpEditCustomer = async (id, payload) => {
   try {
-    const res = request.put(`/customers/${id}`, payload);
+    const res = await request.put(`/customers/${id}`, payload);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
-export const httpPostCustomer = (payload) => {
+export const httpPostCustomer = async (payload) => {
   try {
-    const res = request.post(`/customers`, payload);
+    const res = await request.post(`/customers`, payload);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpDeleteCustomer = (id) => {
+export const httpDeleteCustomer = async (id) => {
   try {
-    const res = request.deleteRequest(`/customers/${id}`);
+    const res = await request.deleteRequest(`/customers/${id}`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };

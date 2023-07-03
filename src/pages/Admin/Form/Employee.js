@@ -3,7 +3,7 @@ import Select from 'react-select';
 import className from 'classnames/bind';
 import styles from './Form.module.scss';
 import { httpGetAllStore } from '~/apiServices/storeServices';
-import { httpGetAllAccount } from '~/apiServices/accountServices';
+import { httpGetAvailableAccount } from '~/apiServices/accountServices';
 import { useNavigate, useParams } from 'react-router-dom';
 import { httpGetEmployeeById, httpPostEmployee, httpPutEmployee } from '~/apiServices/employeeServices';
 import FormValidation from '~/components/Form/FormValidation';
@@ -51,7 +51,7 @@ function Employee() {
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {
         const getAllAccount = async () => {
-            const response = await httpGetAllAccount();
+            const response = await httpGetAvailableAccount();
             setAccounts(response.data);
         };
         getAllAccount();

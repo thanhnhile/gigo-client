@@ -19,6 +19,10 @@
     max-width: 500px;
     padding: 30px 50px;
   }
+  option{
+    font-size: var(--font-normal);
+  }
+  
   input,
   textarea,
   select {
@@ -27,6 +31,7 @@
     box-sizing: border-box;
     padding: 10px;
     width: 100%;
+    font-size: var(--font-normal);
   }
   textarea.vertical-resize{
     resize: vertical;

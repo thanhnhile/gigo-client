@@ -13,11 +13,10 @@ const Footer = () => {
           <div className={cx('footer-top-name')}>
             <h2>Gogi Milk Tea</h2>
             <p>
-              Equator was named after the region where coffee grows, but has
-              come to mean so much more than that. It’s the path around the
-              planet that connects us all.As we tread that path from bean to
-              sip, we try to make everything we touch better. Because we believe
-              drinking good coffee leads to good things.
+              Gogi là một chuỗi cửa hàng trà sữa Việt Nam, được thành lập vào
+              năm 2022. Nó có trụ sở tại Thành phố Hồ Chí Minh. Tính đến tháng 6
+              năm 2023, chuỗi có hơn 100 cửa hàng trên khắp Việt Nam phục vụ hơn
+              40.000 khách hàng mỗi ngày.
             </p>
           </div>
           <div className={cx('footer-top-about')}>

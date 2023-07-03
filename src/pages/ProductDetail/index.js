@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { httpGetProductById } from '../../apiServices/productServices';
+
+import { useToastError } from '~/hooks';
+import { httpGetProductById } from '~/apiServices/productServices';
 import Detail from '../../components/Product/Detail';
 
 function ProductDetail() {
   const { id } = useParams();
+  const { showToastError } = useToastError();
   const [productDetail, setProductDetail] = useState({});
   useEffect(() => {
     const getProductById = async () => {
-      const response = await httpGetProductById(id);
-      setProductDetail(response.data);
+      try {
+        const response = await httpGetProductById(id);
+        setProductDetail(response.data);
+      } catch (error) {
+        showToastError(error);
+      }
     };
     getProductById();
   }, [id]);

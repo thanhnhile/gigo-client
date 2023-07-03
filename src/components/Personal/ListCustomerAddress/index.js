@@ -8,16 +8,17 @@ import { httpGetAllCustomerInfo } from '~/apiServices/accountServices';
 import { httpPutSetCustomerInfoDefault } from '~/apiServices/accountServices';
 import { httpDeleteCustomer } from '~/apiServices/customerServices';
 import { FORM_ACTION } from '~/utils/enum';
+import { useToastError } from '~/hooks';
 
 const cx = className.bind(styles);
 
 const ListCustomerAddress = ({ selected, setSelected }) => {
+  const { showToastError } = useToastError();
   const [listAddress, setListAddress] = useState([]);
   const [reload, setReload] = useState(false);
   useEffect(() => {
     const getListCustomerInfoOfAccount = async () => {
       const res = await httpGetAllCustomerInfo();
-      console.log(res);
       if (res.data) {
         setListAddress(res.data);
         const defaultItem = res?.data.find((item) => item.isDefault);
@@ -28,33 +29,32 @@ const ListCustomerAddress = ({ selected, setSelected }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reload]);
   const handleSetCustomerDefault = async () => {
-    console.log(selected.id);
-    const res = await httpPutSetCustomerInfoDefault(selected.id);
-    if (res.data) {
-      setSelected(res.data);
-      toast.success('Lưu địa chỉ mặc định thành công!', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    } else
-      toast.error(res.errMsg, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+    try {
+      const res = await httpPutSetCustomerInfoDefault(selected.id);
+      if (res.data) {
+        setSelected(res.data);
+        toast.success('Lưu địa chỉ mặc định thành công!', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      showToastError(error);
+    }
   };
   const handleDeleteCustomerInfo = async () => {
-    const res = await httpDeleteCustomer(selected.id);
-    if (res.data) {
-      setReload(!reload);
-      toast.success('Xóa địa chỉ thành công', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    } else
-      toast.error(res.errMsg, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+    try {
+      const res = await httpDeleteCustomer(selected.id);
+      if (res.data) {
+        setReload(!reload);
+        toast.success('Xóa địa chỉ thành công', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      showToastError(error);
+    }
   };
   return (
     <div className='min-container'>

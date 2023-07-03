@@ -1,23 +1,27 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { httpGetProductIdsLiked } from '~/apiServices/accountServices';
+import { httpGetProductLiked } from '~/apiServices/accountServices';
+import { useToastError } from '~/hooks';
 
 export const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
+  const { showToastError } = useToastError();
   const [auth, setAuth] = useState({});
   const [productsLiked, setProductsLiked] = useState([]);
   const [needToUpdateProductLiked, setNeedToUpdateProductLiked] =
     useState(false);
 
-  const getProductLiked = async () => {
-    const response = await httpGetProductIdsLiked();
-    if (response?.data) {
-      setProductsLiked(response.data);
+  const handleApi = async () => {
+    try {
+      const productRes = await httpGetProductLiked();
+      if (productRes?.data) setProductsLiked(productRes.data);
+    } catch (error) {
+      showToastError(error);
     }
   };
   useEffect(() => {
     if (auth?.username) {
-      auth?.username && getProductLiked();
+      auth?.username && handleApi();
       setNeedToUpdateProductLiked(false);
     } else {
       setProductsLiked([]);
@@ -26,7 +30,12 @@ const AuthProvider = ({ children }) => {
   }, [auth, needToUpdateProductLiked]);
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, productsLiked, setNeedToUpdateProductLiked }}
+      value={{
+        auth,
+        setAuth,
+        productsLiked: productsLiked,
+        setNeedToUpdateProductLiked,
+      }}
     >
       {children}
     </AuthContext.Provider>

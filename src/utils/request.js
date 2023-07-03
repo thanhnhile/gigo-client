@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { LOCAL_STORAGE_KEY } from './enum';
-import { handleException } from './handleException';
 const LOGIN_PATH = '/auth';
+const ACCESS_DENIED_MSG = 'Access denied';
+
 const refreshToken = async () => {
   try {
     const res = await axios.get('http://localhost:8089/refresh', {
@@ -75,36 +76,42 @@ request.interceptors.response.use(
         refreshSubscribers.forEach((subscriber) => subscriber());
         refreshSubscribers = [];
       }
-    } else throw handleException(error);
+    } else if (
+      error.response &&
+      error.response.status === 401 &&
+      error.response.data.errMsg === ACCESS_DENIED_MSG
+    ) {
+      redirectToSameOriginPage(LOGIN_PATH);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    }
+    return Promise.reject(error);
   }
 );
 
 export const get = async (path, options = {}) => {
   const response = await request.get(path, options);
-  return response.data;
+  return response?.data;
 };
 
 export const post = async (path, payload) => {
   const response = await request.post(path, payload);
-  return response.data;
+  return response?.data;
 };
 
 export const deleteRequest = async (path) => {
   const response = await request.delete(path);
-  return response.data;
+  return response?.data;
 };
 
 export const put = async (path, payload) => {
   const response = await request.put(path, payload);
-  return response.data;
+  return response?.data;
 };
 
 function redirectToSameOriginPage(pathname) {
-  const origin = window.location.hostname;
-
+  const hostname = window.location.host;
   // Replace the pathname portion of the URL with the desired path
-  const newUrl = `${origin}${pathname}`;
-
+  const newUrl = `${hostname}${pathname}`;
   // Redirect to the new URL
   window.location.href = newUrl;
 }

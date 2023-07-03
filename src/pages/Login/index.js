@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import className from 'classnames/bind';
 import styles from './Login.module.scss';
 import FormValidation from '~/components/Form/FormValidation';
 import FormInput from '~/components/Form/FormInput';
 import Clickable from '../../components/Clickable';
-import useAuth from '~/hooks/useAuth';
+import { useToastError, useAuth } from '~/hooks';
 import { httpAuth } from '../../apiServices/authServices';
 import { httpGetEmployeeAccountUsername } from '~/apiServices/employeeServices';
 import { ROLE } from '~/utils/enum';
@@ -16,6 +15,7 @@ const initValue = { username: '', password: '' };
 
 function Login() {
   const navigate = useNavigate();
+  const { showToastError } = useToastError();
   const { setAuth } = useAuth();
   const [user, setUser] = useState(initValue);
   const handleChange = (e) => {
@@ -79,11 +79,7 @@ function Login() {
               setUser(initValue);
               navigate('/');
             } catch (err) {
-              err.errMsg &&
-                toast.error(err.errMsg, {
-                  position: toast.POSITION.TOP_CENTER,
-                  autoClose: 2000,
-                });
+              showToastError(err);
             } finally {
               setSubmitting(false);
             }

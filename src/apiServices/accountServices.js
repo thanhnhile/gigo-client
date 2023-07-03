@@ -1,10 +1,12 @@
 import * as request from '~/utils/request';
-export const httpGetAllAccount = () => {
+import { handleException } from '~/utils/handleException';
+
+export const httpGetAllAccount = async () => {
   try {
-    const res = request.get(`/accounts/`);
+    const res = await request.get(`/accounts/`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 export const httpGetAvailableAccount = () => {
@@ -24,47 +26,38 @@ export const httpResetPassword = (token, payload) => {
   return res;
 };
 
-export const httpGetAllCustomerInfo = () => {
+export const httpGetAllCustomerInfo = async () => {
   try {
-    const res = request.get('/accounts/customers');
+    const res = await request.get('/accounts/customers');
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpGetCustomerInfoDefault = () => {
+export const httpGetCustomerInfoDefault = async () => {
   try {
-    const res = request.get('/accounts/customers/default');
+    const res = await request.get('/accounts/customers/default');
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpPutSetCustomerInfoDefault = (id) => {
+export const httpPutSetCustomerInfoDefault = async (id) => {
   try {
-    const res = request.put(`/accounts/customers/default/${id}`);
+    const res = await request.put(`/accounts/customers/default/${id}`);
     return res;
   } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };
 
-export const httpGetProductLiked = () => {
+export const httpGetProductLiked = async () => {
   try {
-    const res = request.get('/accounts/productsLiked');
+    const res = await request.get('/accounts/productsLiked');
     return res;
   } catch (error) {
-    console.log(error.response.data);
-  }
-};
-
-export const httpGetProductIdsLiked = () => {
-  try {
-    const res = request.get('/accounts/productsLiked/id');
-    return res;
-  } catch (error) {
-    console.log(error.response.data);
+    throw handleException(error);
   }
 };

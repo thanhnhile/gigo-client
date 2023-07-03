@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import className from 'classnames/bind';
 import styles from './CustomerInfo.module.scss';
@@ -16,12 +17,13 @@ import {
   httpEditCustomer,
   httpPostCustomer,
 } from '~/apiServices/customerServices';
-import { useNavigate } from 'react-router-dom';
+import { useToastError } from '~/hooks';
 
 const cx = className.bind(styles);
 
 const Customerinfo = ({ customerId, action }) => {
   const navigate = useNavigate();
+  const { showToastError } = useToastError();
   const { auth } = useAuth();
   const initValue = {
     id: '',
@@ -99,7 +101,7 @@ const Customerinfo = ({ customerId, action }) => {
         state: { action: FORM_ACTION.VIEW },
       });
     } catch (error) {
-      console.log(error);
+      showToastError(error);
     }
   };
   const formInputs = [

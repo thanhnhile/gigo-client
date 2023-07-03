@@ -4,26 +4,33 @@ import { Icon } from '@iconify/react';
 import className from 'classnames/bind';
 import styles from './Product.module.scss';
 
-import { useAuth } from '~/hooks';
+import { useAuth, useToastError } from '~/hooks';
 import { formatPrice, formatPercent } from '~/utils/format';
 import { httpLikeProduct, httpUnlikeProduct } from '~/apiServices/likeServices';
+
 const cx = className.bind(styles);
+
 const Product = ({ product, isLiked }) => {
   const { setNeedToUpdateProductLiked } = useAuth();
+  const { showToastError } = useToastError();
   const [liked, setLiked] = useState(false);
 
   const handleLike = async () => {
-    const res = await httpLikeProduct(product.id);
-    if (res?.errMsg === null) {
+    try {
+      await httpLikeProduct(product.id);
       setLiked(true);
       setNeedToUpdateProductLiked(true);
+    } catch (error) {
+      showToastError(error);
     }
   };
   const handleUnlike = async () => {
-    const res = await httpUnlikeProduct(product.id);
-    if (res?.errMsg === null) {
+    try {
+      await httpUnlikeProduct(product.id);
       setLiked(false);
       setNeedToUpdateProductLiked(true);
+    } catch (error) {
+      showToastError(error);
     }
   };
   useEffect(() => {

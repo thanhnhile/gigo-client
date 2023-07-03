@@ -1,4 +1,6 @@
 $header-height: 60px;
+$count-notify-number-width: 20px;
+
 .wrapper {
   // display: grid;
   // grid-template-columns: 20% 80%;
@@ -59,6 +61,24 @@ $header-height: 60px;
         /* Handle */
         &::-webkit-scrollbar-thumb {
           background: var(--primary);
+        }
+      }
+    }
+    header {
+      .notification {
+        position: relative;
+        .notification-count {
+          width: $count-notify-number-width;
+          height: $count-notify-number-width;
+          text-align: center;
+          line-height: $count-notify-number-width;
+          border-radius: 50%;
+          background-color: var(--primary);
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          color: #ffff;
+          font-size: 1.2rem;
         }
       }
     }

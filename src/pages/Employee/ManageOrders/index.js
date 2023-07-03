@@ -26,7 +26,7 @@ const ManageOrders = () => {
   const handleFilterByUserphone = async (e) => {
     setUserPhone(e.target.value.trim());
     if (e.target.value.trim().length >= 10) {
-      const result = data.filter(
+      const result = data?.filter(
         (item) => item?.customer?.phone === e.target.value.trim()
       );
       setDataRow(result);
@@ -34,9 +34,9 @@ const ManageOrders = () => {
   };
   const handleFilterByStatus = async (e) => {
     setStatus(e.target.value);
-    const result = data.filter(
-      (item) =>
-        item.status === Number.parseInt(e.target.value) || e.target.value === -1
+    const status = Number.parseInt(e.target.value);
+    const result = data?.filter(
+      (item) => status === -1 || item.status === status
     );
     setDataRow(result);
   };

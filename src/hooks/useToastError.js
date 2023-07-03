@@ -6,7 +6,6 @@ const useToastError = () => {
       toast.dismiss();
       toast.error(error.errMsg, {
         position: 'top-center',
-        autoClose: false,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

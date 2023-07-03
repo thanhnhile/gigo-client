@@ -6,17 +6,13 @@ import Header from '../components/AdminHeader';
 const cx = className.bind(styles);
 
 const AdminLayout = ({ children }) => {
-  const [isOpen,setOpen] = useState(false);
   return (
     <div className={cx('fluid-container', 'wrapper')}>
       <Sidebar />
       <div className={cx('content')}>
         <div className={cx('header')}>
           {' '}
-          <Header setOpen={setOpen}/>
-          <div className={cx('announcement', { open: isOpen })}>
-            <p>Nhi dặt đơn hàng mới</p>
-          </div>
+          <Header/>
         </div>
         <main>{children}</main>
       </div>

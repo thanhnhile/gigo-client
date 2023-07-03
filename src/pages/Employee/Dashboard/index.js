@@ -74,15 +74,13 @@ const Dashboard = () => {
     const url = `http://localhost:8089/subscribe/stores/${auth?.employeeInfo?.storeId}/employees/${auth?.employeeInfo?.employeeId}`;
     const eventSource = new EventSource(url);
     eventSource.addEventListener('LIST_ORDERS_UPDATE', (event) => {
-      console.log(event);
       const data = JSON.parse(event.data);
-      console.log(data);
       if (data.length > 0) {
         setData(data);
         setIsLoading(false);
       }
     });
-    eventSource.onopen = (e) => console.log('connection');
+    eventSource.onopen = (e) => console.log('SSE is connected');
     eventSource.onerror = (event) => {
       if (event.target.readyState === EventSource.CLOSED) {
         console.log('SSE closed (' + event.target.readyState + ')');

@@ -90,7 +90,11 @@ const Invoice = ({ permission }) => {
     [id]
   );
 
-  return order?.details?.length > 0 ? (
+  if (order?.details?.length <= 0) {
+    return <div className='loader'></div>;
+  }
+
+  return (
     <div className={cx('wrapper', 'container')}>
       <h1>Chi tiết đơn hàng</h1>
       <div className={cx('row')}>
@@ -105,7 +109,7 @@ const Invoice = ({ permission }) => {
       </div>
       <div className={cx('row')}>
         <h4>Ngày đặt: {formatDate(order?.createdDate)}</h4>
-        <h4>Mã đơn hàng: {order.id}</h4>
+        <h4>Mã đơn hàng: {order?.id}</h4>
         <div className={cx('info')}>
           <h4>Đến: {order?.customer?.name}</h4>
           <p>{order?.customer?.address}</p>
@@ -118,11 +122,11 @@ const Invoice = ({ permission }) => {
       <div className={cx('row', 'order-info')}>
         <div className={cx('info')}>
           <h4>phương thức</h4>
-          <p>{DELIVERY_METHOD[order?.orderType].name}</p>
+          <p>{DELIVERY_METHOD[order?.orderType]?.name}</p>
         </div>
         <div className={cx('info')}>
           <h4>Phí giao hàng</h4>
-          <p>{formatPrice(DELIVERY_METHOD[order?.orderType].price)}</p>
+          <p>{formatPrice(DELIVERY_METHOD[order?.orderType]?.price)}</p>
         </div>
         <div className={cx('info')}>
           <h4>Giảm giá</h4>
@@ -163,8 +167,6 @@ const Invoice = ({ permission }) => {
         />
       </div>
     </div>
-  ) : (
-    <p>Không có đơn hàng</p>
   );
 };
 

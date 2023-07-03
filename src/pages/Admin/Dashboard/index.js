@@ -123,8 +123,8 @@ const Dashboard = () => {
     setStatus(e.target.value);
     const status = Number.parseInt(e.target.value);
     const result = orderData.filter((item) => {
-      if (item.status === status || status === -1) {
-        if (item.store?.id === store || store === -1) return item;
+      if (status === -1 || item.status === status) {
+        if (store === -1 || item.store?.id === store) return item;
       }
     });
     setDataRow(result);

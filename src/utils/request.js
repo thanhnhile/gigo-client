@@ -108,11 +108,12 @@ export const put = async (path, payload) => {
   return response?.data;
 };
 
-function redirectToSameOriginPage(pathname) {
-  const hostname = window.location.host;
-  // Replace the pathname portion of the URL with the desired path
-  const newUrl = `${hostname}${pathname}`;
-  // Redirect to the new URL
-  window.location.href = newUrl;
+export function redirectToSameOriginPage(pathname) {
+  window.location.href = pathname;
+  // const hostname = window.location.host;
+  // // Replace the pathname portion of the URL with the desired path
+  // const newUrl = `${hostname}${pathname}`;
+  // // Redirect to the new URL
+  // window.location.href = newUrl;
 }
 export default request;
